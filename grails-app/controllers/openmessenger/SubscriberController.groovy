@@ -2,5 +2,8 @@ package openmessenger
 
 class SubscriberController {
 
-    def index = { }
+    def listAllSubscribers = {
+        def subscribers = Subscriber.list()
+        render(template:"listAllSubscribers",model:[subscribers: subscribers])
+    }
 }
