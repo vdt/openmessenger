@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 
 class EventControllerTests extends ControllerUnitTestCase {
 
+    def eventService
     
     protected void setUp() {
         super.setUp()
@@ -44,7 +45,7 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "show", controller.redirectArgs["action"]
     }
     
-     void testSaveEvilEventRedirect(){
+    void testSaveEvilEventRedirect(){
         def eventSaved = []
         mockDomain(Event, eventSaved)
         controller.params.name = "dude"
@@ -54,5 +55,19 @@ class EventControllerTests extends ControllerUnitTestCase {
         controller.save()
         assertEquals "create", controller.renderArgs.view
     }   
-    
+
+    void testSubscribeToEvent(){
+        //mockLogging(eventService)
+        
+        def eventControl = mockFor(EventService) 
+        eventControl.demand.subscribeToEvent(1..1) {->true}
+        controller.params.eventId = "2"
+        controller.params.msisdn = "1234567890"
+        this.controller.eventService = eventControl.createMock()
+        
+        controller.subscribeToEvent()
+        
+        assertEquals "show", controller.redirectArgs["action"]  
+        eventControl.verify()
+    }
 }

@@ -1,6 +1,9 @@
 package openmessenger
 
 class EventController {
+    
+    def eventService
+    
     def listAllEvents = { 
         def events = Event.list()
         render(template:"listAllEvents",model:[events: events])
@@ -14,4 +17,13 @@ class EventController {
             render(view: "create", model: [eventInstance: eventInstance])
         }
     }   
+    
+    def subscribeToEvent = {
+        def eventId =  params.eventId
+        def msisdn =  params.msisdn
+        
+        eventService.subscribeToEvent(eventId, msisdn)
+        
+        redirect(action: "show", id: eventId)
+    }
 }
