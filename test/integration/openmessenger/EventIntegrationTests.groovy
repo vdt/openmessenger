@@ -52,17 +52,26 @@ class EventIntegrationTests extends GroovyTestCase {
             }
         }
         assertNotNull event.save()
+		def targetEvent = Event.get(event.id) 
 		
         def firstSubscriber = new Subscriber(msisdn: '1234567890A')
         def secondSubscriber = new Subscriber(msisdn: '1234567890B')
         def thirdSubscriber = new Subscriber(msisdn: '1234567890C')
 		
-        event.addToSubscribers(firstSubscriber)
-        event.addToSubscribers(secondSubscriber)
-        event.addToSubscribers(thirdSubscriber)
+        targetEvent.addToSubscribers(firstSubscriber)
+        targetEvent.addToSubscribers(secondSubscriber)
+        targetEvent.addToSubscribers(thirdSubscriber)   
+
+		targetEvent.save() 
 		
-        assertEquals 3, Event.get(event.id).subscribers.size()
-    }
+		def addedEvent = Event.get(event.id)
+		
+        assertEquals 3, addedEvent.subscribers.size()
+    }  
+
+	void testUnsubscribeFromEvent(){
+		
+	}
 	
     void testGetAllSubscribers(){
         def event = new Event(name: 'The Championships, Wimbledon',

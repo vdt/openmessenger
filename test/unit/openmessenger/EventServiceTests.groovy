@@ -73,12 +73,62 @@ class EventServiceTests extends GrailsUnitTestCase {
         
         
         assertNotNull eventInstance.id
-        println eventInstance.id
+        
         
         def eventService = new EventService()
         eventService.subscribeToEvent(1,"66809737798")
         
         def targetEvent  = Event.get(1)
         assertEquals 1, targetEvent.subscribers.size()
+    }                      
+
+  void testUnsubscriberFromEvent(){
+        def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status: 'NORMAL')
+        def newSubscriber = new Subscriber(msisdn: '66809737798', active: 'Y')    
+        def secondSubscriber = new Subscriber(msisdn: '66809737799', active: 'Y')   
+
+        mockDomain(Event, [eventInstance])
+        mockDomain(Subscriber, [newSubscriber, secondSubscriber])
+
+ 
+        eventInstance.save()
+
+
+        assertNotNull eventInstance.id
+         
+		eventInstance.addToSubscribers(newSubscriber)
+		eventInstance.addToSubscribers(secondSubscriber)  		
+
+        def eventService = new EventService()
+        eventService.unsubscribeFromEvent(eventInstance.id , "66809737798")
+
+        def targetEvent  = Event.get(1)
+        assertEquals 1, targetEvent.subscribers.size()
     }
+
+	void testShowEvent(){
+        def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status: 'NORMAL')
+        def newSubscriber = new Subscriber(msisdn: '66809737798', active: 'Y')    
+        
+        
+        mockDomain(Event, [eventInstance])
+        mockDomain(Subscriber, [newSubscriber])
+        
+        newSubscriber.save()
+        eventInstance.save()
+        
+        
+        assertNotNull eventInstance.id
+        
+        
+        def eventService = new EventService()
+        def targetEvent = eventService.findEventById(1)
+		assertEquals "The Championships, Wimbledon", targetEvent.name
+	}
 }
