@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="0" name="EventServiceTests" package="openmessenger" tests="6" time="1.744" timestamp="2011-07-14T04:37:37">
+  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="0" name="UserTests" package="openmessenger" tests="1" time="1.083" timestamp="2011-07-14T10:11:19">
       <properties />
 
-      <testcase classname="openmessenger.EventServiceTests" name="testFindByNameLikeKeyword" time="1.386" />
+      <testcase classname="openmessenger.UserTests" name="testUserConstraints" time="1.063" />
 
-      <testcase classname="openmessenger.EventServiceTests" name="testFindByStatus" time="0.027" />
-
-      <testcase classname="openmessenger.EventServiceTests" name="testSubscriberToEvent" time="0.18" />
-
-      <testcase classname="openmessenger.EventServiceTests" name="testUnsubscriberFromEvent" time="0.058" />
-
-      <testcase classname="openmessenger.EventServiceTests" name="testShowEvent" time="0.029" />
-
-      <testcase classname="openmessenger.EventServiceTests" name="testPostMessageToEventSubscriber" time="0.04" />
-
-      <system-out><![CDATA[--Output from testFindByNameLikeKeyword--
---Output from testFindByStatus--
---Output from testSubscriberToEvent--
---Output from testUnsubscriberFromEvent--
---Output from testShowEvent--
---Output from testPostMessageToEventSubscriber--
+      <system-out><![CDATA[--Output from testUserConstraints--
 ]]></system-out>
 
-      <system-err><![CDATA[--Output from testFindByNameLikeKeyword--
---Output from testFindByStatus--
---Output from testSubscriberToEvent--
---Output from testUnsubscriberFromEvent--
---Output from testShowEvent--
---Output from testPostMessageToEventSubscriber--
+      <system-err><![CDATA[--Output from testUserConstraints--
 ]]></system-err>
 
   </testsuite>
