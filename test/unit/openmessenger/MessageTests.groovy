@@ -16,7 +16,7 @@ class MessageTests extends GrailsUnitTestCase {
 		mockForConstraintsTests(Message, [nullMessage])
 	 	assertFalse nullMessage.validate()           
 	
-		def validMessage = new Message(title: "the title", content: "the content")
+		def validMessage = new Message(title: "the title", content: "the content", createdDate: new Date())
 		mockForConstraintsTests(Message, [validMessage])
 		assertTrue validMessage.validate()
     }

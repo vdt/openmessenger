@@ -6,7 +6,8 @@ class Event {
     Date occuredDate
     String status
 	
-    static hasMany = [subscribers:Subscriber]
+    static hasMany = [subscribers:Subscriber, messages:Message]  
+	
     static constraints = {
         name(nullable: false)
         description(nullable: false)

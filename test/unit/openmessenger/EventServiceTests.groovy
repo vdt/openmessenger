@@ -130,5 +130,33 @@ class EventServiceTests extends GrailsUnitTestCase {
         def eventService = new EventService()
         def targetEvent = eventService.findEventById(1)
 		assertEquals "The Championships, Wimbledon", targetEvent.name
+	}        
+	
+	void testPostMessageToEventSubscriber(){
+        def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status: 'NORMAL')
+ 		
+		def subscribers = [	new Subscriber(msisdn: '66809737791', active: 'Y'),
+		 					new Subscriber(msisdn: '66809737792', active: 'Y'),
+							new Subscriber(msisdn: '66809737793', active: 'Y'),
+							new Subscriber(msisdn: '66809737794', active: 'Y'),
+							new Subscriber(msisdn: '66809737795', active: 'Y')	]
+		
+		mockDomain(Event, [eventInstance])   
+		mockDomain(Subscriber, [subscribers])  
+		
+		eventInstance.save()        
+		subscribers.each{
+			eventInstance.addToSubscribers(it) 
+	    }         
+	
+		def targetEvent = Event.get(eventInstance.id)
+		assertEquals 5, targetEvent.subscribers.size()
+		                                              
+		
+		
+		
 	}
 }
