@@ -26,4 +26,13 @@ class EventController {
         
         redirect(action: "show", id: eventId)
     }
+
+	def sendMessage = {
+		def eventId = params.eventId
+		def message = params.message
+
+		eventService.sendMessage(eventId, message)
+
+		redirect(action: "show", id: eventId)
+	}
 }

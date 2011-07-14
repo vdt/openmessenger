@@ -70,4 +70,18 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "show", controller.redirectArgs["action"]  
         eventControl.verify()
     }
+
+	void testSendMessage(){
+        def eventService = mockFor(EventService) 
+        eventService.demand.sendMessage(1..1) {->true}
+        controller.params.eventId = "2"
+		controller.params.message = "test message"
+		
+		this.controller.eventService = eventService.createMock()
+
+		controller.sendMessage()
+
+		assertEquals "show", controller.redirectArgs["action"]  
+        eventService.verify()
+	}
 }
