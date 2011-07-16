@@ -159,8 +159,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 
 	void testSendMessage(){
 		String message = "send to rabbitMQ"
-		def rabbitTemplate = mockFor(RabbitTemplate)
-		rabbitTemplate.demand.convertAndSend(1..5) {-> true}
+		def rabbitSent=0
 
 		def eventInstance = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
@@ -185,12 +184,11 @@ class EventServiceTests extends GrailsUnitTestCase {
 		eventInstance.addToMessages(initMessage)
 
 		def eventService = new EventService()
-		eventService.rabbitTemplate = rabbitTemplate.createMock()
+		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++}
 		eventService.queueName = "rabbitTemplate"
 
 		eventService.sendMessage(eventInstance.id, message)
-		rabbitTemplate.verify()
-
+		assertEquals 5, rabbitSent
 		assertEquals 2, eventInstance.messages.size()
 	}
 }
