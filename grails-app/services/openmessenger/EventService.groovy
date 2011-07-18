@@ -1,11 +1,8 @@
 package openmessenger
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 class EventService {
 
     static transactional = true
-	def rabbitTemplate
 	def queueName
 
     def findEventById(Long eventId){
@@ -39,7 +36,7 @@ class EventService {
 		def event = Event.get(eventId) 	
 		event.subscribers.each {
 			def msg = [msisdn:it.msisdn, msg:message, date:new Date()]
-			rabbitTemplate.convertAndSend(queueName, message)
+			rabbitSend(queueName, msg)
 		}		
 		event.addToMessages(new Message(title:message, content:message, createdDate:new Date()))
 		event.save()
