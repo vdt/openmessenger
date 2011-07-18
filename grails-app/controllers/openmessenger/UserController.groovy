@@ -12,4 +12,9 @@ class UserController {
 			redirect(action:"login")
 		}
 	}
+	
+	def logout = {
+		session.user = null
+		redirect(action:"login")		
+	}
 }

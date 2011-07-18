@@ -23,4 +23,12 @@ class UserControllerTests extends ControllerUnitTestCase {
 		controller.authenticate() 
 		assertTrue controller.flash.message.startsWith("Sorry, roofimon")	
     }
+
+	void testLogout(){
+		def jdoe = new User(username:"roofimon", password:"s3creT#") 
+		mockDomain(User, [jdoe])
+		controller.session.user = jdoe
+		controller.logout()
+		assertNull controller.session.user
+	}
 }
