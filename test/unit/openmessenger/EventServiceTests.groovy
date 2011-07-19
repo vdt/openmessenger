@@ -1,7 +1,6 @@
 package openmessenger
 import java.text.SimpleDateFormat
 import grails.test.*
-import org.springframework.amqp.rabbit.core.RabbitTemplate
 
 class EventServiceTests extends GrailsUnitTestCase {
     protected void setUp() {
