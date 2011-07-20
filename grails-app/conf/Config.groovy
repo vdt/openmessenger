@@ -58,12 +58,56 @@ environments {
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
-    }
+	}
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
+		
+		// rabbitMQ Configuration
+		rabbitmq {
+			connectionfactory {
+				username = 'guest'
+				password = 'guest'
+				hostname = 'deftdev.com'
+				consumers = 5
+			}
+			queues = {
+				openmessenger()
+			}
+		}
+		
+		// sms gateway configuration
+		sms.gateway.uri='http://api.clickatell.com'
+		sms.gateway.path='/http/sendmsg'
+		sms.gateway.apiId='3312346'
+		sms.gateway.user='opendream'
+		sms.gateway.password='Tdb5vzt6zuMAhG'
+		sms.gateway.senderId ='Messenger'
     }
 
 }
+
+// rabbitMQ Configuration
+rabbitmq {
+	connectionfactory {
+		username = 'guest'
+		password = 'guest'
+		hostname = 'deftdev.com'
+		consumers = 5
+	}
+	queues = {
+		openmessenger()
+	}
+}
+
+// sms gateway configuration
+sms.gateway.uri='http://api.clickatell.com'
+sms.gateway.path='/http/sendmsg'
+sms.gateway.apiId='3312346'
+sms.gateway.user='opendream'
+sms.gateway.password='Tdb5vzt6zuMAhG'
+
+
+
 
 // log4j configuration
 log4j = {

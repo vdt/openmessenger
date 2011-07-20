@@ -3,7 +3,7 @@ package openmessenger
 class EventService {
 
     static transactional = true
-	def queueName
+	def queueName = 'openmessenger'
 
     def findEventById(Long eventId){
 		Event.get(eventId)
@@ -32,13 +32,15 @@ class EventService {
 		event.save()
 	}
 
-	def sendMessage(Long eventId, String message){
-		def event = Event.get(eventId) 	
+	def sendMessage(Long eventId, Message message){
+		println eventId
+		def event = Event.findById(eventId)
+		println event.name
+		event.addToMessages(message)
 		event.subscribers.each {
-			def msg = [msisdn:it.msisdn, msg:message, date:new Date()]
+			def msg = [msisdn:it.msisdn, content:message.content, date:new Date()]
 			rabbitSend(queueName, msg)
-		}		
-		event.addToMessages(new Message(title:message, content:message, createdDate:new Date()))
+		}				
 		event.save()
 	}
                                                            
