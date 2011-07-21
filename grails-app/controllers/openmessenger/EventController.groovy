@@ -4,15 +4,20 @@ class EventController {
     
     def eventService
     
+	def view = {
+		def targetEvent = Event.get(params.id)
+		render(view: "view", model:[event: targetEvent])
+	}
+
     def listAllEvents = { 
         def events = Event.list()
-        render(template:"listAllEvents",model:[events: events])
+        render(view:"listAllEvents",model:[events: events])
     }
 
     def save = {
         def eventInstance = new Event(params)
         if (eventInstance.save(flush: true)){
-            redirect(action: "show", id: eventInstance.id)
+            redirect(action: "view", id: eventInstance.id)
         }else{
             render(view: "create", model: [eventInstance: eventInstance])
         }
