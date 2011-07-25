@@ -3,16 +3,18 @@ package openmessenger
 import grails.test.*
 import org.apache.commons.lang.CharUtils
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 
 class ConsumerServiceTests extends GrailsUnitTestCase {
 	def consumerService
 	
     protected void setUp() {
 		consumerService = new ConsumerService()
-		def config = new ConfigObject()
-		config.put('sms.gateway', 'path')
-		CH.setConfig(config)
+		/*mockConfig ('''
+		sms.gateway.uri="path"		
+		''')*/
+		mockConfig ('''
+		sms.gateway.senderId="opendream"
+		''')
         super.setUp()
     }
 
@@ -25,14 +27,26 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 			[uri:'http2', msisdn:'66890242989', content:'Call me RabbitMQ dude'], 
 			[uri:'http3', msisdn:'66890242989', content:'Call me RabbitMQ dude']]
 		def counter = 0
-		consumerService.metaClass.withHttp = {Map map, Closure closure -> counter++}
+		consumerService.metaClass.withHttp = {Map map, Closure closure -> 
+			counter++
+			'ID:'	
+		}
 
 		maps.each { 
-			consumerService.handleMessage(it)
+			consumerService.handleMessage(it)			
 		}
 		
 		assertEquals 3, counter
     }
+	
+	void testConsumerServiceException() {
+		def arg = [uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude']
+		consumerService.metaClass.withHttp = {Map map, Closure closure -> 'ERR: 123 Invalid Sender ID'}
+		shouldFailWithCause(new ConsumerServiceException()){
+		//shouldFailWithCause(ConsumerServiceException) {  
+			consumerService.sendMessage(arg)
+		}
+	}
 	
 	void testConvertToUnicode() {		
 		String msg = 'ไทย'
@@ -44,4 +58,13 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 		assertEquals 1 , consumerService.getConcatinationSize('asdf')		
 		assertEquals 2 , consumerService.getConcatinationSize('Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ')	
 	}
+	
+	private void shouldFailWithCause( Throwable cause, Closure closure ){
+		try {
+		   closure()
+		   fail("An expected exception was not thrown: $cause")
+		}catch( t ){
+		   assert t.class == cause.class
+		}
+	 }
 }

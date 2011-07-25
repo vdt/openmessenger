@@ -25,7 +25,7 @@ class OpenMessengerIntegrationTests extends GroovyTestCase {
         assertNotNull event.id		
 		
 		
-		// create Subscribers and add to event
+		// create Subscribers and add to event 66897753337 66896959009 66800892412
 		List subscribers = [	new Subscriber(msisdn: '66890242989', active: 'Y'),
 			new Subscriber(msisdn: '66800892412', active: 'Y')]
 		event.subscribers = subscribers
@@ -35,14 +35,13 @@ class OpenMessengerIntegrationTests extends GroovyTestCase {
 	
 		
 		// create Messege and send to rabbitMq
-		def message = new Message(title:"new messege", content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', createdDate:new Date())
+		def message = new Message(title:"new messege", content:'ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', createdDate:new Date())
 		
 		eventService.sendMessage(event.id, message)
 		
-		assertEquals 1, event.messages.size()
+		assertEquals 1, event.messages.size()	
 		
-		
-		// waiting for consumerService process (60sec)
-		Thread.sleep 240000
-	}
+		// waiting for consumerService process (5sec)
+		Thread.sleep 5000
+	}	
 }

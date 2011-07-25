@@ -8,6 +8,7 @@ import groovyx.net.http.Method.*
 import org.apache.commons.lang.CharUtils
 import org.apache.commons.lang.StringUtils;
 
+
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 
 class ConsumerService {
@@ -16,12 +17,12 @@ class ConsumerService {
 	static rabbitQueue = 'openmessenger'
 	def sessionId
 
-    def handleMessage(String msg) {
+    void handleMessage(String msg) {
 		println "Received String Message: ${msg}"
     }
 	
-	def handleMessage(Map map){
-		try{
+	void handleMessage(Map map) {
+		//try{
 			/*if(!sessionId) {
 			def clickatell = withHttp(uri: "http://api.clickatell.com") {
 				def html = get(path : '/http/auth', query : [api_id:'3312346',user:'opendream',password:'Tdb5vzt6zuMAhG'])
@@ -37,16 +38,35 @@ class ConsumerService {
 			println sessionId
 			}*/
 			
-			def result = withHttp(uri:CH.config.sms.gateway.uri) {
-				def html = get(path :CH.config.sms.gateway.path, 
-								query : [api_id:CH.config.sms.gateway.apiId, user:CH.config.sms.gateway.user, 
+			
+			/*def http = new HTTPBuilder(CH.config.sms.gateway.uri)			
+			def html = http.get( path : CH.config.sms.gateway.path, query : [api_id:CH.config.sms.gateway.apiId, user:CH.config.sms.gateway.user, 
 										password:CH.config.sms.gateway.password, to:map.msisdn, 
-										text:convertToUnicode(map.content), unicode:1, concat:getConcatinationSize(map.content)])
-			}					
-			result			
-		}catch(Exception e){
-			println e
-		}		
+										text:convertToUnicode(map.content), unicode:1, 
+										from:CH.config.sms.gateway.senderId, 
+										concat:getConcatinationSize(map.content)] )
+			return println(html)*/			 
+		try{	
+			sendMessage(map)	
+		}catch (Exception e) {
+			log.error(e.toString(),e)
+			//throw e
+		}
+			println 'sent!'
+						
+		
+	}
+	
+	def sendMessage(Map map){
+		def result = withHttp(uri:CH.config.sms.gateway.uri) {
+			def html = get(path :CH.config.sms.gateway.path,
+								query : [api_id:CH.config.sms.gateway.apiId, user:CH.config.sms.gateway.user,
+										password:CH.config.sms.gateway.password, to:map.msisdn,
+										text:convertToUnicode(map.content), from:CH.config.sms.gateway.senderId, unicode:1, concat:getConcatinationSize(map.content)])
+			}
+		
+		if(!result.toString().contains('ID:'))
+			throw new ConsumerServiceException(result.toString(), CH.config.sms.gateway.senderId, map.msisdn)		
 	}
 	
 	def convertToUnicode(String msg){
@@ -58,6 +78,6 @@ class ConsumerService {
 	}
 	
 	def getConcatinationSize(String msg){
-		msg.size().div(70).plus(msg.size()%70?1:0).intValue()		
+		msg.size().div(70).plus(msg.size()%70?1:0).intValue()			
 	}
 }
