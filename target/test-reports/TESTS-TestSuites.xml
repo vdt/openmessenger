@@ -1,26 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="0" name="EventControllerTests" package="openmessenger" tests="6" time="2.386" timestamp="2011-07-21T10:57:23">
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="0" name="ConsumerServiceTests" package="openmessenger" tests="3" time="0.403" timestamp="2011-07-25T09:10:31">
       <properties />
 
-      <testcase classname="openmessenger.EventControllerTests" name="testListAllEvents" time="1.75" />
+      <testcase classname="openmessenger.ConsumerServiceTests" name="testHandleMessage" time="0.27" />
 
-      <testcase classname="openmessenger.EventControllerTests" name="testViewEvent" time="0.084" />
+      <testcase classname="openmessenger.ConsumerServiceTests" name="testConvertToUnicode" time="0.098" />
 
-      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvent" time="0.292" />
+      <testcase classname="openmessenger.ConsumerServiceTests" name="testGetConcatinationSize" time="0.01" />
 
-      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvilEventRedirect" time="0.045" />
+      <system-out><![CDATA[--Output from testHandleMessage--
+--Output from testConvertToUnicode--
+--Output from testGetConcatinationSize--
+]]></system-out>
 
-      <testcase classname="openmessenger.EventControllerTests" name="testSubscribeToEvent" time="0.164" />
+      <system-err><![CDATA[--Output from testHandleMessage--
+--Output from testConvertToUnicode--
+--Output from testGetConcatinationSize--
+]]></system-err>
 
-      <testcase classname="openmessenger.EventControllerTests" name="testSendMessage" time="0.015" />
+  </testsuite>
+  <testsuite errors="1" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="1" name="EventControllerTests" package="openmessenger" tests="6" time="2.362" timestamp="2011-07-25T09:10:31">
+      <properties />
+
+      <testcase classname="openmessenger.EventControllerTests" name="testListAllEvents" time="1.63" />
+
+      <testcase classname="openmessenger.EventControllerTests" name="testViewEvent" time="0.035">
+          <error message="Cannot invoke method findEventById() on null object" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke method findEventById() on null object
+	at openmessenger.EventController$_closure1.doCall(EventController.groovy:9)
+	at openmessenger.EventController$_closure1.doCall(EventController.groovy)
+	at openmessenger.EventControllerTests.testViewEvent(EventControllerTests.groovy:49)
+</error>
+
+      </testcase>
+
+      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvent" time="0.157" />
+
+      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvilEventRedirect" time="0.04" />
+
+      <testcase classname="openmessenger.EventControllerTests" name="testSubscribeToEvent" time="0.335" />
+
+      <testcase classname="openmessenger.EventControllerTests" name="testSendMessage" time="0.086" />
 
       <system-out><![CDATA[--Output from testListAllEvents--
 --Output from testViewEvent--
+1
 --Output from testSaveEvent--
 --Output from testSaveEvilEventRedirect--
 --Output from testSubscribeToEvent--
 --Output from testSendMessage--
+sendMessage from EventController:2:test message
 ]]></system-out>
 
       <system-err><![CDATA[--Output from testListAllEvents--
@@ -29,6 +58,133 @@
 --Output from testSaveEvilEventRedirect--
 --Output from testSubscribeToEvent--
 --Output from testSendMessage--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="2" name="EventServiceTests" package="openmessenger" tests="7" time="0.378" timestamp="2011-07-25T09:10:33">
+      <properties />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testSendMessage" time="0.119" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testFindByNameLikeKeyword" time="0.044" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testFindByStatus" time="0.018" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testSubscriberToEvent" time="0.029" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testUnsubscriberFromEvent" time="0.089" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testShowEvent" time="0.042" />
+
+      <testcase classname="openmessenger.EventServiceTests" name="testPostMessageToEventSubscriber" time="0.027" />
+
+      <system-out><![CDATA[--Output from testSendMessage--
+sendMessage EventService:1
+The Championships, Wimbledon
+--Output from testFindByNameLikeKeyword--
+--Output from testFindByStatus--
+--Output from testSubscriberToEvent--
+--Output from testUnsubscriberFromEvent--
+--Output from testShowEvent--
+--Output from testPostMessageToEventSubscriber--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSendMessage--
+--Output from testFindByNameLikeKeyword--
+--Output from testFindByStatus--
+--Output from testSubscriberToEvent--
+--Output from testUnsubscriberFromEvent--
+--Output from testShowEvent--
+--Output from testPostMessageToEventSubscriber--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="3" name="EventTests" package="openmessenger" tests="3" time="0.119" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.EventTests" name="testValidate" time="0.059" />
+
+      <testcase classname="openmessenger.EventTests" name="testMockGorm" time="0.023" />
+
+      <testcase classname="openmessenger.EventTests" name="testAddMessageToEvent" time="0.014" />
+
+      <system-out><![CDATA[--Output from testValidate--
+--Output from testMockGorm--
+--Output from testAddMessageToEvent--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testValidate--
+--Output from testMockGorm--
+--Output from testAddMessageToEvent--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="1" hostname="twin-panichsombats-macbook-pro.local" id="4" name="MessageTests" package="openmessenger" tests="1" time="0.039" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.MessageTests" name="testMessageConstraints" time="0.034">
+          <failure message="junit.framework.AssertionFailedError: null" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: junit.framework.AssertionFailedError: null
+	at openmessenger.MessageTests.testMessageConstraints(MessageTests.groovy:21)
+</failure>
+
+      </testcase>
+
+      <system-out><![CDATA[--Output from testMessageConstraints--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testMessageConstraints--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="5" name="SubscriberControllerTests" package="openmessenger" tests="1" time="0.047" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.SubscriberControllerTests" name="testListAllSubscribers" time="0.04" />
+
+      <system-out><![CDATA[--Output from testListAllSubscribers--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testListAllSubscribers--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="6" name="SubscriberTests" package="openmessenger" tests="1" time="0.051" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.SubscriberTests" name="testValidattion" time="0.045" />
+
+      <system-out><![CDATA[--Output from testValidattion--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testValidattion--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="7" name="UserControllerTests" package="openmessenger" tests="2" time="0.083" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.UserControllerTests" name="testAuthentication" time="0.065" />
+
+      <testcase classname="openmessenger.UserControllerTests" name="testLogout" time="0.012" />
+
+      <system-out><![CDATA[--Output from testAuthentication--
+--Output from testLogout--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testAuthentication--
+--Output from testLogout--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="twin-panichsombats-macbook-pro.local" id="8" name="UserTests" package="openmessenger" tests="1" time="0.03" timestamp="2011-07-25T09:10:34">
+      <properties />
+
+      <testcase classname="openmessenger.UserTests" name="testUserConstraints" time="0.028" />
+
+      <system-out><![CDATA[--Output from testUserConstraints--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testUserConstraints--
 ]]></system-err>
 
   </testsuite>
