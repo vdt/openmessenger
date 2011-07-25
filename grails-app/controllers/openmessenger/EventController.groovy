@@ -4,10 +4,11 @@ class EventController {
     
     def eventService
     
-	def view = {
-		def targetEvent = Event.get(params.id)
-		render(view: "view", model:[event: targetEvent])
-	}
+    def view = {
+        println params.id
+        def targetEvent = eventService.findEventById(Long.valueOf(params.id))
+        render(view: "view", model:[event: targetEvent])
+    }
 
     def listAllEvents = { 
         def events = Event.list()
@@ -29,15 +30,18 @@ class EventController {
         
         eventService.subscribeToEvent(eventId, msisdn)
         
-        redirect(action: "show", id: eventId)
+        redirect(action: "view", id: eventId)
     }
 
-	def sendMessage = {
-		def eventId = params.eventId
-		def message = params.message
+    def sendMessage = {
+        println "sendMessage from EventController:" +params.eventId+":"+params.message
+        
+        def eventId = params.eventId
+        def content = params.message
+        def message = new Message(title:"news from openmessenger", content: content, createdDate: new Date())
+        eventService.sendMessage(Long.valueOf(eventId), message)
 
-		eventService.sendMessage(eventId, message)
-
-		redirect(action: "show", id: eventId)
-	}
+        redirect(action: "view", id: eventId)
+    }
 }
+

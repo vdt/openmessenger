@@ -33,7 +33,7 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "listAllEvents", controller.renderArgs.view
     }
 
-	void testViewEvent(){
+    void testViewEvent(){
         def firstEvent = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
@@ -45,10 +45,10 @@ class EventControllerTests extends ControllerUnitTestCase {
             status: 'NORMAL')
 			
         mockDomain(Event, [firstEvent, secondEvent])
-		controller.params.id = "1"
-		controller.view()
+        controller.params.id = "1"
+        controller.view()
         assertEquals "view", controller.renderArgs.view		
-	}
+    }
     
     void testSaveEvent(){
         def eventSaved = []
@@ -73,9 +73,7 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "create", controller.renderArgs.view
     }   
 
-    void testSubscribeToEvent(){
-        //mockLogging(eventService)
-        
+    void testSubscribeToEvent(){     
         def eventControl = mockFor(EventService) 
         eventControl.demand.subscribeToEvent(1..1) {->true}
         controller.params.eventId = "2"
@@ -84,21 +82,21 @@ class EventControllerTests extends ControllerUnitTestCase {
         
         controller.subscribeToEvent()
         
-        assertEquals "show", controller.redirectArgs["action"]  
+        assertEquals "view", controller.redirectArgs["action"]  
         eventControl.verify()
     }
 
-	void testSendMessage(){
-        def eventService = mockFor(EventService) 
+    void testSendMessage(){
+        def eventService = mockFor(EventService)
         eventService.demand.sendMessage(1..1) {->true}
         controller.params.eventId = "2"
-		controller.params.message = "test message"
-		
-		this.controller.eventService = eventService.createMock()
+        controller.params.message = "test message"
 
-		controller.sendMessage()
+        this.controller.eventService = eventService.createMock()
 
-		assertEquals "show", controller.redirectArgs["action"]  
+        controller.sendMessage()
+
+        assertEquals "view", controller.redirectArgs["action"]
         eventService.verify()
-	}
+    }
 }
