@@ -22,39 +22,18 @@ class ConsumerService {
     }
 	
 	void handleMessage(Map map) {
-		//try{
+		
 			/*if(!sessionId) {
 			def clickatell = withHttp(uri: "http://api.clickatell.com") {
 				def html = get(path : '/http/auth', query : [api_id:'3312346',user:'opendream',password:'Tdb5vzt6zuMAhG'])
-			}
-			println "class ${clickatell.getClass()}"
-			println clickatell
-			println clickatell.name
-			println clickatell.namespacePrefix
-			println clickatell.size()
-			clickatell.childNodes().each { println "${it.name()} ${it.text()}" }
-			println clickatell.toString()
-			sessionId = clickatell.getAt('OK')
-			println sessionId
-			}*/
-			
-			
-			/*def http = new HTTPBuilder(CH.config.sms.gateway.uri)			
-			def html = http.get( path : CH.config.sms.gateway.path, query : [api_id:CH.config.sms.gateway.apiId, user:CH.config.sms.gateway.user, 
-										password:CH.config.sms.gateway.password, to:map.msisdn, 
-										text:convertToUnicode(map.content), unicode:1, 
-										from:CH.config.sms.gateway.senderId, 
-										concat:getConcatinationSize(map.content)] )
-			return println(html)*/			 
+			}*/		
+				 
 		try{	
 			sendMessage(map)	
 		}catch (Exception e) {
 			log.error(e.toString(),e)
 			//throw e
-		}
-			println 'sent!'
-						
-		
+		}		
 	}
 	
 	def sendMessage(Map map){
@@ -66,7 +45,8 @@ class ConsumerService {
 			}
 		
 		if(!result.toString().contains('ID:'))
-			throw new ConsumerServiceException(result.toString(), CH.config.sms.gateway.senderId, map.msisdn)		
+			throw new ConsumerServiceException(result.toString(), CH.config.sms.gateway.senderId, map.msisdn)	
+		return result	
 	}
 	
 	def convertToUnicode(String msg){
