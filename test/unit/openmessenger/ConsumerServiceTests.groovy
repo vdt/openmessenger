@@ -43,7 +43,7 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 		def arg = [uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude']
 		consumerService.metaClass.withHttp = {Map map, Closure closure -> 'ERR: 123 Invalid Sender ID'}
 		shouldFailWithCause(new ConsumerServiceException()){
-		//shouldFailWithCause(ConsumerServiceException) {  
+		//shouldFail(ConsumerServiceException) {  
 			consumerService.sendMessage(arg)
 		}
 	}
