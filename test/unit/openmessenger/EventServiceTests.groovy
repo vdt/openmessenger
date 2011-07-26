@@ -80,9 +80,40 @@ class EventServiceTests extends GrailsUnitTestCase {
         
         def targetEvent  = Event.get(1)
         assertEquals 1, targetEvent.subscribers.size()
-    }                      
+    }        
 
-  void testUnsubscriberFromEvent(){
+    void testListEventSubscribers(){
+         def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status: 'NORMAL')  
+         def moreEventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status: 'NORMAL')
+
+        def newSubscriberA = new Subscriber(msisdn: '66809737798', active: 'Y')  
+        def newSubscriberB = new Subscriber(msisdn: '66809737799', active: 'Y')  
+        def newSubscriberC = new Subscriber(msisdn: '66809737790', active: 'Y')  
+ 	                      
+        mockDomain(Event, [eventInstance, moreEventInstance])     
+     
+		eventInstance.addToSubscribers(newSubscriberA)
+		eventInstance.addToSubscribers(newSubscriberB)
+		eventInstance.addToSubscribers(newSubscriberC)
+
+		moreEventInstance.addToSubscribers(newSubscriberA)
+		moreEventInstance.addToSubscribers(newSubscriberB)
+		moreEventInstance.addToSubscribers(newSubscriberC)   
+		
+		assertNotNull eventInstance.id
+		def event = Event.get(eventInstance.id)
+		assertEquals 3, event.subscribers.size()
+		
+				
+	}          
+
+  	void testUnsubscriberFromEvent(){
         def eventInstance = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),

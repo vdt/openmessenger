@@ -5,7 +5,6 @@ class EventController {
     def eventService
     
     def view = {
-        println params.id
         def targetEvent = eventService.findEventById(Long.valueOf(params.id))
         render(view: "view", model:[event: targetEvent])
     }
@@ -13,7 +12,12 @@ class EventController {
     def listAllEvents = { 
         def events = Event.list()
         render(view:"listAllEvents",model:[events: events])
-    }
+    }       
+
+	def listEventSubscribers = {
+	    def targetEvent = eventService.findEventById(Long.valueOf(params.id))
+        render(view: "listEventSubscribers", model:[event: targetEvent]) 
+	}
 
     def save = {
         def eventInstance = new Event(params)

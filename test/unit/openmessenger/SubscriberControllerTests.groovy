@@ -18,5 +18,6 @@ class SubscriberControllerTests extends ControllerUnitTestCase {
         
         controller.listAllSubscribers()
         assertEquals "listAllSubscribers", controller.renderArgs.template
-    }
+    }    
+
 }

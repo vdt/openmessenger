@@ -19,18 +19,15 @@
         </form-->
 
         <form id="send-message" method="post" action="../sendMessage">
-          <g:hiddenField name="eventId" value="${event?.id}" />
-          <div id="message-input"><textarea id="edit-message" class="" name="message" rows="3" cols="60"></textarea></div>
-          <input id="submit-button" type="submit" value="Send Message">
         </form>
 
         <div id="news-wrapper">
           <div class="news-items">
-            <g:each in="${event.messages}" var="message">
+            <g:each in="${event.subscribers}" var="subscriber">
               <div class="rows row-1">
                 <div class="news-writer">-</div>					
-                <div class="news-title">${message.content}</div>
-                <div class="news-date">${message.createdDate}</div>
+                <div class="news-title">${subscriber.msisdn}</div>
+                <div class="news-date">${subscriber.active}</div>
               </div>
             </g:each>
           </div>
@@ -61,9 +58,6 @@
 
             <h3> ${event.subscribers.size()} people subscribe to this event</h3>
             <ol>
-              <g:each in="${event.subscribers}" var="subscriber">		
-                <li>${subscriber.msisdn}</li>
-              </g:each>	
             </ol>
           </div>
         </div>
