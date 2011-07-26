@@ -60,7 +60,7 @@ class EventTests extends GrailsUnitTestCase {
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
             status: 'NORMAL')
 
-   	   	def firstMessageเระ  = new Message (title:"the final", content:"Nadal wes defeated by Novak, 1-3")  
+   	   	def firstMessage  = new Message (title:"the final", content:"Nadal wes defeated by Novak, 1-3")  
 
 		mockDomain(Event, [newEvent])
 		newEvent.save()
