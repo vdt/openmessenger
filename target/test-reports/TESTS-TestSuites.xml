@@ -1,39 +1,127 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="0" name="EventControllerTests" package="openmessenger" tests="7" time="3.763" timestamp="2011-07-26T08:06:43">
+  <testsuite errors="1" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="0" name="ConsumerIntegrationTests" package="openmessenger" tests="1" time="3.242" timestamp="2011-07-26T08:33:33">
       <properties />
 
-      <testcase classname="openmessenger.EventControllerTests" name="testListAllEvents" time="2.888" />
+      <testcase classname="openmessenger.ConsumerIntegrationTests" name="testSendMessage" time="3.216">
+          <error type="java.lang.reflect.UndeclaredThrowableException">java.lang.reflect.UndeclaredThrowableException
+	at openmessenger.ConsumerService$$EnhancerByCGLIB$$c3611170.sendMessage(&lt;generated&gt;)
+	at openmessenger.ConsumerService$sendMessage.call(Unknown Source)
+	at openmessenger.ConsumerIntegrationTests.testSendMessage(ConsumerIntegrationTests.groovy:22)
+Caused by: ERR: 301, No Credit Left sender_id: Messenger msisdn: 66809737799
+	at openmessenger.ConsumerService.sendMessage(ConsumerService.groovy:48)
+	at openmessenger.ConsumerService$$FastClassByCGLIB$$751505da.invoke(&lt;generated&gt;)
+	at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:149)
+	at openmessenger.ConsumerService$$EnhancerByCGLIB$$c3611170.sendMessage(&lt;generated&gt;)
+	at openmessenger.ConsumerService$sendMessage.call(Unknown Source)
+	at openmessenger.ConsumerIntegrationTests.testSendMessage(ConsumerIntegrationTests.groovy:22)
+	at _GrailsTest_groovy$_run_closure4.doCall(_GrailsTest_groovy:271)
+	at _GrailsTest_groovy$_run_closure4.call(_GrailsTest_groovy)
+	at _GrailsTest_groovy$_run_closure2.doCall(_GrailsTest_groovy:228)
+	at _GrailsTest_groovy$_run_closure1_closure21.doCall(_GrailsTest_groovy:187)
+	at _GrailsTest_groovy$_run_closure1.doCall(_GrailsTest_groovy:174)
+	at TestApp$_run_closure1.doCall(TestApp.groovy:82)
+	at gant.Gant$_dispatch_closure5.doCall(Gant.groovy:381)
+	at gant.Gant$_dispatch_closure7.doCall(Gant.groovy:415)
+	at gant.Gant$_dispatch_closure7.doCall(Gant.groovy)
+	at gant.Gant.withBuildListeners(Gant.groovy:427)
+	at gant.Gant.this$2$withBuildListeners(Gant.groovy)
+	at gant.Gant$this$2$withBuildListeners.callCurrent(Unknown Source)
+	at gant.Gant.dispatch(Gant.groovy:415)
+	at gant.Gant.this$2$dispatch(Gant.groovy)
+	at gant.Gant.invokeMethod(Gant.groovy)
+	at gant.Gant.executeTargets(Gant.groovy:590)
+	at gant.Gant.executeTargets(Gant.groovy:589)
+</error>
 
-      <testcase classname="openmessenger.EventControllerTests" name="testViewEvent" time="0.197" />
+      </testcase>
 
-      <testcase classname="openmessenger.EventControllerTests" name="testListEventSubscriber" time="0.062" />
-
-      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvent" time="0.385" />
-
-      <testcase classname="openmessenger.EventControllerTests" name="testSaveEvilEventRedirect" time="0.021" />
-
-      <testcase classname="openmessenger.EventControllerTests" name="testSubscribeToEvent" time="0.104" />
-
-      <testcase classname="openmessenger.EventControllerTests" name="testSendMessage" time="0.059" />
-
-      <system-out><![CDATA[--Output from testListAllEvents--
---Output from testViewEvent--
---Output from testListEventSubscriber--
---Output from testSaveEvent--
---Output from testSaveEvilEventRedirect--
---Output from testSubscribeToEvent--
---Output from testSendMessage--
-sendMessage from EventController:2:test message
+      <system-out><![CDATA[--Output from testSendMessage--
 ]]></system-out>
 
-      <system-err><![CDATA[--Output from testListAllEvents--
---Output from testViewEvent--
---Output from testListEventSubscriber--
---Output from testSaveEvent--
---Output from testSaveEvilEventRedirect--
---Output from testSubscribeToEvent--
---Output from testSendMessage--
+      <system-err><![CDATA[--Output from testSendMessage--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="1" name="EventControllerIntegrationTests" package="openmessenger" tests="1" time="0.031" timestamp="2011-07-26T08:33:36">
+      <properties />
+
+      <testcase classname="openmessenger.EventControllerIntegrationTests" name="testSubscribeToEvent" time="0.021" />
+
+      <system-out><![CDATA[--Output from testSubscribeToEvent--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSubscribeToEvent--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="2" name="EventIntegrationTests" package="openmessenger" tests="5" time="0.174" timestamp="2011-07-26T08:33:36">
+      <properties />
+
+      <testcase classname="openmessenger.EventIntegrationTests" name="testSave" time="0.045" />
+
+      <testcase classname="openmessenger.EventIntegrationTests" name="testEvilSave" time="0.015" />
+
+      <testcase classname="openmessenger.EventIntegrationTests" name="testAddToSubscribers" time="0.041" />
+
+      <testcase classname="openmessenger.EventIntegrationTests" name="testUnsubscribeFromEvent" time="0.0070" />
+
+      <testcase classname="openmessenger.EventIntegrationTests" name="testGetAllSubscribers" time="0.056" />
+
+      <system-out><![CDATA[--Output from testSave--
+--Output from testEvilSave--
+--Output from testAddToSubscribers--
+--Output from testUnsubscribeFromEvent--
+--Output from testGetAllSubscribers--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSave--
+--Output from testEvilSave--
+--Output from testAddToSubscribers--
+--Output from testUnsubscribeFromEvent--
+--Output from testGetAllSubscribers--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="3" name="OpenMessengerIntegrationTests" package="openmessenger" tests="1" time="5.493" timestamp="2011-07-26T08:33:36">
+      <properties />
+
+      <testcase classname="openmessenger.OpenMessengerIntegrationTests" name="testSentMessegeToRabbitMqPullQueueAndSendSms" time="5.476" />
+
+      <system-out><![CDATA[--Output from testSentMessegeToRabbitMqPullQueueAndSendSms--
+sendMessage EventService:6
+The Championships
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSentMessegeToRabbitMqPullQueueAndSendSms--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="Twin-Panichsombats-MacBook.local" id="4" name="SubscriberIntegrationTests" package="openmessenger" tests="5" time="0.151" timestamp="2011-07-26T08:33:41">
+      <properties />
+
+      <testcase classname="openmessenger.SubscriberIntegrationTests" name="testFirstSave" time="0.036" />
+
+      <testcase classname="openmessenger.SubscriberIntegrationTests" name="testSaveAndUpdate" time="0.018" />
+
+      <testcase classname="openmessenger.SubscriberIntegrationTests" name="testSaveAndDelete" time="0.043" />
+
+      <testcase classname="openmessenger.SubscriberIntegrationTests" name="testEvilSaveErrors" time="0.033" />
+
+      <testcase classname="openmessenger.SubscriberIntegrationTests" name="testEvilSaveCorrect" time="0.016" />
+
+      <system-out><![CDATA[--Output from testFirstSave--
+--Output from testSaveAndUpdate--
+--Output from testSaveAndDelete--
+--Output from testEvilSaveErrors--
+--Output from testEvilSaveCorrect--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testFirstSave--
+--Output from testSaveAndUpdate--
+--Output from testSaveAndDelete--
+--Output from testEvilSaveErrors--
+--Output from testEvilSaveCorrect--
 ]]></system-err>
 
   </testsuite>
