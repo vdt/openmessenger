@@ -76,8 +76,8 @@ environments {
 		}
 		
 		// sms gateway configuration
-		sms.gateway.uri='http://api.clickatell.com'
-		sms.gateway.path='/http/sendmsg'
+		sms.gateway.uri='http://10.0.1.33:8090'//'http://api.clickatell.com'
+		sms.gateway.path='/clickatell-mocker/http/sendmsg'
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'

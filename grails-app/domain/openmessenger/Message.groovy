@@ -11,5 +11,5 @@ class Message {
         createdDate(nullable: false)
     }
     
-     static belongsTo = [event:Event]
+    static belongsTo = [event:Event]
 }

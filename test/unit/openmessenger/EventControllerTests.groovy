@@ -33,7 +33,11 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "listAllEvents", controller.renderArgs.view
     }
 
-    void testViewEvent(){
+    void testViewEvent(){      
+		def eventControl = mockFor(EventService)          
+		eventControl.demand.findEventById(1..1) {->true}   
+		this.controller.eventService = eventControl.createMock() 
+		
         def firstEvent = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
@@ -45,9 +49,13 @@ class EventControllerTests extends ControllerUnitTestCase {
             status: 'NORMAL')
 			
         mockDomain(Event, [firstEvent, secondEvent])
+		controller.eventService = eventControl.createMock() 
+
         controller.params.id = "1"
         controller.view()
-        assertEquals "view", controller.renderArgs.view		
+        assertEquals "view", controller.renderArgs.view	  
+
+        eventControl.verify()    
     }
     
     void testSaveEvent(){
