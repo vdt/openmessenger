@@ -45,7 +45,7 @@ class ConsumerService {
 			}
 		
 		if(!result.toString().contains('ID:'))
-			throw new ConsumerServiceException(result.toString(), CH.config.sms.gateway.senderId, map.msisdn)	
+			throw new ConsumerServiceException(errorMsg:result.toString(), senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn)	
 		return result	
 	}
 	

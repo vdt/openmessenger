@@ -42,8 +42,7 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 	void testConsumerServiceException() {
 		def arg = [uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude']
 		consumerService.metaClass.withHttp = {Map map, Closure closure -> 'ERR: 123 Invalid Sender ID'}
-		shouldFailWithCause(new ConsumerServiceException()){
-		//shouldFail(ConsumerServiceException) {  
+		shouldFail(ConsumerServiceException) {  
 			consumerService.sendMessage(arg)
 		}
 	}
@@ -57,14 +56,5 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 	void testGetConcatinationSize(){		
 		assertEquals 1 , consumerService.getConcatinationSize('asdf')		
 		assertEquals 2 , consumerService.getConcatinationSize('Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ')	
-	}
-	
-	private void shouldFailWithCause( Throwable cause, Closure closure ){
-		try {
-		   closure()
-		   fail("An expected exception was not thrown: $cause")
-		}catch( t ){
-		   assert t.class == cause.class
-		}
-	 }
+	}	
 }
