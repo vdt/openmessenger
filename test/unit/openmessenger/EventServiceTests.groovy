@@ -1,7 +1,6 @@
 package openmessenger
 import java.text.SimpleDateFormat
 import grails.test.*
-import org.springframework.amqp.rabbit.core.RabbitTemplate
 
 class EventServiceTests extends GrailsUnitTestCase {
     protected void setUp() {
@@ -149,19 +148,17 @@ class EventServiceTests extends GrailsUnitTestCase {
 		mockDomain(Subscriber, [subscribers])  
 		
 		eventInstance.save()        
-		subscribers.each{
+		/*subscribers.each{
 			eventInstance.addToSubscribers(it) 
-	    }         
+	    } */ 
+		
+		eventInstance.subscribers = subscribers
 	
 		def targetEvent = Event.get(eventInstance.id)
 		assertEquals 5, targetEvent.subscribers.size()
 	}
 
 	void testSendMessage(){
-		String message = "send to rabbitMQ"
-		def rabbitTemplate = mockFor(RabbitTemplate)
-		rabbitTemplate.demand.convertAndSend(1..5) {-> true}
-
 		def eventInstance = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
@@ -178,19 +175,19 @@ class EventServiceTests extends GrailsUnitTestCase {
 		mockDomain(Subscriber, [subscribers])
 
 		eventInstance.save()        
-		subscribers.each{
-			eventInstance.addToSubscribers(it) 
-	    } 
+		eventInstance.subscribers = subscribers
+	     
 
 		eventInstance.addToMessages(initMessage)
-
+		
+		def rabbitSent=0		
 		def eventService = new EventService()
-		eventService.rabbitTemplate = rabbitTemplate.createMock()
-		eventService.queueName = "rabbitTemplate"
-
+		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++}
+		def message = new Message(title:"new messege", content:"send to rabbitMQ", createdDate:new Date())
+		
 		eventService.sendMessage(eventInstance.id, message)
-		rabbitTemplate.verify()
-
+		
+		assertEquals 5, rabbitSent
 		assertEquals 2, eventInstance.messages.size()
 	}
 }

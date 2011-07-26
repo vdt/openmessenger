@@ -1,0 +1,305 @@
+body {
+  width: 100%;
+  position: relative;
+  font-family: Helvetica, arial;
+}
+
+#content-wrapper {
+  display: block;
+  width: 920px;
+  padding: 30px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+#login #submit-button {
+  display: block;
+  clear: both;
+  margin: 15px auto 0 auto;
+}
+#tabs #submit-button {
+	margin: 15px 0 0 0;
+}
+#login {
+	overflow: hidden;
+  width: 270px;
+  margin: 0 auto;
+}
+#login label {
+  display: block;
+  margin: 0 10px 0 0;
+  width: 80px;
+  float: left;
+  line-height: 24px;
+}
+#username-input input,
+#password-input input {
+	width: 170px;
+	float: left;
+	margin-bottom: 15px;
+}
+#username-input,
+#password-input {
+  display: block;
+  height: 30px;
+  margin: 10px 0;
+  line-height: 30px;
+}
+#submit-button {
+  width: 60px;
+  cursor: pointer;
+}
+
+#login #submit-button {
+	display: block;
+	clear: both;
+	float: right;
+	margin: 0;
+	border-radius: 5px;
+	background-color: #ccc;
+	padding: 5px;
+	font-size: 0.8em;
+	border: none;
+}
+#submit-button:hover {
+	background-color: #333;
+	color: #FFF;
+}
+a, a:visited, a:link, a:active {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	color: #CCC;
+}
+
+/* --------------------- Login page -----------------------*/
+#page-front #content {
+	width: 400px;
+	height: 220px;
+	padding: 40px;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	border-radius: 20px;
+	box-shadow: 0 0 5px #000;
+}
+/* --------------------- Event List -----------------------*/
+#page-event-list #content-wrapper {
+	margin-top: 40px;
+	border: 1px solid #CCC;
+	border-radius: 20px;
+	box-shadow: 0 0 5px #000;
+}
+#page-event-list h1 {
+	text-align: left;
+	width: 300px;
+	float: left;
+}
+#search{
+	width: 270px;
+	margin: 20px 0;
+	display: block;
+	overflow: hidden;
+	float: right;
+}
+#search label {
+  position: absolute;
+  text-align: -999em;
+  overflow: hidden;
+}
+#search-input {
+	width: 210px;
+	height: 30px;
+	float: left;
+}
+#search-input input {
+	width: 200px;
+	height: 20px;
+}
+#search #submit-button {
+	display: block;
+	/*margin: 15px 0 0 0;*/
+	border-radius: 5px;
+	background-color: #CCC;
+	padding: 5px;
+	font-size: 0.8em;
+	border: none;
+	float: right;
+}
+table.event-container {
+	width: 920px;
+	clear: both;
+}
+table.event-container thead tr th.event-title,
+table.event-container tbody tr td.event-title {
+	text-align: left;
+	padding-left: 10px;
+}
+table.event-container tr {
+	width: 920px;
+	height: 50px;
+	display: block;
+	overflow: hidden;
+	border-bottom: 1px solid #666666;
+}
+table.event-container tr.even {
+	background-color: #F2F2F2;
+}
+table.event-container tr.hover {
+	background-color: #CCC;
+}
+table.event-container tr td {
+	text-align: center;
+}
+
+table.event-container tr .event-news,
+table.event-container tr .event-subscriber,
+table.event-container tr .event-update {
+	width: 120px;
+}
+.event-title {
+	width: 500px;
+}
+table thead tr th {
+	height: 50px;
+}
+table thead tr th,
+table tbody tr td {
+	height: 49px;
+	line-height: 49px;
+	display: block;
+	float: left;
+}
+
+.pager-wrapper {
+	text-align: center;
+}
+ul.pager {
+	overflow: hidden;
+	text-align: center;
+	float: right;
+	padding: 0;
+	margin: 20px 0 10px 0;
+}
+ul.pager li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+ul.pager li {
+	float: left;
+	margin: 0 5px;
+}
+ul.pager li.dot,
+ul.pager li a,
+ul.pager li.page-number a {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	padding: 5px;
+	display: block;	
+}
+ul.pager li.prev a{
+	width: 65px;
+}
+ul.pager li.current a {
+	background-color: #CCC;
+	border-radius: 5px;
+}
+ul.pager li.current a:hover {
+	color: #FFF;
+}
+
+/* --------------------- News list -----------------------*/
+#page-news-list #content-wrapper {
+	margin-top: 40px;
+	border: 1px solid #CCC;
+	border-radius: 20px;
+	box-shadow: 0 0 5px #000;
+}
+
+#news-list {
+	width: 540px;
+	overflow: hidden;
+	float: left;
+}
+
+#page-news-list h1 {
+	text-align: left;
+	width: 250px;
+	float: left;
+}
+#news-list .news-items {
+	margin-top: 20px;
+}
+#news-list .news-items .rows {
+	display: block;
+	width: 520px;
+	padding: 10px 10px;
+	border-bottom: 1px solid #CCC;
+}
+#news-list .news-items .rows:hover {
+	background-color: #f2f2f2;
+}
+#news-list .news-items .rows .news-writer,
+#news-list .news-items .rows .news-title,
+#news-list .news-items .rows .news-date {
+	margin-bottom: 8px;
+}
+
+#news-list .news-items .rows .news-writer,
+#news-list .news-items .rows .news-date {
+	color: #666666;
+}
+#send-message {
+	width: 540px;
+	overflow: hidden;
+	display: block;
+}
+
+#send-message #edit-message {
+	width: 528px;
+	line-height: 20px;
+	padding: 10px 0 0 10px;
+	
+	margin-bottom: 20px;
+}
+#send-message #submit-button {
+	width: 135px;
+	display: block;
+	/*margin: 15px 0 0 0;*/
+	border-radius: 5px;
+	background-color: #CCC;
+	padding: 10px;
+	font-size: 1em;
+	border: none;
+	float: right;
+}
+
+
+/* --------------------- Event Details -----------------------*/
+#event-detail {
+	width: 280px;
+	margin: 0 30px;
+	padding: 20px;
+	overflow: hidden;
+	float: left;
+	background-color: #CCC;
+	border-radius: 10px;
+}
+#event-detail h2 {
+	margin-top: 0;
+	width: 280px;
+}
+
+.event-subscriber-list ol {
+	padding: 0 0 0 30px;
+}
+.event-description,
+.event-news-count {
+	margin-bottom: 20px;
+}

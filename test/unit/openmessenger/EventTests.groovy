@@ -62,6 +62,7 @@ class EventTests extends GrailsUnitTestCase {
 
    	   	def firstMessage  = new Message (title:"the final", content:"Nadal wes defeated by Novak, 1-3")  
 
+
 		mockDomain(Event, [newEvent])
 		newEvent.save()
 		

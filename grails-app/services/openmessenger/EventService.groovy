@@ -1,18 +1,15 @@
 package openmessenger
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 class EventService {
 
     static transactional = true
-	def rabbitTemplate
-	def queueName
+    def queueName = 'openmessenger'
 
     def findEventById(Long eventId){
-		Event.get(eventId)
-	}
+        Event.get(eventId)
+    }
 
-	def findAllEventByNameLikeKeyword(String keyword) {
+    def findAllEventByNameLikeKeyword(String keyword) {
         Event.findAllByNameLike('%'+keyword+'%')
     }
     
@@ -28,21 +25,23 @@ class EventService {
         event.save()
     }         
 
-	def unsubscribeFromEvent(Long eventId, String msisdn){
+    def unsubscribeFromEvent(Long eventId, String msisdn){
     	def event = Event.get(eventId) 	
-		def targetSubscriber = event.subscribers.find{it.msisdn=msisdn}
-		event.removeFromSubscribers(targetSubscriber)
-		event.save()
-	}
+        def targetSubscriber = event.subscribers.find{it.msisdn=msisdn}
+        event.removeFromSubscribers(targetSubscriber)
+        event.save()
+    }
 
-	def sendMessage(Long eventId, String message){
-		def event = Event.get(eventId) 	
-		event.subscribers.each {
-			def msg = [msisdn:it.msisdn, msg:message, date:new Date()]
-			rabbitTemplate.convertAndSend(queueName, message)
-		}		
-		event.addToMessages(new Message(title:message, content:message, createdDate:new Date()))
-		event.save()
-	}
+    def sendMessage(Long eventId, Message message){
+        println "sendMessage EventService:"+eventId
+        def event = Event.findById(eventId)
+        println event.name
+        event.addToMessages(message)
+        event.subscribers.each {
+            def msg = [msisdn:it.msisdn, content:message.content, date:new Date()]
+            rabbitSend(queueName, msg)
+        }				
+        event.save()
+    }
                                                            
 }
