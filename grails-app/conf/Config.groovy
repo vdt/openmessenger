@@ -54,7 +54,27 @@ grails.exceptionresolver.params.exclude = ['password']
 // set per-environment serverURL stem for creating absolute links
 environments {
     production {
-        grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://messenger.opendream.org"
+		
+		rabbitmq {
+			connectionfactory {
+				username = 'guest'
+				password = 'guest'
+				hostname = 'deftdev.com'
+				consumers = 5
+			}
+			queues = {
+				openmessenger()
+			}
+		}
+		
+		// sms gateway configuration
+		sms.gateway.uri='http://api.clickatell.com'
+		sms.gateway.path='/http/sendmsg'
+		sms.gateway.apiId='3312346'
+		sms.gateway.user='opendream'
+		sms.gateway.password='Tdb5vzt6zuMAhG'
+		sms.gateway.senderId ='OpenMsngr'
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
@@ -78,7 +98,7 @@ environments {
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='Messenger'
+		sms.gateway.senderId ='OpenMsngr'
 	}
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
