@@ -12,7 +12,7 @@
     <div id="content-wrapper">
       <!-- News List -->
       <div id="news-list">
-        <h1>${fieldValue(bean: event, field: "name")}</h1>
+        <h1><g:link action="listAllEvents">Openmessenger</g:link></h1>
         <!--form id="search" method="post" action="">
           <div id="search-input"><input type="text" name="search" value="" size="20" maxlength="20" /></div>
           <input id="submit-button" type="submit" value="Search">
@@ -28,7 +28,7 @@
           <div class="news-items">
             <g:each in="${event.messages}" var="message">
               <div class="rows row-1">
-                <div class="news-writer">-</div>					
+                <div class="news-writer">${message.title}</div>					
                 <div class="news-title">${message.content}</div>
                 <div class="news-date">${message.createdDate}</div>
               </div>
@@ -53,18 +53,19 @@
       <!-- Event Detail -->	
       <div id="event-detail">
         <div id="event-content">
-          <h2 class="event-title">Event</h2>
+          <h2 class="event-title">${fieldValue(bean: event, field: "name")}</h2>
           <div class="event-description">${fieldValue(bean: event, field: "description")}</div>
-          <div class="event-news-count"><strong>Totals:</strong></div>
+          <div class="event-news-count"><strong>Totals: ${event.messages.size()}</strong></div>
           <div class="event-last-update"><strong>Last Update:</strong> 26 july 2011</div>
           <div class="event-subscriber-list">
 
-            <h3> ${event.subscribers.size()} people subscribe to this event</h3>
+            <h3><g:link action="listEventSubscribers" id="${event.id}"> ${event.subscribers.size()} people subscribe to this event</g:link></h3>
             <ol>
               <g:each in="${event.subscribers}" var="subscriber">		
                 <li>${subscriber.msisdn}</li>
               </g:each>	
-            </ol>
+            </ol> 
+
           </div>
         </div>
       </div><!-- End Event Detail -->

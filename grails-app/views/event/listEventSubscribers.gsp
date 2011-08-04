@@ -12,13 +12,18 @@
     <div id="content-wrapper">
       <!-- News List -->
       <div id="news-list">
-        <h1>${fieldValue(bean: event, field: "name")}</h1>
+        <h1>
+	<g:link action="listAllEvents">Openmessenger</g:link>/
+	<g:link action="view" id="${event.id}">${fieldValue(bean: event, field: "name")}</g:link></h1>
         <!--form id="search" method="post" action="">
           <div id="search-input"><input type="text" name="search" value="" size="20" maxlength="20" /></div>
           <input id="submit-button" type="submit" value="Search">
         </form-->
 
-        <form id="send-message" method="post" action="../sendMessage">
+        <form id="send-message" method="post" action="../subscribeToEvent">  
+	      <g:hiddenField name="eventId" value="${event?.id}" />
+          <div id="message-input"><textarea id="edit-message" class="" name="msisdn" rows="3" cols="60"></textarea></div>
+          <input id="submit-button" type="submit" value="Add Subscriber">
         </form>
 
         <div id="news-wrapper">
@@ -27,7 +32,10 @@
               <div class="rows row-1">
                 <div class="news-writer">-</div>					
                 <div class="news-title">${subscriber.msisdn}</div>
-                <div class="news-date">${subscriber.active}</div>
+                <div class="news-date">${subscriber.active}</div>   
+				<div class="new-date">
+					<g:link action="unsubscribeFromEvent" id="${event.id}" params="[msisdn:subscriber.msisdn]" >Unscribe</g:link>
+				</div>
               </div>
             </g:each>
           </div>

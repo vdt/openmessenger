@@ -78,7 +78,7 @@ environments {
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='Messenger'
+		sms.gateway.senderId ='OpenMsngr'
 	}
     test {
         grails.serverURL = "http://localhost:8080/${appName}"

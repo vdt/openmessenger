@@ -83,7 +83,13 @@ class EventControllerTests extends ControllerUnitTestCase {
         eventControl.verify()  	
 		
 	}
-    
+               
+    void testCreateEvent(){
+		def eventInstance = controller.create()
+		assertNotNull eventInstance
+	
+	}
+	
     void testSaveEvent(){
         def eventSaved = []
         mockDomain(Event, eventSaved)
@@ -116,7 +122,7 @@ class EventControllerTests extends ControllerUnitTestCase {
         
         controller.subscribeToEvent()
         
-        assertEquals "view", controller.redirectArgs["action"]  
+        assertEquals "listEventSubscribers", controller.redirectArgs["action"]  
         eventControl.verify()
     }
 

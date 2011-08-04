@@ -12,16 +12,24 @@
 <div id="content-wrapper">
 	<h1>Event List</h1>
 	<form id="search" method="post" action="">
-		<div id="search-input"><input type="text" name="search" value="" size="20" maxlength="20" /></div>
-		<input id="submit-button" type="submit" value="Search">
+		<!--div id="search-input"><input type="text" name="search" value="" size="20" maxlength="20" /></div>
+		<input id="submit-button" type="submit" value="Search"-->
 	</form>
 	
-	<table class="event-container">
+	<table class="event-container">        
+		<thead>
+			<tr>
+				<th class="event-title"></th>
+				<th class="event-news"></th>
+				<th class="event-subscriber"></th>
+				<th class="event-update"><g:link action="create">Create New Event</g:link></th>
+			</tr>
+		</thead>
 		<thead>
 			<tr>
 				<th class="event-title">Event</th>
 				<th class="event-news">News</th>
-				<th class="event-subscriber">Subscriber</th>
+				<th class="event-subscriber">Subscribers</th>
 				<th class="event-update">Update</th>
 			</tr>
 		</thead>
@@ -31,7 +39,7 @@
 				<td class="event-title"><g:link action="view" id="${event.id}">${fieldValue(bean: event, field: "id")}</g:link>${event.name}</td>
 				<td class="event-news">${event.messages.size()}</td>
 				<td class="event-subscriber">${event.subscribers.size()}</td>
-				<td class="event-update">${event.occuredDate}</td>
+				<td class="event-update">${event.occuredDate}</td> 
 			</tr>
 		</g:each>	
 		</tbody>

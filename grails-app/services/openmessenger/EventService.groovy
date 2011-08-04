@@ -19,7 +19,8 @@ class EventService {
     
     def subscribeToEvent(Long eventId, String msisdn){
         def event = Event.get(eventId)
-        def subscriber = Subscriber.findByMsisdn(msisdn)
+        def subscriber = Subscriber.findByMsisdn(msisdn)     
+		if(subscriber==null) subscriber = new Subscriber(msisdn: msisdn, active:"Y")
         
         event.addToSubscribers(subscriber)
         event.save()
@@ -27,15 +28,15 @@ class EventService {
 
     def unsubscribeFromEvent(Long eventId, String msisdn){
     	def event = Event.get(eventId) 	
-        def targetSubscriber = event.subscribers.find{it.msisdn=msisdn}
+        def targetSubscriber = event.subscribers.find{it.msisdn==msisdn}      
+		println targetSubscriber.msisdn
         event.removeFromSubscribers(targetSubscriber)
         event.save()
     }
 
     def sendMessage(Long eventId, Message message){
-        println "sendMessage EventService:"+eventId
         def event = Event.findById(eventId)
-        println event.name
+		message.title = "News from "+ event.name
         event.addToMessages(message)
         event.subscribers.each {
             def msg = [msisdn:it.msisdn, content:message.content, date:new Date()]

@@ -7,9 +7,9 @@ class BootStrap {
 
     def init = { servletContext ->
         if (!Event.count()) {
-            def firstEvent = new Event(name: 'The Championships, Wimbledon', 
-                description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
-                occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
+            def firstEvent = new Event(name: 'Soccernet', 
+                description: 'A website that provides comprehensive coverage of world football (soccer)',
+                occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("1995-DEC-25"),
                 subscribers: [	new Subscriber(msisdn: '66809737791', active: 'Y'),
                     new Subscriber(msisdn: '66809737792', active: 'Y'),
                     new Subscriber(msisdn: '66809737793', active: 'Y'),
@@ -17,12 +17,18 @@ class BootStrap {
                     new Subscriber(msisdn: '66809737795', active: 'Y')	],
                 status: 'NORMAL').save(failOnError: true)
             
-            firstEvent.addToMessages(new Message(title:'1', content:'1', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2001-DEC-25")))
-            firstEvent.addToMessages(new Message(title:'2', content:'3', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2002-DEC-25")))    
-            firstEvent.addToMessages(new Message(title:'3', content:'3', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2003-DEC-25")))   
+            firstEvent.addToMessages(new Message(title:'Xavi urges Cesc again', 
+					content:'Barcelona midfielder Xavi has again weighed into the debate over the future of Arsenal skipper Cesc Fabregas, saying he wants to play alongside his Spain team-mate at club level before he retires.', 
+					createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2001-DEC-25")))
+            firstEvent.addToMessages(new Message(title:'Aguero to fly in and seal City deal', 
+					content:'Sergio Aguero is set to fly into Manchester Airport on Wednesday to finalise a transfer that is set to cost Manchester City £38 million. ', 
+					createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2002-DEC-25")))    
+            firstEvent.addToMessages(new Message(title:'Vucinic very close to United', 
+					content:'Roma forward Mirko Vucinic is "very close" to joining Manchester United, according to his agent, as chief exec David Gill suggested that United may yet add more personnel this summer. ', 
+					createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2003-DEC-25")))   
                 
 		
-            
+            /*
             def secondEvent = new Event(name: 'The Australian Open', 
                 description: 'The tournament is held in the middle of the Australian summer, in the last fortnight of the month of January; thus an extreme-heat policy is put into play when temperatures reach dangerous levels.',
                 occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
@@ -36,7 +42,7 @@ class BootStrap {
             secondEvent.addToMessages(new Message(title:'1', content:'1', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2001-DEC-25")))
             secondEvent.addToMessages(new Message(title:'2', content:'3', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2002-DEC-25")))    
             secondEvent.addToMessages(new Message(title:'3', content:'3', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2003-DEC-25")))             
-            
+            */
         }
     }
     def destroy = {
