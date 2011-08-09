@@ -60,7 +60,7 @@ environments {
 			connectionfactory {
 				username = 'guest'
 				password = 'guest'
-				hostname = 'deftdev.com'
+				hostname = 'messenger.opendream.org'
 				consumers = 5
 			}
 			queues = {
@@ -69,6 +69,7 @@ environments {
 		}
 		
 		// sms gateway configuration
+		sms.gateway.suri='https://api.clickatell.com'
 		sms.gateway.uri='http://api.clickatell.com'
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.apiId='3312346'
@@ -84,7 +85,7 @@ environments {
 			connectionfactory {
 				username = 'guest'
 				password = 'guest'
-				hostname = 'deftdev.com'
+				hostname = 'messenger.opendream.org'
 				consumers = 5
 			}
 			queues = {
@@ -93,6 +94,7 @@ environments {
 		}
 		
 		// sms gateway configuration
+		sms.gateway.suri='https://api.clickatell.com'
 		sms.gateway.uri='http://api.clickatell.com'
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.apiId='3312346'
@@ -108,7 +110,7 @@ environments {
 			connectionfactory {
 				username = 'guest'
 				password = 'guest'
-				hostname = 'deftdev.com'
+				hostname = 'messenger.opendream.org'
 				consumers = 5
 			}
 			queues = {
@@ -117,6 +119,7 @@ environments {
 		}
 		
 		// sms gateway configuration
+		sms.gateway.suri='https://api.clickatell.com'
 		sms.gateway.uri='http://10.0.1.33:8090'//http://api.clickatell.com'
 		sms.gateway.path='/clickatell-mocker/http/sendmsg'
 		sms.gateway.apiId='3312346'
@@ -126,29 +129,6 @@ environments {
     }
 
 }
-
-// rabbitMQ Configuration
-rabbitmq {
-	connectionfactory {
-		username = 'guest'
-		password = 'guest'
-		hostname = 'deftdev.com'
-		consumers = 5
-	}
-	queues = {
-		openmessenger()
-	}
-}
-
-// sms gateway configuration
-sms.gateway.uri='http://api.clickatell.com'
-sms.gateway.path='/http/sendmsg'
-sms.gateway.apiId='3312346'
-sms.gateway.user='opendream'
-sms.gateway.password='Tdb5vzt6zuMAhG'
-
-
-
 
 // log4j configuration
 log4j = {
