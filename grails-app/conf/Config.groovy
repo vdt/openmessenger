@@ -130,6 +130,9 @@ environments {
 
 }
 
+// sms gateway configuration
+sms.gateway.inactivity=600000
+
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console
