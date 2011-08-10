@@ -3,37 +3,41 @@
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Login | Open Messenger</title>
+	<title>Create New Even</title>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" href="${resource(dir:'css',file:'style.css')}" />        
 </head>
 
-<body id="page-front">
+<body id="page-login">
 <div id="content-wrapper">
 	<div id="content">
-		<h1>Open Messenger</h1>
+		<h1>Create New Event</h1>
 		<form id="login" method="post" action="save">
-			<div id="username-input">
+			<div id="username-input" class="general-field">
 				<label>name: </label>    
 				 <g:textField name="name" value="${eventInstance?.name}" /> 
 			</div>
-			<div id="password-input">
+			<div id="password-input" class="general-field">
 				<label>description: </label>
 				 <g:textField name="description" value="${eventInstance?.description}" />
 			</div>    
-			<div id="password-input">
+			<div id="status-input" class="general-field">
+				<label>description: </label>
+				 <g:textField name="status" value="${eventInstance?.status}" />
+			</div>
+			<div id="occurred-input" class="general-field date">
 				<label>occurred date: </label>
 				<g:datePicker name="occuredDate" precision="day" value="${eventInstance?.occuredDate}" >
-	          </g:datePicker>
-			</div>
-			<div id="password-input">
-				<label>status: </label>
-				 <g:textField name="status" value="${eventInstance?.status}" />
-			</div>			
-			<input id="submit-button" type="submit" value="Login">
+			  </g:datePicker>
+			</div>						     
+			<input id="submit-button" type="submit" value="Create"> 
 		</form>
 	</div>
 </div>
 </body>
 
 </html>
+
+
+
+

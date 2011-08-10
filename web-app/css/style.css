@@ -2,20 +2,80 @@ body {
   width: 100%;
   position: relative;
   font-family: Helvetica, arial;
+  background-color: #000;
+
 }
 
 #content-wrapper {
   display: block;
   width: 920px;
-  padding: 30px;
+  padding: 30px 30px 100px 30px;
   overflow: hidden;
   margin: 0 auto;
+  background-color: #fff;
+  background: url("../images/RoundedCorners.png") #FFF repeat-x left bottom;
+}
+
+#submit-button:hover {
+	background-color: #333;
+	color: #FFF;
 }
 
 h1 {
   text-align: center;
   margin: 20px 0;
 }
+
+a, a:visited, a:link, a:active {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+/* --------------------- Login page -----------------------*/
+.general-field { 
+	overflow: hidden;
+	clear: both;
+	display: block;
+	height: 65px;
+	margin: 10px 0;
+	line-height: 30px;	
+}
+
+.general-field .date{
+	height: 60px;
+}           
+
+.general-field input {
+	width: 300px;
+	height: 30px;
+	font-size: 1.2em;
+	float: left;
+	margin-left: 2px;
+	margin-bottom: 15px; 
+}
+
+#page-login #content-wrapper {
+	background-color: #000;
+	background-image: none;
+}
+#page-login #content {
+	width: 600px;
+	height: 400px;
+	padding: 40px 40px 60px 40px;
+	margin: 0 auto;
+  	background: url("../images/RoundedCorners.png") #FFF repeat-x left bottom;
+	border-radius: 20px 20px 0 0;
+	box-shadow: 0 0 5px #000;
+}
+#page-login h1 {
+	width: 200px;
+	float: left;
+	text-align: left;
+}
+
 #login #submit-button {
   display: block;
   clear: both;
@@ -25,27 +85,32 @@ h1 {
 	margin: 15px 0 0 0;
 }
 #login {
-	overflow: hidden;
-  width: 270px;
+  overflow: hidden;
+  width: 350px;
   margin: 0 auto;
 }
 #login label {
   display: block;
-  margin: 0 10px 0 0;
-  width: 80px;
-  float: left;
+  margin: 0 10px 0 2px;
+  width: 200px;
+  /*float: left;*/
   line-height: 24px;
+  text-shadow: 1px 1px #ccc;
 }
 #username-input input,
 #password-input input {
-	width: 170px;
+	width: 300px;
+	height: 30px;
+	font-size: 1.2em;
 	float: left;
+	margin-left: 2px;
 	margin-bottom: 15px;
 }
 #username-input,
-#password-input {
+#password-input {  
+  clear: both;
   display: block;
-  height: 30px;
+  height: 65px;
   margin: 10px 0;
   line-height: 30px;
 }
@@ -57,7 +122,7 @@ h1 {
 #login #submit-button {
 	display: block;
 	clear: both;
-	float: right;
+	/*float: right;*/
 	margin: 0;
 	border-radius: 5px;
 	background-color: #ccc;
@@ -65,33 +130,96 @@ h1 {
 	font-size: 0.8em;
 	border: none;
 }
-#submit-button:hover {
-	background-color: #333;
-	color: #FFF;
+
+/* --------------------- Front Page ----------------------- */
+#page-front .content-col {
+	width: 300px;
+	height: 600px;
+	margin-right: 10px;
+	float: left;
+	background-color: #CCC;
 }
-a, a:visited, a:link, a:active {
-	text-decoration: none;
-	color: #000;
+#page-front .col-1 {
+	
 }
-a:hover {
-	color: #CCC;
+#page-front .col-2 {
+	text-align: center;
+}
+#page-front .col-3 {
+	margin: 0;
+}
+/*
+#page-front .content-col .set {
+	width: 300px;
+	overflow: hidden;
+	border-top: 1px solid #FFF;
+	border-bottom: 1px solid #333;
+	display: block;
+	float: left;
+}
+*/
+#page-front .content-col .accordion_content {
+	background-color: #FFF;
+	border-bottom: 1px solid #333;
+	overflow: hidden;
+	float: left;
+	width: 280px;
+	padding: 0 10px;
+	font-size: 0.8em;
 }
 
-/* --------------------- Login page -----------------------*/
-#page-front #content {
-	width: 400px;
-	height: 220px;
-	padding: 40px;
-	margin: 0 auto;
-	border: 1px solid #CCC;
-	border-radius: 20px;
-	box-shadow: 0 0 5px #000;
+#page-front .content-col .accordion_title {
+	float: left;
+	border-bottom: 1px solid #333;
+}
+#page-front .content-col .set.active .accordion_title {
+	background-color: #FFF;
+}
+
+#page-front .col-1 .set1 .accordion_content {display: block;}
+#page-front .content-col .accordion_title h3 {
+	margin: 0;
+	width: 280px;
+	height: 24px;
+	line-height: 24px;
+	padding: 5px 10px;
+	font-size: 1em;
+}
+#page-front .content-col .accordion_title:hover,
+#page-front .content-col .ui-state-active {
+	background-color: #FFF;
+	border: none;
+}
+#page-front .col-3 .set {
+	height: 50px;
+}
+#page-front .col-3 .set .accordion_title {
+	display: block;
+	overflow: hidden;
+}
+
+#page-front .col-3 .accordion_title h3 {
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+}
+#page-front .col-3 .accordion_title p {
+	width: 170px;
+	height: 40px;
+	line-height: 40px;
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 5px 10px 5px 0;
+	font-size: 0.8em;
+	text-align: right;
 }
 /* --------------------- Event List -----------------------*/
 #page-event-list #content-wrapper {
 	margin-top: 40px;
-	border: 1px solid #CCC;
-	border-radius: 20px;
+	/*border: 1px solid #CCC;*/
+	border-radius: 20px 20px 0 0;
 	box-shadow: 0 0 5px #000;
 }
 #page-event-list h1 {
@@ -215,11 +343,12 @@ ul.pager li.current a:hover {
 }
 
 /* --------------------- News list -----------------------*/
-#page-news-list #content-wrapper {
+#page-news-list #content-wrapper,
+#page-front #content-wrapper {
 	margin-top: 40px;
-	border: 1px solid #CCC;
-	border-radius: 20px;
-	box-shadow: 0 0 5px #000;
+	/*border: 1px solid #CCC;*/
+	border-radius: 20px 20px 0 0;
+	/*box-shadow: 0 0 5px #000;*/
 }
 
 #news-list {
@@ -281,7 +410,7 @@ ul.pager li.current a:hover {
 }
 
 
-/* --------------------- Event Details -----------------------*/
+/* --------------------- Event Details ----------------------- */
 #event-detail {
 	width: 280px;
 	margin: 0 30px;
@@ -303,3 +432,4 @@ ul.pager li.current a:hover {
 .event-news-count {
 	margin-bottom: 20px;
 }
+
