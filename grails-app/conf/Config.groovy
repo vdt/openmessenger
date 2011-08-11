@@ -72,6 +72,8 @@ environments {
 		sms.gateway.suri='https://api.clickatell.com'
 		sms.gateway.uri='http://api.clickatell.com'
 		sms.gateway.path='/http/sendmsg'
+		sms.gateway.auth='/http/auth'
+		sms.gateway.ping='/http/ping'
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
@@ -97,6 +99,8 @@ environments {
 		sms.gateway.suri='https://api.clickatell.com'
 		sms.gateway.uri='http://api.clickatell.com'
 		sms.gateway.path='/http/sendmsg'
+		sms.gateway.auth='/http/auth'
+		sms.gateway.ping='/http/ping'
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
@@ -119,19 +123,32 @@ environments {
 		}
 		
 		// sms gateway configuration
-		sms.gateway.suri='https://api.clickatell.com'
-		sms.gateway.uri='http://10.0.1.33:8090'//http://api.clickatell.com'
+		sms.gateway.suri='http://10.0.1.23:8090'
+		sms.gateway.uri='http://10.0.1.23:8090'
 		sms.gateway.path='/clickatell-mocker/http/sendmsg'
+		sms.gateway.auth='/clickatell-mocker/http/auth'
+		sms.gateway.ping='/clickatell-mocker/http/ping'
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
 		sms.gateway.senderId ='OpenMsngr'
+		
+		/** SSL truststore configuration key */
+		//rest.https.truststore.path = 'web-app/certs/truststore.jks'
+		/** SSL keystore configuration key */
+		//rest.https.keystore.path='web-app/certs/keystore.jks'
+		/** SSL keystore password configuration key */
+		//rest.https.keystore.pass='changeme'
+		/** Certificate Hostname Verifier configuration key */
+		rest.https.cert.hostnameVerifier = 'ALLOW_ALL'
+		/** Enforce SSL Socket Factory */
+		//rest.https.sslSocketFactory.enforce = true
     }
 
 }
 
 // sms gateway configuration
-sms.gateway.inactivity=600000
+sms.gateway.inactivity=600000 // 10 mins
 
 // log4j configuration
 log4j = {

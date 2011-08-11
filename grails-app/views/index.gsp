@@ -1,100 +1,86 @@
-<html>
-    <head>
-        <title>Welcome to Grails</title>
-        <meta name="layout" content="main" />
-        <style type="text/css" media="screen">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
-        #nav {
-            margin-top:20px;
-            margin-left:30px;
-            width:228px;
-            float:left;
+<head>
+	<title>Open Messenger</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<!--<link rel="stylesheet" type="text/css" href="lib/jquery_ui/themes/base/jquery.ui.all.css" />-->
+	<script type="text/javascript" src="js/jquery-1.6.2.js"></script>
+	<script type="text/javascript" src="lib/jquery_ui/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="lib/jquery_ui/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="lib/jquery_ui/ui/jquery.ui.accordion.js"></script>
+	<script type="text/javascript" src="js/build.js"></script>
+</head>
 
-        }
-        .homePagePanel * {
-            margin:0px;
-        }
-        .homePagePanel .panelBody ul {
-            list-style-type:none;
-            margin-bottom:10px;
-        }
-        .homePagePanel .panelBody h1 {
-            text-transform:uppercase;
-            font-size:1.1em;
-            margin-bottom:10px;
-        }
-        .homePagePanel .panelBody {
-            background: url(images/leftnav_midstretch.png) repeat-y top;
-            margin:0px;
-            padding:15px;
-        }
-        .homePagePanel .panelBtm {
-            background: url(images/leftnav_btm.png) no-repeat top;
-            height:20px;
-            margin:0px;
-        }
+<body id="page-front">
+<div id="content-wrapper">
+	<div class="content-col col-1">
+		<h1>Open Messenger</h1>
+		<div id="menus" class="accordion">
+			<div id="accordion_title-about" class="accordion_title">
+				<h3><a href="#">About us</a></h3>
+			</div>
+			<div id="accordion_content-about" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>
+			<div id="accordion_title-services" class="accordion_title">
+				<h3><a href="#">Services</a></h3>
+			</div>
+			<div id="accordion_content-services" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+			<div id="accordion_title-clients" class="accordion_title">
+				<h3><a href="#">Clients</a></h3>
+			</div>
+			<div id="accordion_content-clients" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+			<div id="accordion_title-contacts" class="accordion_title">
+				<h3><a href="#">Contacts</a></h3>
+			</div>
+			<div id="accordion_content-contacts" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+		</div>
+	</div>
+	<div class="content-col col-2">
+		<img alt="" title="" src="images/banner.png" />
+	</div>
+	<div class="content-col col-3">
+		<div id="sets" class="accordion">
+			<div id="accordion_title-set1" class="accordion_title">
+				<h3><a href="#">set1</a></h3>
+				<p>Lorem ipsum dolor sit amet.</p>
+			</div>
+			<div id="accordion_content-set1" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>
+			<div id="accordion_title-set2" class="accordion_title">
+				<h3><a href="#">set2</a></h3>
+				<p>Lorem ipsum dolor sit amet.</p>
+			</div>
+			<div id="accordion_content-set2" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+			<div id="accordion_title-set3" class="accordion_title">
+				<h3><a href="#">set3</a></h3>
+				<p>Lorem ipsum dolor sit amet.</p>
+			</div>
+			<div id="accordion_content-set3" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+			<div id="accordion_title-set4" class="accordion_title">
+				<h3><a href="#">set4</a></h3>
+				<p>Lorem ipsum dolor sit amet.</p>
+			</div>
+			<div id="accordion_content-set4" class="accordion_content">
+				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+			</div>		
+		</div>
+	</div>
+</div>
+</body>
 
-        .homePagePanel .panelTop {
-            background: url(images/leftnav_top.png) no-repeat top;
-            height:11px;
-            margin:0px;
-        }
-        h2 {
-            margin-top:15px;
-            margin-bottom:15px;
-            font-size:1.2em;
-        }
-        #pageBody {
-            margin-left:280px;
-            margin-right:20px;
-        }
-        </style>
-    </head>
-    <body>
-        <div id="nav">
-            <div class="homePagePanel">
-                <div class="panelTop"></div>
-                <div class="panelBody">
-                    <h1>Application Status</h1>
-                    <ul>
-                        <li>App version: <g:meta name="app.version"></g:meta></li>
-                        <li>Grails version: <g:meta name="app.grails.version"></g:meta></li>
-                        <li>Groovy version: ${org.codehaus.groovy.runtime.InvokerHelper.getVersion()}</li>
-                        <li>JVM version: ${System.getProperty('java.version')}</li>
-                        <li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-                        <li>Domains: ${grailsApplication.domainClasses.size()}</li>
-                        <li>Services: ${grailsApplication.serviceClasses.size()}</li>
-                        <li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-                    </ul>
-                    <h1>Installed Plugins</h1>
-                    <ul>
-                        <g:set var="pluginManager"
-                               value="${applicationContext.getBean('pluginManager')}"></g:set>
-
-                        <g:each var="plugin" in="${pluginManager.allPlugins}">
-                            <li>${plugin.name} - ${plugin.version}</li>
-                        </g:each>
-
-                    </ul>
-                </div>
-                <div class="panelBtm"></div>
-            </div>
-        </div>
-        <div id="pageBody">
-            <h1>Welcome to Grails</h1>
-            <p>Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display whatever
-            content you may choose. Below is a list of controllers that are currently deployed in this application,
-            click on each to execute its default action:</p>
-
-            <div id="controllerList" class="dialog">
-                <h2>Available Controllers:</h2>
-                <ul>
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                        <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-                    </g:each>
-                </ul>
-            </div>
-        </div>
-    </body>
 </html>

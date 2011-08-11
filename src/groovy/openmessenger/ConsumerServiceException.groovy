@@ -1,6 +1,6 @@
 package openmessenger
 
-class ConsumerServiceException extends Exception {
+class ConsumerServiceException extends RuntimeException {
 	String errorMsg
 	String senderId
 	String msisdn
