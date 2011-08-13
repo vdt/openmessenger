@@ -62,7 +62,7 @@
             <h3><g:link action="listEventSubscribers" id="${event.id}"> ${event.subscribers.size()} people subscribe to this event</g:link></h3>
             <ol>
               <g:each in="${event.subscribers}" var="subscriber">		
-                <li>${subscriber.msisdn}</li>
+                <li>${subscriber.msisdnx}</li>
               </g:each>	
             </ol> 
 
