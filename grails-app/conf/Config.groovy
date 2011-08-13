@@ -74,10 +74,10 @@ environments {
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.auth='/http/auth'
 		sms.gateway.ping='/http/ping'
-		sms.gateway.apiId='3312346'
-		sms.gateway.user='opendream'
-		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='OpenMsngr'
+		sms.gateway.apiId=''
+		sms.gateway.user=''
+		sms.gateway.password=''
+		sms.gateway.senderId =''
     }
     development {
         grails.serverURL = "http://localhost:8080/${appName}"
@@ -101,10 +101,10 @@ environments {
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.auth='/http/auth'
 		sms.gateway.ping='/http/ping'
-		sms.gateway.apiId='3312346'
-		sms.gateway.user='opendream'
-		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='OpenMsngr'
+		sms.gateway.apiId=''
+		sms.gateway.user=''
+		sms.gateway.password=''
+		sms.gateway.senderId =''
 	}
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
@@ -128,10 +128,10 @@ environments {
 		sms.gateway.path='/clickatell-mocker/http/sendmsg'
 		sms.gateway.auth='/clickatell-mocker/http/auth'
 		sms.gateway.ping='/clickatell-mocker/http/ping'
-		sms.gateway.apiId='3312346'
-		sms.gateway.user='opendream'
-		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='OpenMsngr'		
+		sms.gateway.apiId=''
+		sms.gateway.user=''
+		sms.gateway.password=''
+		sms.gateway.senderId =''		
 		
     }
 
