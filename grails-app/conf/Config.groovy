@@ -131,24 +131,25 @@ environments {
 		sms.gateway.apiId='3312346'
 		sms.gateway.user='opendream'
 		sms.gateway.password='Tdb5vzt6zuMAhG'
-		sms.gateway.senderId ='OpenMsngr'
+		sms.gateway.senderId ='OpenMsngr'		
 		
-		/** SSL truststore configuration key */
-		//rest.https.truststore.path = 'web-app/certs/truststore.jks'
-		/** SSL keystore configuration key */
-		//rest.https.keystore.path='web-app/certs/keystore.jks'
-		/** SSL keystore password configuration key */
-		//rest.https.keystore.pass='changeme'
-		/** Certificate Hostname Verifier configuration key */
-		rest.https.cert.hostnameVerifier = 'ALLOW_ALL'
-		/** Enforce SSL Socket Factory */
-		//rest.https.sslSocketFactory.enforce = true
     }
 
 }
 
 // sms gateway configuration
 sms.gateway.inactivity=600000 // 10 mins
+
+/** SSL truststore configuration key */
+//rest.https.truststore.path = 'web-app/certs/truststore.jks'
+/** SSL keystore configuration key */
+//rest.https.keystore.path='web-app/certs/keystore.jks'
+/** SSL keystore password configuration key */
+//rest.https.keystore.pass='changeme'
+/** Certificate Hostname Verifier configuration key */
+rest.https.cert.hostnameVerifier = 'ALLOW_ALL'
+/** Enforce SSL Socket Factory */
+//rest.https.sslSocketFactory.enforce = true
 
 // log4j configuration
 log4j = {
