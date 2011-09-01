@@ -10,6 +10,8 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+import grails.plugins.springsecurity.SecurityConfigType;
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -58,9 +60,9 @@ environments {
 		
 		rabbitmq {
 			connectionfactory {
-				username = 'guest'
-				password = 'guest'
-				hostname = 'messenger.opendream.org'
+				username = ''
+				password = ''
+				hostname = ''
 				consumers = 5
 			}
 			queues = {
@@ -74,6 +76,7 @@ environments {
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.auth='/http/auth'
 		sms.gateway.ping='/http/ping'
+		sms.gateway.coverage='/utils/routeCoverage.php'
 		sms.gateway.apiId=''
 		sms.gateway.user=''
 		sms.gateway.password=''
@@ -85,9 +88,9 @@ environments {
 		// rabbitMQ Configuration
 		rabbitmq {
 			connectionfactory {
-				username = 'guest'
-				password = 'guest'
-				hostname = 'messenger.opendream.org'
+				username = ''
+				password = ''
+				hostname = ''
 				consumers = 5
 			}
 			queues = {
@@ -101,6 +104,7 @@ environments {
 		sms.gateway.path='/http/sendmsg'
 		sms.gateway.auth='/http/auth'
 		sms.gateway.ping='/http/ping'
+		sms.gateway.coverage='/utils/routeCoverage.php'
 		sms.gateway.apiId=''
 		sms.gateway.user=''
 		sms.gateway.password=''
@@ -112,9 +116,9 @@ environments {
 		// rabbitMQ Configuration
 		rabbitmq {
 			connectionfactory {
-				username = 'guest'
-				password = 'guest'
-				hostname = 'messenger.opendream.org'
+				username = ''
+				password = ''
+				hostname = ''
 				consumers = 5
 			}
 			queues = {
@@ -128,6 +132,7 @@ environments {
 		sms.gateway.path='/clickatell-mocker/http/sendmsg'
 		sms.gateway.auth='/clickatell-mocker/http/auth'
 		sms.gateway.ping='/clickatell-mocker/http/ping'
+		sms.gateway.coverage='/clickatell-mocker/utils/routeCoverage.php'
 		sms.gateway.apiId=''
 		sms.gateway.user=''
 		sms.gateway.password=''
@@ -174,3 +179,22 @@ log4j = {
 
     warn   'org.mortbay.log'
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'openmessenger.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'openmessenger.UserRole'
+grails.plugins.springsecurity.authority.className = 'openmessenger.Role'
+
+grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
+grails.plugins.springsecurity.interceptUrlMap = [
+	'/sec/**':   					['IS_AUTHENTICATED_FULLY'],
+	'/user/**':   			['ROLE_ADMINS'],
+	'/role/**':   			['ROLE_ADMINS'],
+	'/event/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
+	'/js/**':       				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/css/**':      				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/images/**':   				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/*':           				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/login/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/logout/**':   				['IS_AUTHENTICATED_ANONYMOUSLY']
+ ]

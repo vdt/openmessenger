@@ -31,22 +31,23 @@ class ConsumerService {
 	}
 	
 	def sendMessage(Map map){
-		if(!sessionId) {
+		if(!sessionId) {			
 		 	getNewSession(map)			
 		}else {
-			if(isExpire()){ 
+			if(isExpire()){ 				
 				def result = ping()
-				if(result.contain('ERR')) getNewSession(map)
+				if(result.contains('ERR')) getNewSession(map)
 			}			
 		}
 		
 		def result = withHttp(uri:CH.config.sms.gateway.uri) {
 			def html = get(path :CH.config.sms.gateway.path,
 								query : [session_id:sessionId, to:map.msisdn,
-										text:convertToUnicode(map.content), from:CH.config.sms.gateway.senderId, 
+										from:CH.config.sms.gateway.senderId,
+										text:convertToUnicode(map.content), 
 										unicode:1, concat:getConcatinationSize(map.content)]) 
-			
-			}
+										 
+			}		
 		
 		if(!result.toString().contains('ID:'))
 			throw new ConsumerServiceException(errorMsg:result.toString(), senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn)	

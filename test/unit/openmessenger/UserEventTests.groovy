@@ -2,7 +2,7 @@ package openmessenger
 
 import grails.test.*
 
-class UserControllerTests extends ControllerUnitTestCase {
+class UserEventTests extends GrailsUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

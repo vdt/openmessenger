@@ -1,5 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page import="openmessenger.Event" %>
+<%@ page import="openmessenger.User" %>
+<%@ page import="openmessenger.UserEvent" %>
+<%@ page import="org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils"%>
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -18,20 +22,27 @@
 <div id="content-wrapper">
 	<div class="content-col col-1">
 		<h1>Open Messenger</h1>
+		<h4 style="margin: 20px;">
+			<sec:ifLoggedIn>
+			Hello! <sec:username/>
+			</sec:ifLoggedIn>
+		</h4>
 		<div id="menus" class="accordion">
 			<div id="accordion_title-about" class="accordion_title">
 				<h3><a href="#">About us</a></h3>
 			</div>
 			<div id="accordion_content-about" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+				<p><strong>OpenMessenger is a flexible messaging platform for group communication and data collection via mobile phone.</strong></p><p>OpenMessenger is developed by the collaboration between <a href="http://opendream.co.th">Opendream Co., Ltd.</a>, Bangkok, Thailand based ICT social enterprise, and <a href="http://oxfam.org.uk">Oxfam GB</a>.</p><p>This system is currently in close alpha test. Please contact info@opendream.co.th for more information.</p>
 			</div>
+			<!-- 
 			<div id="accordion_title-services" class="accordion_title">
 				<h3><a href="#">Services</a></h3>
 			</div>
 			<div id="accordion_content-services" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
-			</div>		
-			<div id="accordion_title-clients" class="accordion_title">
+				<p></p>
+			</div>
+			-->		
+			<!-- div id="accordion_title-clients" class="accordion_title">
 				<h3><a href="#">Clients</a></h3>
 			</div>
 			<div id="accordion_content-clients" class="accordion_content">
@@ -42,43 +53,41 @@
 			</div>
 			<div id="accordion_content-contacts" class="accordion_content">
 				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
-			</div>		
+			</div-->
+			<p></p>
+			<p>
+			<h4 style="margin: 20px;">
+				<sec:ifLoggedIn>
+				<g:link controller='logout'>Logout</g:link>
+				</sec:ifLoggedIn>
+				<sec:ifNotLoggedIn>
+				<g:link controller='login' action='auth'>Login</g:link>
+				</sec:ifNotLoggedIn>
+			</h4>
+			</p>		
 		</div>
 	</div>
 	<div class="content-col col-2">
-		<img alt="" title="" src="images/banner.png" />
+		<img alt="" title="" src="images/openmessenger-startup-screen.jpg" />
 	</div>
-	<div class="content-col col-3">
+	<div class="content-col col-3">		
 		<div id="sets" class="accordion">
+			<!-- sec:access expression="hasRole('ROLE_ADMINS')"-->
+			<sec:ifLoggedIn>
+			<g:each in="${UserEvent.findAllByUser(User.findByUsername(SpringSecurityUtils.getBean('springSecurityService').authentication.name)).collect { it.event } as Set}" var="event">
 			<div id="accordion_title-set1" class="accordion_title">
-				<h3><a href="#">set1</a></h3>
-				<p>Lorem ipsum dolor sit amet.</p>
+				<h3>${event.name}</h3>
+				<p></p>
 			</div>
 			<div id="accordion_content-set1" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
+				<p><strong><g:link controller="event" action="view" id="${event.id}">${event.description}</g:link></strong></p>
 			</div>
-			<div id="accordion_title-set2" class="accordion_title">
-				<h3><a href="#">set2</a></h3>
-				<p>Lorem ipsum dolor sit amet.</p>
-			</div>
-			<div id="accordion_content-set2" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
-			</div>		
-			<div id="accordion_title-set3" class="accordion_title">
-				<h3><a href="#">set3</a></h3>
-				<p>Lorem ipsum dolor sit amet.</p>
-			</div>
-			<div id="accordion_content-set3" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
-			</div>		
-			<div id="accordion_title-set4" class="accordion_title">
-				<h3><a href="#">set4</a></h3>
-				<p>Lorem ipsum dolor sit amet.</p>
-			</div>
-			<div id="accordion_content-set4" class="accordion_content">
-				<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum augue in est euismod consectetur.</strong></p><p>Duis id nisl purus. Nullam congue turpis vitae dolor pellentesque a blandit augue lobortis. Vestibulum tempus arcu sit amet arcu dapibus eget viverra nibh sollicitudin. Donec in dolor a turpis faucibus facilisis eu eu arcu.</p>
-			</div>		
+			</g:each>
+			</sec:ifLoggedIn>	
+			<!-- /sec:access-->
+							
 		</div>
+		
 	</div>
 </div>
 </body>

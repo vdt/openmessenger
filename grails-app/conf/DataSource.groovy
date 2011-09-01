@@ -35,8 +35,8 @@ environments {
             url = "jdbc:mysql://localhost:3306/openmessenger?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8" 
 			driverClassName = "com.mysql.jdbc.Driver"  
 			dialect = "org.hibernate.dialect.MySQLInnoDBDialect"
-			username = "openmessenger"
-			password = "openpubyesroti!"   
+			username = ""
+			password = ""   
 			properties {
 				validationQuery = 'select 1'
 			}

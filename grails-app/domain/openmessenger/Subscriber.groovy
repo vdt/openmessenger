@@ -3,6 +3,7 @@ package openmessenger
 class Subscriber {
     String msisdn
     String active
+	//Boolean support
 
 	static transients = ['msisdnx']
 	

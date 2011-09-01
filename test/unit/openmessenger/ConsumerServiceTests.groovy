@@ -9,6 +9,7 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 	
     protected void setUp() {
 		consumerService = new ConsumerService()
+		MockUtils.mockLogging(ConsumerService, true)		
 		/*mockConfig ('''
 		sms.gateway.uri="path"		
 		''')*/
@@ -24,6 +25,8 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
     }
 
     void testHandleMessage() {
+		consumerService.sessionId = 'testSessionId'
+		consumerService.lastPing = System.currentTimeMillis()
 		def maps = [[uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude'], 
 			[uri:'http2', msisdn:'66890242989', content:'Call me RabbitMQ dude'], 
 			[uri:'http3', msisdn:'66890242989', content:'Call me RabbitMQ dude']]
@@ -87,8 +90,9 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
 		consumerService.metaClass.withHttp = {Map map, Closure closure -> 
 											counter++
 											'OK : 12345'}
-		consumerService.ping()
+		def result = consumerService.ping()
 		assertEquals 1, counter
+		assertTrue result.contains('OK')
 	}
 	
 	void testGetNewSessionId(){		

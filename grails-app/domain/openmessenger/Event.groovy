@@ -4,7 +4,7 @@ class Event {
     String name
     String description
     Date occuredDate
-    String status
+    String status	
 	
     static constraints = {
         name(nullable: false)

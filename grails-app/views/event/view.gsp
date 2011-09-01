@@ -45,7 +45,8 @@
               <li class="page-number"><a href="#">10</a></li>
               <li class="next"><a href="#">next</a></li>
             </ul>
-          </div>			
+          </div>          
+                   			
         </div>
 
       </div><!-- End News List -->

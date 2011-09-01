@@ -1,6 +1,9 @@
 import openmessenger.Event
 import openmessenger.Message
 import openmessenger.Subscriber
+import openmessenger.User
+import openmessenger.Role
+import openmessenger.UserRole
 import java.text.SimpleDateFormat
 
 class BootStrap {
@@ -44,6 +47,16 @@ class BootStrap {
             secondEvent.addToMessages(new Message(title:'3', content:'3', createdDate:new SimpleDateFormat("yyyy-MMM-dd").parse("2003-DEC-25")))             
             */
         }
+		
+		if(!User.count() && !Role.count()){
+			def user = new User(username:'admin', password:'openpubyesroti!', 
+								firstname:'admin', lastname:'messenger',
+								email:'admin@messenger.opendream.org', enabled:true).save(failOnError: true)
+			def role = new Role(authority:'ROLE_ADMINS').save(failOnError: true)
+			UserRole.create(user, role)
+			new Role(authority:'ROLE_MANAGER').save(failOnError: true)
+			new Role(authority:'ROLE_USER').save(failOnError: true)
+		}
     }
     def destroy = {
     }

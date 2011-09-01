@@ -34,9 +34,9 @@
 			</tr>
 		</thead>
 		<tbody>
-		<g:each in="${events}" var="event">			
+		<g:each in="${events}" var="event" status="i">			
 			<tr class="item-row odd">
-				<td class="event-title"><g:link action="view" id="${event.id}">${fieldValue(bean: event, field: "id")}. ${event.name}</g:link></td>
+				<td class="event-title"><g:link action="view" id="${event.id}">${i+1}. ${event.name}</g:link></td>
 				<td class="event-news">${event.messages.size()}</td>
 				<td class="event-subscriber">${event.subscribers.size()}</td>
 				<td class="event-update">${event.occuredDate}</td> 

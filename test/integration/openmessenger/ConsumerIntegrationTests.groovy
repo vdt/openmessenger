@@ -15,7 +15,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
     }
 	
 	void testHandleMessage(){
-		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ']
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ']
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}

@@ -9,6 +9,10 @@ class EventService {
         Event.get(eventId)
     }
 
+	def getEventMessages(def messages, Integer offset, Integer max = 10){
+		messages.subList(offset, offset+max)
+	}
+	
     def findAllEventByNameLikeKeyword(String keyword) {
         Event.findAllByNameLike('%'+keyword+'%')
     }
@@ -16,6 +20,11 @@ class EventService {
     def findAllEventByStatus(String status){
         Event.findAllByStatus(status)
     }
+	
+	def findAllEventByUser(User user){
+		def userEvents = UserEvent.findAllByUser(user)
+		userEvents*.event.sort {it.name}
+	}
     
     def subscribeToEvent(Long eventId, String msisdn){
         def event = Event.get(eventId)
@@ -41,7 +50,7 @@ class EventService {
         event.subscribers.each {
             def msg = [msisdn:it.msisdn, content:message.content, date:new Date()]
             rabbitSend(queueName, msg)
-        }				
+        }		
         event.save()
     }
                                                            
