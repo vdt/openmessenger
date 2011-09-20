@@ -31,7 +31,7 @@ class User {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
 	
-	Set<Role> getEvents() {
+	Set<Event> getEvents() {
 		UserEvent.findAllByUser(this).collect { it.event } as Set
 	}
 

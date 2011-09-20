@@ -4,13 +4,33 @@ class Event {
     String name
     String description
     Date occuredDate
-    String status	
+	Status status
+		
+	public enum Status{
+		NORMAL,
+		CRITICAL,
+		STABLE,
+		RELIVE
+		static list() {
+			[NORMAL,CRITICAL,STABLE,RELIVE]
+		}
+	}
 	
-    static constraints = {
+	public enum Type{
+		EVENT,
+		GROUP_CHAT,
+		POLL
+		static list(){
+			[EVENT,GROUP_CHAT,POLL]
+		}
+	}
+	
+	static constraints = {
         name(nullable: false)
         description(nullable: false)
         occuredDate(nullale: false)
-        status(nullable:false, inList:['NORMAL', 'CRITICAL', 'STABLE', 'RELIVE'])
+		status(nullable:false, inList:Status.list())
+        //status(nullable:false, inList:['NORMAL', 'CRITICAL', 'STABLE', 'RELIVE'])
     } 
     
     static hasMany = [subscribers:Subscriber, messages:Message] 
