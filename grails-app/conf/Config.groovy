@@ -136,7 +136,7 @@ environments {
 		sms.gateway.apiId=''
 		sms.gateway.user=''
 		sms.gateway.password=''
-		sms.gateway.senderId =''		
+		sms.gateway.senderId ='q'		
 		
     }
 
@@ -181,9 +181,12 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'openmessenger.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'openmessenger.UserRole'
-grails.plugins.springsecurity.authority.className = 'openmessenger.Role'
+grails.plugins.springsecurity.userLookup.userDomainClassName='openmessenger.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName='openmessenger.UserRole'
+grails.plugins.springsecurity.authority.className='openmessenger.Role'
+
+//grails.plugins.springsecurity.dao.reflectionSaltSourceProperty=''
+
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
@@ -191,6 +194,8 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/user/**':   			['ROLE_ADMINS'],
 	'/role/**':   			['ROLE_ADMINS'],
 	'/event/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
+	'/groupChat/**':    				['ROLE_ADMINS','ROLE_MANAGER'],
+	'/api/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/js/**':       				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/css/**':      				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/images/**':   				['IS_AUTHENTICATED_ANONYMOUSLY'],

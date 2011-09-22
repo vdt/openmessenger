@@ -5,6 +5,7 @@ class Event {
     String description
     Date occuredDate
 	Status status
+	Type type
 		
 	public enum Status{
 		NORMAL,
@@ -28,8 +29,9 @@ class Event {
 	static constraints = {
         name(nullable: false)
         description(nullable: false)
-        occuredDate(nullale: false)
+        occuredDate(nullable: false)
 		status(nullable:false, inList:Status.list())
+		type(nullable:false, inList:Type.list())
         //status(nullable:false, inList:['NORMAL', 'CRITICAL', 'STABLE', 'RELIVE'])
     } 
     

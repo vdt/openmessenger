@@ -1,4 +1,5 @@
 import openmessenger.Event
+import openmessenger.Event.Type
 import openmessenger.Message
 import openmessenger.Subscriber
 import openmessenger.User
@@ -18,7 +19,7 @@ class BootStrap {
                     new Subscriber(msisdn: '66809737793', active: 'Y'),
                     new Subscriber(msisdn: '66809737794', active: 'Y'),
                     new Subscriber(msisdn: '66809737795', active: 'Y')	],
-                status: 'NORMAL').save(failOnError: true)
+                status: 'NORMAL', type:Type.EVENT).save(failOnError: true)
             
             firstEvent.addToMessages(new Message(title:'Xavi urges Cesc again', 
 					content:'Barcelona midfielder Xavi has again weighed into the debate over the future of Arsenal skipper Cesc Fabregas, saying he wants to play alongside his Spain team-mate at club level before he retires.', 
