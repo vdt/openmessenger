@@ -17,7 +17,7 @@ class EventService {
         Event.findAllByNameLike('%'+keyword+'%')
     }
     
-    def findAllEventByStatus(String status){
+    def findAllEventByStatus(def status){
         Event.findAllByStatus(status)
     }
 	

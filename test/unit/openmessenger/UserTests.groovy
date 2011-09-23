@@ -14,26 +14,7 @@ class UserTests extends GrailsUnitTestCase {
     void testUserConstraints() {
 		def user = new User()   
 		mockForConstraintsTests(User, [user])
-		assertFalse user.validate()
-		
-		user = new User(username: "roof,,,,", password: "pass***", role: "user")
-		assertFalse user.validate()
-		assertEquals "matches", user.errors["username"]     
-				
-		user = new User(username: "roofimon", password: "@S3cr3T@S3cr3T@S3cr3T", role: "user")                        
-		assertFalse user.validate()  
-		assertEquals "size", user.errors["password"]   
-
-		user = new User(username: "roofimon", password: "S3cr3t", role: "user")                        
-		assertFalse user.validate()  
-		assertEquals "matches", user.errors["password"]
-		
-		user = new User(username: "roofimon", password: "s3creT#", role: "not admin")
-		assertFalse user.validate()
-		assertEquals "inList", user.errors["role"]
-		
-		user = new User(username: "roofimon", password: "s3creT#", role: "admin")                        
-		assertTrue user.validate()		
+		assertFalse user.validate()	
     } 
 
 	

@@ -1,6 +1,8 @@
 package openmessenger
 
 import grails.test.*
+import openmessenger.Event.Status
+import openmessenger.Event.Type
 
 class EventIntegrationTests extends GroovyTestCase {
     protected void setUp() {
@@ -15,7 +17,7 @@ class EventIntegrationTests extends GroovyTestCase {
         def event = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new Date(), //new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
-            status: 'NORMAL')
+            status:Status.NORMAL, type:Type.EVENT)
 		
         event.validate()
 		
@@ -42,7 +44,7 @@ class EventIntegrationTests extends GroovyTestCase {
         def event = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new Date(), //new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
-            status: 'NORMAL')
+            status:Status.NORMAL, type:Type.EVENT)
 		
         event.validate()
 		
@@ -77,7 +79,7 @@ class EventIntegrationTests extends GroovyTestCase {
         def event = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new Date(),
-            status: 'NORMAL')
+            status:Status.NORMAL, type:Type.EVENT)
 		
         event.validate()
 		

@@ -1,5 +1,7 @@
 package openmessenger
 
+import openmessenger.Event.Status
+import openmessenger.Event.Type
 import grails.test.*
 import java.text.SimpleDateFormat
 
@@ -20,14 +22,17 @@ class EventTests extends GrailsUnitTestCase {
          newEvent = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
+            type:Type.GROUP_CHAT,
             status: 'DAMN')
         assertFalse newEvent.validate()
-        assertEquals 'inList', newEvent.errors['status']
+        println newEvent.errors['status']
+        assertEquals 'nullable', newEvent.errors['status']
 				
          newEvent = new Event(name: 'The Championships, Wimbledon', 
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
-            status: 'NORMAL')	
+            type:Type.GROUP_CHAT,
+            status: Status.NORMAL)	
 	
         assertTrue newEvent.validate()	
     }
@@ -36,7 +41,8 @@ class EventTests extends GrailsUnitTestCase {
         def newEvent = new Event(name: 'The Championships, Wimbledon',
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("2008-DEC-25"),
-            status: 'NORMAL')
+            type:Type.GROUP_CHAT,
+            status: Status.NORMAL)
         mockDomain(Event, [newEvent])
 		
         assertNotNull newEvent.save()
