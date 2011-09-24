@@ -43,23 +43,23 @@ class EventController {
     def save = {
         def eventInstance
         def eventType = params.type
-        println "group "+eventType
-        println "params: "+params
+        //println "group "+eventType
+        //println "params: "+params
         if(eventType=='event'){    
             eventInstance = new Event(params)
             eventInstance.type = Type.EVENT
-            println 'add event'
+            //println 'add event'
         }else if(eventType=='groupChat'){    
             eventInstance = new GroupChat(params)
             eventInstance.type = Type.GROUP_CHAT
-            println "add group ${eventInstance.codename}"
+            //println "add group ${eventInstance.codename}"
         }
 
         eventInstance.validate()
         
         if(eventInstance.hasErrors()){
             eventInstance.errors.each {
-                println it
+                //println it
             }
         }
 
