@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page import="openmessenger.Event.Type" %>  
+<%@ page import="openmessenger.GroupChat" %>  
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
@@ -26,7 +28,7 @@
 
         <div id="news-wrapper">
           <div class="news-items">
-            <g:each in="${event.messages}" var="message">
+            <g:each in="${event?.messages}" var="message">
               <div class="rows row-1">
                 <div class="news-writer">${message.title}</div>					
                 <div class="news-title">${message.content}</div>
@@ -56,6 +58,9 @@
         <div id="event-content">
           <h2 class="event-title">${fieldValue(bean: event, field: "name")}</h2>
           <div class="event-description">${fieldValue(bean: event, field: "description")}</div>
+          <g:if test="${event?.type==Type.GROUP_CHAT}">
+            <div class="event-news-count"><strong>Codename: ${GroupChat.get(event.id).codename}</strong></div>
+          </g:if>
           <div class="event-news-count"><strong>Totals: ${event.messages.size()}</strong></div>
           <div class="event-last-update"><strong>Last Update:</strong> 26 july 2011</div>
           <div class="event-subscriber-list">

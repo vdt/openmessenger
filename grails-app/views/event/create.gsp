@@ -12,7 +12,12 @@
 <body id="page-login">
 <div id="content-wrapper">
 	<div id="content">
+		<g:if test="${eventType=='event'}">
 		<h1>Create New Event</h1>
+		</g:if>
+		<g:if test="${eventType=='groupChat'}">
+		<h1>Create Group Chat</h1>
+		</g:if>
 		<form id="login" method="post" action="save">
 			<div id="username-input" class="general-field">
 				<label>name: </label>    
@@ -22,6 +27,12 @@
 				<label>description: </label>
 				 <g:textField name="description" value="${eventInstance?.description}" />
 			</div>    
+		    <g:if test="${eventType=='groupChat'}">
+		    <div id="status-input" class="general-field">
+				<label>code name: </label>
+				 <g:textField name="codename" value="${eventInstance?.codename}" />
+			</div>    
+			</g:if>	
 			<div id="status-input" class="general-field">
 				<label>status: </label>
 				<g:select name="status" from="${Status.list()}"/>
@@ -30,7 +41,8 @@
 				<label>occurred date: </label>
 				<g:datePicker name="occuredDate" precision="day" value="${eventInstance?.occuredDate}" >
 			  </g:datePicker>
-			</div>						     
+			</div>	
+			<g:hiddenField name="type" value="${eventType}" />					     
 			<input id="submit-button" type="submit" value="Create"> 
 		</form>
 	</div>

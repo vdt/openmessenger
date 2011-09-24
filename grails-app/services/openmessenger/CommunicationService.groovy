@@ -1,6 +1,5 @@
 package openmessenger
 
-import java.awt.Event;
 import openmessenger.Event.Type
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 
