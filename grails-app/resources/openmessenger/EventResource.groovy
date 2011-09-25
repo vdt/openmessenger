@@ -14,7 +14,7 @@ class EventResource {
     def communicationService
 
     @GET
-    @Path('/{id:[a-z][a-z_0-9]}/msisdn/{msisdn}/{content}/passphase/{username}/{password}')
+    @Path('/{id:[a-z][a-z_0-9]{1,4}}/msisdn/{msisdn}/{content}/passphase/{username}/{password}')
     @Produces('text/plain')
     Response sendMessageToEvent(@PathParam('id') String id,
                                   @PathParam('msisdn') String msisdn,
@@ -22,7 +22,7 @@ class EventResource {
 								  @PathParam('username') String username,
 								  @PathParam('password') String password) 
 	{
-        def messageMap = communicationService.extractMessage(id, msisdn, content)    
+		def messageMap = communicationService.extractMessage(id, msisdn, content)    
         eventService.sendMessage(messageMap.eventId, messageMap.message)
         ok "Request Completed"
     }
