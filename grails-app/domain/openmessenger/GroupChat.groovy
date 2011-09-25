@@ -8,4 +8,8 @@ class GroupChat extends Event {
     static constraints = {
 		codename(size:1..7, nullable: false, unique:true)
     }
+
+    def beforeInsert() {
+        codename = codename.toLowerCase()
+   } 
 }

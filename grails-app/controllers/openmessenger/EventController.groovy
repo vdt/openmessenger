@@ -1,5 +1,5 @@
 package openmessenger
-
+import openmessenger.Event.Type
 class EventController {
     
     def eventService
@@ -29,17 +29,45 @@ class EventController {
 	}    
 	
     def create = {
-        def eventInstance = new Event()
+        def eventInstance
+        def eventType = params.type
+        if(eventType=='event'){
+            eventInstance = new Event()    
+        }else if(eventType=='groupChat'){
+            eventInstance = new GroupChat()
+        }
         //eventInstance.properties = params
-        return [eventInstance: eventInstance]
+        return [eventInstance: eventInstance, eventType:eventType]
     }	
 
     def save = {
-        def eventInstance = new Event(params)
+        def eventInstance
+        def eventType = params.type
+        //println "group "+eventType
+        //println "params: "+params
+        if(eventType=='event'){    
+            eventInstance = new Event(params)
+            eventInstance.type = Type.EVENT
+            //println 'add event'
+        }else if(eventType=='groupChat'){    
+            eventInstance = new GroupChat(params)
+            eventInstance.type = Type.GROUP_CHAT
+            //println "add group ${eventInstance.codename}"
+        }
+
+        eventInstance.validate()
+        
+        if(eventInstance.hasErrors()){
+            eventInstance.errors.each {
+                //println it
+            }
+        }
+
+
         if (eventInstance.save(flush: true)){
             redirect(action: "view", id: eventInstance.id)
         }else{
-            render(view: "create", model: [eventInstance: eventInstance])
+            render(view: "create", model: [eventInstance: eventInstance, , eventType:eventType])
         }
     }      
            

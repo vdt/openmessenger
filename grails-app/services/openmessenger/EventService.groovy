@@ -6,7 +6,7 @@ class EventService {
     def queueName = 'openmessenger'
 
     def findEventById(Long eventId){
-        Event.get(eventId)
+        def eventInstance = Event.get(eventId)
     }
 
 	def getEventMessages(def messages, Integer offset, Integer max = 10){
@@ -17,7 +17,7 @@ class EventService {
         Event.findAllByNameLike('%'+keyword+'%')
     }
     
-    def findAllEventByStatus(String status){
+    def findAllEventByStatus(def status){
         Event.findAllByStatus(status)
     }
 	

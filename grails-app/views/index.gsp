@@ -74,15 +74,31 @@
 		<div id="sets" class="accordion">
 			<!-- sec:access expression="hasRole('ROLE_ADMINS')"-->
 			<sec:ifLoggedIn>
-			<g:each in="${UserEvent.findAllByUser(User.findByUsername(SpringSecurityUtils.getBean('springSecurityService').authentication.name)).collect { it.event } as Set}" var="event">
 			<div id="accordion_title-set1" class="accordion_title">
-				<h3>${event.name}</h3>
+				<h3>Event</h3>
 				<p></p>
 			</div>
 			<div id="accordion_content-set1" class="accordion_content">
-				<p><strong><g:link controller="event" action="view" id="${event.id}">${event.description}</g:link></strong></p>
+				<p><strong><g:link controller="event" action="listAllEvents">List All Events</g:link></strong></p>
+				<p><strong><g:link controller="event" action="create" params="[type:'event']">Create New Event</g:link></strong></p>
 			</div>
-			</g:each>
+			<div id="accordion_title-set1" class="accordion_title">
+				<h3>Group Chat</h3>
+				<p></p>
+			</div>
+			<div id="accordion_content-set1" class="accordion_content">
+				<p><strong><g:link controller="event" action="listAllEvents">List All Group Chat</g:link></strong></p>
+				<p><strong><g:link controller="event" action="create" params="[type:'groupChat']">Create New Group Chat</g:link></strong></p>
+			</div>
+			<div id="accordion_title-set1" class="accordion_title">
+				<h3>Poll</h3>
+				<p></p>
+			</div>
+			<div id="accordion_content-set1" class="accordion_content">
+				<p><strong><g:link controller="event" action="listAllEvents">List All Events</g:link></strong></p>
+			</div>			
+
+
 			</sec:ifLoggedIn>	
 			<!-- /sec:access-->
 							

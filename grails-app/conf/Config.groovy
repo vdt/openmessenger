@@ -116,23 +116,23 @@ environments {
 		// rabbitMQ Configuration
 		rabbitmq {
 			connectionfactory {
-				username = ''
-				password = ''
-				hostname = ''
+				username = 'guest'
+				password = 'guest'
+				hostname = 'deftdev.com'
 				consumers = 5
 			}
 			queues = {
-				openmessenger()
+				openmessenger_test()
 			}
 		}
 		
 		// sms gateway configuration
-		sms.gateway.suri='http://10.0.1.23:8090'
-		sms.gateway.uri='http://10.0.1.23:8090'
-		sms.gateway.path='/clickatell-mocker/http/sendmsg'
-		sms.gateway.auth='/clickatell-mocker/http/auth'
-		sms.gateway.ping='/clickatell-mocker/http/ping'
-		sms.gateway.coverage='/clickatell-mocker/utils/routeCoverage.php'
+		sms.gateway.suri='http://172.16.181.129:8080'
+		sms.gateway.uri='http://172.16.181.129:8080'
+		sms.gateway.path='/clickatell-mocker-0.1/http/sendmsg'
+		sms.gateway.auth='/clickatell-mocker-0.1/http/auth'
+		sms.gateway.ping='/clickatell-mocker-0.1/http/ping'
+		sms.gateway.coverage='/clickatell-mocker-0.1/utils/routeCoverage.php'
 		sms.gateway.apiId=''
 		sms.gateway.user=''
 		sms.gateway.password=''

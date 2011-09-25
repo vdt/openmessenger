@@ -1,6 +1,8 @@
 package openmessenger
 
 import grails.test.*
+import openmessenger.Event.Status
+import openmessenger.Event.Type
 
 class OpenMessengerIntegrationTests extends GroovyTestCase {
 	def eventService
@@ -18,7 +20,7 @@ class OpenMessengerIntegrationTests extends GroovyTestCase {
 		// create Event
 		Event event = new Event(name: 'The Championships',
 			description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
-			occuredDate: new Date(), status: 'NORMAL')
+			occuredDate: new Date(),status:Status.NORMAL, type:Type.GROUP_CHAT)
 		
         assertTrue event.validate()		
         assertNotNull event.save()		

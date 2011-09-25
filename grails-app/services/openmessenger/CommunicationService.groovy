@@ -1,6 +1,5 @@
 package openmessenger
 
-import java.awt.Event;
 import openmessenger.Event.Type
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 
@@ -31,16 +30,18 @@ class CommunicationService {
 	
 	def getType(def code){
 		def type = code?.size()?code?.substring(0,1):'';
-		type=='g'?Type.GROUP_CHAT:type=='p'?Type.POLL:'undefined'
+		type.toLowerCase()=='g'?Type.GROUP_CHAT:type.toLowerCase()=='p'?Type.POLL:'undefined'
 	}
 	
 	def getCommunicationTypeInstanceByCodeName(def code, def type, def msisdn){
 		def instance
+		log.debug code
 		if(type==Type.GROUP_CHAT)
 			instance = GroupChat.findByCodename(code)
 		else if(type==Type.POLL)
 			instance = Poll.findByCodename(code)
 			
+		log.debug instance
 		return instance?.subscribers?.find {it.msisdn ==  msisdn}?instance:null
 	}
 	
