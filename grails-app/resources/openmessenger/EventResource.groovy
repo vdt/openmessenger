@@ -22,6 +22,7 @@ class EventResource {
 								  @PathParam('username') String username,
 								  @PathParam('password') String password) 
 	{
+		content = URLDecoder.decode(content, 'UTF-8')
 		def messageMap = communicationService.extractMessage(id, msisdn, content)    
         eventService.sendMessage(messageMap.eventId, messageMap.message)
         ok "Request Completed"

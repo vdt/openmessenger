@@ -32,8 +32,8 @@ class Event {
         occuredDate(nullable: false)
 		status(nullable:false, inList:Status.list())
 		type(nullable:false, inList:Type.list())
-    } 
-    
-    static hasMany = [subscribers:Subscriber, messages:Message] 
-    static mapping = { messages sort:'createdDate', order:'desc'}
+    }     
+	
+    static hasMany = [subscribers:Subscriber, messages:Message]	
+    static mapping = { messages sort:'createdDate', order:'desc'}		
 }

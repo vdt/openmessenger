@@ -32,7 +32,12 @@
               <div class="rows row-1">
                 <div class="news-writer">${message.title}</div>					
                 <div class="news-title">${message.content}</div>
-                <div class="news-date">${message.createdDate}</div>
+                <div class="news-date">                	
+                	<g:if test="${event?.type==Type.GROUP_CHAT && message.createBy!=null}">
+            			from:${message.createBy}  
+          			</g:if>
+          			${message.createdDate} 
+                </div>
               </div>
             </g:each>
           </div>
@@ -63,15 +68,20 @@
           </g:if>
           <div class="event-news-count"><strong>Totals: ${event.messages.size()}</strong></div>
           <div class="event-last-update"><strong>Last Update:</strong> 26 july 2011</div>
-          <div class="event-subscriber-list">
-
-            <h3><g:link action="listEventSubscribers" id="${event.id}"> ${event.subscribers.size()} people subscribe to this event</g:link></h3>
+          <div class="event-subscriber-list">			
+            <h3><sec:ifAnyGranted roles="ROLE_ADMINS,ROLE_MANAGER">
+            		<g:link action="listEventSubscribers" id="${event.id}"> ${event.subscribers.size()} people subscribe to this event</g:link>
+            	</sec:ifAnyGranted>
+            	<sec:ifAllGranted roles="ROLE_USER">
+            		 ${event.subscribers.size()} people subscribe to this event
+            	</sec:ifAllGranted>
+            </h3>
             <ol>
               <g:each in="${event.subscribers}" var="subscriber">		
                 <li>${subscriber.msisdnx}</li>
               </g:each>	
             </ol> 
-
+			
           </div>
         </div>
       </div><!-- End Event Detail -->

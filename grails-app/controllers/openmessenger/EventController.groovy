@@ -63,8 +63,10 @@ class EventController {
             }
         }
 
-
         if (eventInstance.save(flush: true)){
+			def userDetails = springSecurityService.principal
+			def user = User.get(userDetails.id)
+			UserEvent.create(user, eventInstance)
             redirect(action: "view", id: eventInstance.id)
         }else{
             render(view: "create", model: [eventInstance: eventInstance, , eventType:eventType])

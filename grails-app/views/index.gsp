@@ -80,7 +80,9 @@
 			</div>
 			<div id="accordion_content-set1" class="accordion_content">
 				<p><strong><g:link controller="event" action="listAllEvents">List All Events</g:link></strong></p>
+				<sec:ifAnyGranted roles="ROLE_ADMINS">
 				<p><strong><g:link controller="event" action="create" params="[type:'event']">Create New Event</g:link></strong></p>
+				</sec:ifAnyGranted>
 			</div>
 			<div id="accordion_title-set1" class="accordion_title">
 				<h3>Group Chat</h3>
@@ -88,7 +90,9 @@
 			</div>
 			<div id="accordion_content-set1" class="accordion_content">
 				<p><strong><g:link controller="event" action="listAllEvents">List All Group Chat</g:link></strong></p>
+				<sec:ifAnyGranted roles="ROLE_ADMINS">
 				<p><strong><g:link controller="event" action="create" params="[type:'groupChat']">Create New Group Chat</g:link></strong></p>
+				</sec:ifAnyGranted>
 			</div>
 			<div id="accordion_title-set1" class="accordion_title">
 				<h3>Poll</h3>
