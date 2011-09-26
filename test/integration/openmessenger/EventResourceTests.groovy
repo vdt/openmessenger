@@ -53,7 +53,7 @@ class EventResourceTests extends IntegrationTestCase {
 		secondGroup.save(flush:true)
 
         def headers = ['Content-Type':'application/json', 'Accept':'text/plain']
-        def content = '{"class":"openmessenger.EventDTO","codename":"g1","content":"Hill", "msisdn":"66809737799", "username":"roofimon", "password":"password"}'
+        def content = '{"class":"openmessenger.EventDTO","codename":"g1","content":"Hill", "msisdn":"1234567890", "username":"roofimon", "password":"password"}'
         def expected = 'Request Completed'
 
         

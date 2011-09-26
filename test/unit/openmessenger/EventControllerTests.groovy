@@ -101,29 +101,6 @@ class EventControllerTests extends ControllerUnitTestCase {
 	
 	}
 	
-    void testSaveEvent(){
-        def eventSaved = []
-        mockDomain(Event, eventSaved)
-        controller.params.name = "dude"
-        controller.params.description = "description"
-        controller.params.occuredDate = new Date()
-        controller.params.type = "GROUP_CHAT"
-        controller.params.status = "NORMAL"
-        controller.save()
-        
-        assertEquals "view", controller.redirectArgs["action"]
-    }
-    
-    void testSaveEvilEventRedirect(){
-        def eventSaved = []
-        mockDomain(Event, eventSaved)
-        controller.params.name = "dude"
-        controller.params.description = "description"
-        controller.params.occuredDate = new Date()
-        controller.params.status = "EVIL" //Wrong status for Event class 
-        controller.save()
-        assertEquals "create", controller.renderArgs.view
-    }   
 
     void testSubscribeToEvent(){     
         def eventControl = mockFor(EventService) 
