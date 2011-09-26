@@ -6,6 +6,7 @@ import grails.test.*
 import openmessenger.Event.Status
 import openmessenger.Event.Type
 import static org.junit.Assert.*
+import openmessenger.EventDTO
 
 
 class EventResourceTests extends IntegrationTestCase {
@@ -51,8 +52,8 @@ class EventResourceTests extends IntegrationTestCase {
 		secondGroup.addToSubscribers(sub)
 		secondGroup.save(flush:true)
 
-        def headers = ['Content-Type':'text/plain', 'Accept':'text/plain']
-        def content = '{}'
+        def headers = ['Content-Type':'application/json', 'Accept':'text/plain']
+        def content = '{"class":"openmessenger.EventDTO","codename":"g1","content":"Hill", "msisdn":"66809737799", "username":"roofimon", "password":"password"}'
         def expected = 'Request Completed'
 
         
@@ -66,6 +67,11 @@ class EventResourceTests extends IntegrationTestCase {
 		assertEquals('1234567890', results.message.createBy)
 
         sendRequest('/api/event/g1/msisdn/1234567890/hello/passphase/roofimon/passw0rd','GET', headers)
+        
+        assertEquals(200, response.status)
+        assertEquals("${expected}".toString(), response.contentAsString)
+
+        sendRequest('/api/event','POST', headers, content.bytes)
         
         assertEquals(200, response.status)
         assertEquals("${expected}".toString(), response.contentAsString)

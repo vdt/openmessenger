@@ -1,11 +1,13 @@
 package openmessenger
 import static org.grails.jaxrs.response.Responses.*
 import javax.ws.rs.GET
+import javax.ws.rs.POST
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
 import javax.ws.rs.core.Response
 import javax.ws.rs.PathParam
+import openmessenger.EventDTO
 
 
 @Path('/api/event')
@@ -26,6 +28,15 @@ class EventResource {
         eventService.sendMessage(messageMap.eventId, messageMap.message)
         ok "Request Completed"
     }
+
+    @POST
+    @Produces('text/plain')
+    Response postMessageToEvent(EventDTO eventDTO){
+        //println "${eventDTO.codename} and ${eventDTO.msisdn} and ${eventDTO.content} and ${eventDTO.username} and ${eventDTO.password}"
+        def messageMap = communicationService.extractMessage(eventDTO.codename, eventDTO.msisdn, eventDTO.content)    
+        eventService.sendMessage(messageMap.eventId, messageMap.message)
+        ok "Request Completed"
+    }    
     
 }
 
