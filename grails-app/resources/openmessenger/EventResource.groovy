@@ -16,28 +16,29 @@ class EventResource {
     def communicationService
 
     @GET
-    @Path('/{id:[a-z][a-z_0-9]{1,4}}/msisdn/{msisdn}/{content}/passphase/{username}/{password}')
+    @Path('/{id:[a-z][a-z_0-9]{1,4}}/msisdn/{msisdn}/{senderId}/{content}/passphase/{username}/{password}')
     @Produces('text/plain')
     Response sendMessageToEvent(@PathParam('id') String id,
                                   @PathParam('msisdn') String msisdn,
-								  @PathParam('content') String content, 
+								  @PathParam('senderId') String senderId,
+								  @PathParam('content') String content,
 								  @PathParam('username') String username,
 								  @PathParam('password') String password) 
 	{
 		content = URLDecoder.decode(content, 'UTF-8')
 		def messageMap = communicationService.extractMessage(id, msisdn, content)    
-        eventService.sendMessage(messageMap.eventId, messageMap.message)
+        eventService.sendMessage(messageMap.eventId, messageMap.message, senderId)
         ok "Request Completed"
     }
 
     @POST
     @Produces('text/plain')
     Response postMessageToEvent(EventDTO eventDTO){
-        //println "${eventDTO.codename} and ${eventDTO.msisdn} and ${eventDTO.content} and ${eventDTO.username} and ${eventDTO.password}"
+        println "${eventDTO.codename} and ${eventDTO.msisdn} and ${eventDTO.senderId} and ${eventDTO.content} and ${eventDTO.username} and ${eventDTO.password}"
         def messageMap = communicationService.extractMessage(eventDTO.codename, eventDTO.msisdn, eventDTO.content)    
-        eventService.sendMessage(messageMap.eventId, messageMap.message)
+        eventService.sendMessage(messageMap.eventId, messageMap.message, eventDTO.senderId)
         ok "Request Completed"
-    }    
+    }  
     
 }
 

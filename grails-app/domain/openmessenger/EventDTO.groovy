@@ -5,4 +5,5 @@ class EventDTO{
 	String content
 	String username
 	String password
+	String senderId
 }

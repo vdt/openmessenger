@@ -37,6 +37,10 @@
 				<label>status: </label>
 				<g:select name="status" from="${Status.list()}"/>
 			</div>
+			<div id="status-input" class="general-field">
+				<label>senderID: </label>
+				<g:checkBox name="isSenderId" value="${eventInstance?.isSenderId}" />
+			</div>
 			<div id="occurred-input" class="general-field date">
 				<label>occurred date: </label>
 				<g:datePicker name="occuredDate" precision="day" value="${eventInstance?.occuredDate}" >

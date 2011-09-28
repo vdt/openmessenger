@@ -8,6 +8,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 	
     protected void setUp() {
         super.setUp()
+		MockUtils.mockLogging(ConsumerService, true)
     }
 
     protected void tearDown() {
@@ -15,7 +16,25 @@ class ConsumerIntegrationTests extends GroovyTestCase {
     }
 	
 	void testHandleMessage(){
-		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ']
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true, senderId:'testSenderId']
+		consumerService.handleMessage(map)
+		assertNotNull consumerService.sessionId
+	}
+	
+	void testHandleMessageWithDefaultSenderId(){
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true]
+		consumerService.handleMessage(map)
+		assertNotNull consumerService.sessionId
+	}
+	
+	void testHandleMessageWithOutSenderIdCheckSenderId(){
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false, senderId:"WithoutSender"]
+		consumerService.handleMessage(map)
+		assertNotNull consumerService.sessionId
+	}
+	
+	void testHandleMessageWithOutSenderId(){
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false]
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}
@@ -36,7 +55,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 	void testHandleMessageFail(){
 		CH.config.sms.gateway.user="opendreamx"
 		consumerService.sessionId = null
-		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ']
+		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true]
 		consumerService.handleMessage(map)
 		assertNull consumerService.sessionId		
 	}
