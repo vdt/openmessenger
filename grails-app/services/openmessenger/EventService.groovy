@@ -1,5 +1,7 @@
 package openmessenger
 
+import openmessenger.Event.Type
+
 class EventService {
 
     static transactional = true
@@ -43,15 +45,21 @@ class EventService {
         event.save()
     }
 
-    def sendMessage(Long eventId, Message message){
+    def sendMessage(Long eventId, Message message, String senderId=null){
         def event = Event.findById(eventId)
+		def isSenderId = event.isSenderId
+		def content
+		if(event.type==Type.GROUP_CHAT){
+			content = "${message.createBy}: ${message.content}"
+		}else{
+			content = message.content
+		}
 		message.title = "News from "+ event.name
         event.addToMessages(message)
-        event.subscribers.each {
-            def msg = [msisdn:it.msisdn, content:message.content, date:new Date()]
-            rabbitSend(queueName, msg)
+		event.subscribers.each {
+            def msg = [msisdn:it.msisdn, content:content, date:new Date(), isSenderId:isSenderId, senderId:senderId]
+			rabbitSend(queueName, msg)
         }		
         event.save()
-    }
-                                                           
+    }                                                           
 }

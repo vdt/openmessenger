@@ -16,7 +16,7 @@ class EventResourceTests extends IntegrationTestCase {
 	
 	@Test
     void testExtractMessageAndSend() {
-		def group = new GroupChat(codename:'G1', name:'group-chat', description:'mock group', occuredDate:new Date(), status:Status.NORMAL, type:Type.GROUP_CHAT)
+		def group = new GroupChat(codename:'G1', name:'group-chat', description:'mock group', occuredDate:new Date(), status:Status.NORMAL, type:Type.GROUP_CHAT, isSenderId:true)
 		group.addToSubscribers(new Subscriber(msisdn:'1234567890', active:'Y'))
 		group.addToSubscribers(new Subscriber(msisdn:'2345678901', active:'Y'))
 		group.addToSubscribers(new Subscriber(msisdn:'3456789012', active:'Y'))
@@ -31,7 +31,7 @@ class EventResourceTests extends IntegrationTestCase {
 		
 		group.save(flush:true)		
 		
-		def poll = new Poll(codename:'p2', name:'poll', description:'mock poll', occuredDate:new Date(), status:Status.NORMAL, type:Type.POLL)
+		def poll = new Poll(codename:'p2', name:'poll', description:'mock poll', occuredDate:new Date(), status:Status.NORMAL, type:Type.POLL, isSenderId:true)
 		def sub = Subscriber.findByMsisdn('1234567890')
 		poll.addToSubscribers(sub)
 		poll.addToSubscribers(new Subscriber(msisdn:'12345678901', active:'Y'))
@@ -48,12 +48,12 @@ class EventResourceTests extends IntegrationTestCase {
 	    MockUtils.mockLogging(CommunicationService, true)
 
 
-		def secondGroup = new GroupChat(codename:'g3', name:'second-group-chat', description:'mock group2', occuredDate:new Date(), status:Status.NORMAL, type:Type.GROUP_CHAT)
+		def secondGroup = new GroupChat(codename:'g3', name:'second-group-chat', description:'mock group2', occuredDate:new Date(), status:Status.NORMAL, type:Type.GROUP_CHAT, isSenderId:true)
 		secondGroup.addToSubscribers(sub)
 		secondGroup.save(flush:true)
 
         def headers = ['Content-Type':'application/json', 'Accept':'text/plain']
-        def content = '{"class":"openmessenger.EventDTO","codename":"g1","content":"Hill", "msisdn":"1234567890", "username":"roofimon", "password":"password"}'
+        def content = '{"class":"openmessenger.EventDTO","codename":"g1","content":"Hill", "msisdn":"1234567890", "senderId":"6281287925981", "username":"roofimon", "password":"password"}'
         def expected = 'Request Completed'
 
         
@@ -65,8 +65,8 @@ class EventResourceTests extends IntegrationTestCase {
 		//assertEquals(2, results.eventId)
 		assertEquals('helloworld', results.message.content)
 		assertEquals('1234567890', results.message.createBy)
-
-        sendRequest('/api/event/g1/msisdn/1234567890/hello/passphase/roofimon/passw0rd','GET', headers)
+		
+        sendRequest('/api/event/g1/msisdn/1234567890/6281287925981/hello/passphase/roofimon/passw0rd','GET', headers)
         
         assertEquals(200, response.status)
         assertEquals("${expected}".toString(), response.contentAsString)
@@ -74,7 +74,7 @@ class EventResourceTests extends IntegrationTestCase {
         sendRequest('/api/event','POST', headers, content.bytes)
         
         assertEquals(200, response.status)
-        assertEquals("${expected}".toString(), response.contentAsString)
+        assertEquals("${expected}".toString(), response.contentAsString)		
     }
 
 }

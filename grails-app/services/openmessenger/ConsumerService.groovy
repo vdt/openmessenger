@@ -14,6 +14,7 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 class ConsumerService {
 
     static transactional = true
+	//static rabbitQueue = 'openmessenger'
 	static rabbitQueue = 'openmessenger'
 	String sessionId
 	Long lastPing 
@@ -23,8 +24,14 @@ class ConsumerService {
     }
 	
 	void handleMessage(Map map) {				 
-		try{	
-			sendMessage(map)	
+		try{
+			if(map.isSenderId){	
+				println("send with senderId")
+				sendMessage(map)					
+			}else{
+				println("send without senderId")
+				sendMessageWithoutSenderId(map)
+			}			
 		}catch (Exception e) {
 			log.error(e.toString(),e)
 		}		
@@ -32,7 +39,7 @@ class ConsumerService {
 	
 	def sendMessage(Map map){
 		if(!sessionId) {			
-		 	getNewSession(map)			
+		 	getNewSession(map)		
 		}else {
 			if(isExpire()){ 				
 				def result = ping()
@@ -40,19 +47,44 @@ class ConsumerService {
 			}			
 		}
 		
+		def senderId = map.senderId?:CH.config.sms.gateway.senderId
+		
 		def result = withHttp(uri:CH.config.sms.gateway.uri) {
 			def html = get(path :CH.config.sms.gateway.path,
 								query : [session_id:sessionId, to:map.msisdn,
-										from:CH.config.sms.gateway.senderId,
+										from:senderId,
 										text:convertToUnicode(map.content), 
 										unicode:1, concat:getConcatinationSize(map.content)]) 
-										 
+										
 			}		
 		
 		if(!result.toString().contains('ID:'))
 			throw new ConsumerServiceException(errorMsg:result.toString(), senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn)	
 			
 		return result.toString()	
+	}
+	
+	def sendMessageWithoutSenderId(Map map){
+		if(!sessionId) {
+			getNewSession(map)
+	   }else {
+		   if(isExpire()){
+			   def result = ping()
+			   if(result.contains('ERR')) getNewSession(map)
+		   }
+	   }
+	   def result = withHttp(uri:CH.config.sms.gateway.uri) {
+		   def html = get(path :CH.config.sms.gateway.path,
+							   query : [session_id:sessionId, to:map.msisdn,
+									   text:convertToUnicode(map.content),
+									   unicode:1, concat:getConcatinationSize(map.content)])
+									   
+		   }
+	   
+	   if(!result.toString().contains('ID:'))
+		   throw new ConsumerServiceException(errorMsg:result.toString(), senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn)
+		   
+	   return result.toString()
 	}
 	
 	def getNewSession(Map map){

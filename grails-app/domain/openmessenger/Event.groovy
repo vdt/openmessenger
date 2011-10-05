@@ -6,6 +6,7 @@ class Event {
     Date occuredDate
 	Status status
 	Type type
+	Boolean isSenderId=false
 		
 	public enum Status{
 		NORMAL,
@@ -32,6 +33,7 @@ class Event {
         occuredDate(nullable: false)
 		status(nullable:false, inList:Status.list())
 		type(nullable:false, inList:Type.list())
+		isSenderId(nullable: false)
     }     
 	
     static hasMany = [subscribers:Subscriber, messages:Message]	
