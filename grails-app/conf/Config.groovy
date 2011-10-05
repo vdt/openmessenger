@@ -60,9 +60,9 @@ environments {
 		
 		rabbitmq {
 			connectionfactory {
-				username = ''
-				password = ''
-				hostname = ''
+				username = 'guest'
+				password = 'guest'
+				hostname = 'http://messenger.opendream.org'
 				consumers = 5
 			}
 			queues = {
