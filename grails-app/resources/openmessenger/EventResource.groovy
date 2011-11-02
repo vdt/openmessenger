@@ -16,7 +16,7 @@ class EventResource {
     def communicationService
 
     @GET
-    @Path('/{id:[a-z][a-z_0-9]{1,4}}/msisdn/{msisdn}/{senderId}/{content}/passphase/{username}/{password}')
+    @Path('/{id:[a-z][a-z_0-9]{1,7}}/msisdn/{msisdn}/{senderId}/{content}/passphase/{username}/{password}')
     @Produces('text/plain')
     Response sendMessageToEvent(@PathParam('id') String id,
                                   @PathParam('msisdn') String msisdn,
@@ -27,7 +27,7 @@ class EventResource {
 	{
 		content = URLDecoder.decode(content, 'UTF-8')
 		def messageMap = communicationService.extractMessage(id, msisdn, content)    
-        eventService.sendMessage(messageMap.eventId, messageMap.message, senderId)
+        eventService.sendGroupChatMessage(messageMap.eventId, messageMap.message, senderId)
         ok "Request Completed"
     }
 
@@ -36,7 +36,7 @@ class EventResource {
     Response postMessageToEvent(EventDTO eventDTO){
         println "${eventDTO.codename} and ${eventDTO.msisdn} and ${eventDTO.senderId} and ${eventDTO.content} and ${eventDTO.username} and ${eventDTO.password}"
         def messageMap = communicationService.extractMessage(eventDTO.codename, eventDTO.msisdn, eventDTO.content)    
-        eventService.sendMessage(messageMap.eventId, messageMap.message, eventDTO.senderId)
+        eventService.sendGroupChatMessage(messageMap.eventId, messageMap.message, eventDTO.senderId)
         ok "Request Completed"
     }  
     

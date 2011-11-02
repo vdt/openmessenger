@@ -4,6 +4,7 @@ class Subscriber {
     String msisdn
     String active
 	//Boolean support
+	Gateway gateway
 
 	static transients = ['msisdnx']
 	
@@ -14,6 +15,7 @@ class Subscriber {
     static constraints = {
         msisdn(nullable: false, size:10..15, unique:true)
         active(nullable: false, inList: ['Y','N'])
+		gateway(nullable: true)
     }
     static mapping = {
         sort msisdn:"desc"

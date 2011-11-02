@@ -63,8 +63,8 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 	void testSendMessageFail(){
 		CH.config.sms.gateway.user="opendreamx"		
 		shouldFail(ConsumerServiceException) {
-			consumerService.sessionId = null
-			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ']
+			consumerService.sessionId = "error"
+			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date()]
 			consumerService.sendMessage(map)
 		}		
 	}

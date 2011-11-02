@@ -19,9 +19,18 @@ class CommunicationService {
     }
 	
 	def extractMessage(def eventId, def msisdn, def content){ //extract codeName(G,P), msg// code, msisdn, content
-		def event = eventId!='null'?getCommunicationTypeInstanceByCodeName(eventId, getType(eventId), msisdn):getCommunicationTypeInstanceByMsisdn(Type.GROUP_CHAT, msisdn)	
+		def event
+		if(eventId!='null'){
+			//event = getCommunicationTypeInstanceByCodeName(eventId, getType(eventId), msisdn)
+			event = getCommunicationInstanceByCodeName(eventId, msisdn)
+		}else {
+			//event = getCommunicationTypeInstanceByMsisdn(Type.GROUP_CHAT, msisdn)
+			event = getCommunicationInstanceByMsisdn(msisdn)
+		}	
 			
-		if(!event) throw new CommunicationException(message:"msisdn:$msisdn, content:$content, eventId:$eventId")
+		if(!event){ 
+			throw new CommunicationException(message:"msisdn:$msisdn, content:$content, prefix:$eventId not found!")
+		}
 			
 		def message = new Message(title:event.name, content:content.trim(), createdDate: new Date(), createBy:msisdn)
 		
@@ -43,6 +52,32 @@ class CommunicationService {
 			
 		log.debug instance
 		return instance?.subscribers?.find {it.msisdn ==  msisdn}?instance:null
+	}
+	
+	def getCommunicationInstanceByCodeName(def code, def msisdn){
+		def instance
+		log.debug code
+		instance = Event.findByCodename(code)			
+		return instance?.subscribers?.find {it.msisdn ==  msisdn}?instance:null
+	}
+	
+	def getCommunicationInstanceByMsisdn(def msisdn){
+		def instance
+		def event = Event.createCriteria()
+		def instances = event.list {
+			subscribers{
+				eq('msisdn', msisdn)
+			}
+		}
+		/*if(!instances){
+			throw new CommunicationException(message:"msisdn:$msisdn, msg:not found")
+		}else */
+		if(instances.size()==1){
+			instance = instances.get(0)			
+		}else if(instances.size()>1){
+			throw new CommunicationException(message:"msisdn:$msisdn, msg:get multiple communication type")
+		}
+		return instance?:null
 	}
 	
 	def getCommunicationTypeInstanceByMsisdn(def type, def msisdn){

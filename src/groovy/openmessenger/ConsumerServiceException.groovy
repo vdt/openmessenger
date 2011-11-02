@@ -1,11 +1,13 @@
 package openmessenger
 
 class ConsumerServiceException extends RuntimeException {
-	String errorMsg
+	String message
+	/*String errorMsg
 	String senderId
-	String msisdn
+	String msisdn*/
 	
 	String toString(){
-		errorMsg+' sender_id: '+senderId+' msisdn: '+msisdn
+		"ConsumerServiceException[clickatell]: $message"
+		//errorMsg+' sender_id: '+senderId+' msisdn: '+msisdn
 	}
 }

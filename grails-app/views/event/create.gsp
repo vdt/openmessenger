@@ -38,6 +38,10 @@
 				<g:select name="status" from="${Status.list()}"/>
 			</div>
 			<div id="status-input" class="general-field">
+				<label>unicode: </label>
+				<g:checkBox name="isUnicode" value="${eventInstance?.isUnicode}" />
+			</div>
+			<div id="status-input" class="general-field">
 				<label>senderID: </label>
 				<g:checkBox name="isSenderId" value="${eventInstance?.isSenderId}" />
 			</div>

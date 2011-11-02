@@ -5,10 +5,12 @@ class SubscriberFileService {
     static transactional = true
 
     List parseCsv(File file) {
-		def subscribers = []
+		def msisdns = []
 		file.eachCsvLine { tokens ->
-			subscribers.add(tokens[0].toString().trim())
+			def msisdn = tokens[0].toString().trim()
+			msisdn = msisdn.replace(' ', '')
+			msisdns.add(msisdn)
 		}
-		return subscribers
+		return msisdns
     }
 }

@@ -1,5 +1,6 @@
 import openmessenger.Event
 import openmessenger.Event.Type
+import openmessenger.Gateway
 import openmessenger.Message
 import openmessenger.Subscriber
 import openmessenger.User
@@ -57,6 +58,11 @@ class BootStrap {
 			UserRole.create(user, role)
 			new Role(authority:'ROLE_MANAGER').save(failOnError: true)
 			new Role(authority:'ROLE_USER').save(failOnError: true)
+		}
+		
+		if(!Gateway.count()){
+			new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin').save(failOnError: true)
+			new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin').save(failOnError: true)
 		}
     }
     def destroy = {
