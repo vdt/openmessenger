@@ -54,9 +54,11 @@ class EventService {
 			def subscriber = Subscriber.findByMsisdn(it)
 			if(subscriber==null) subscriber = new Subscriber(msisdn: it, active:"Y")			
 			event.addToSubscribers(subscriber)
-			def gateway = findGateway(subscriber.msisdn)
-			gateway.addToSubscribers(subscriber)
-			gateway.save()
+			if(!subscriber.gateway){
+				def gateway = findGateway(subscriber.msisdn)
+				gateway.addToSubscribers(subscriber)
+				gateway.save()
+			}
 		}
 		event.save()		
 	}
@@ -93,7 +95,7 @@ class EventService {
 			log.debug(it.msisdn)
 			def date = new Date()
             def msg = [msisdn:it.msisdn, content:message.content, date:date, isSenderId:isSenderId]
-			insertMessageLog(eventId, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
+			insertMessageLog(event, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
 			rabbitSend(it.gateway.queueName, msg)
 			//rabbitSend(queueName, msg)
         }		
@@ -112,15 +114,15 @@ class EventService {
 			log.debug(it.msisdn)
 			def date = new Date()
 			def msg = [msisdn:it.msisdn, content:content, date:date, isSenderId:isSenderId, senderId:senderId]
-			insertMessageLog(eventId, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
+			insertMessageLog(event, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
 			rabbitSend(it.gateway.queueName, msg)
 			//rabbitSend(queueName, msg)
 		}
 		event.save()
 	}
 	
-	private void insertMessageLog(Long eventId, Type eventType, String msisdn, Gateway gateway, String msg, String createBy, Date date){ 
-		def msgLog = new MessageLog(eventId:eventId, eventType:eventType, msisdn:msisdn, gateway:gateway.name, price:gateway.rate, msg:msg, createBy:createBy, date:date)
+	private void insertMessageLog(Event event, Type eventType, String msisdn, Gateway gateway, String msg, String createBy, Date date){ 
+		def msgLog = new MessageLog(event:event, eventType:eventType, msisdn:msisdn, gateway:gateway.name, price:gateway.rate, msg:msg, createBy:createBy, date:date)
 		msgLog.concatinationSize = OpenMessengerUtil.getConcatinationSize(msg, gateway.messageSize)
 		msgLog.save()
 	}

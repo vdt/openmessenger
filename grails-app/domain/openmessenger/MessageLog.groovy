@@ -4,7 +4,7 @@ import java.util.Date;
 import openmessenger.Event.Type
 
 class MessageLog {
-	Long eventId
+	Event event
 	Type eventType 
 	String msisdn
 	String gateway
@@ -16,8 +16,10 @@ class MessageLog {
 	Date dateCreated
 	Date lastUpdated
 
+	//static belongsTo = [event:Event]
+	
     static constraints = {
-		eventId(nullable: false)
+		event(nullable: false)
 		eventType(nullable: false)
 		msisdn(nullable: false)
 		gateway(nullable: false)

@@ -67,7 +67,7 @@
             <div class="event-news-count"><strong>Codename: ${GroupChat.get(event.id).codename}</strong></div>
           </g:if>
           <div class="event-news-count"><strong>Totals: ${event.messages.size()}</strong></div>
-          <div class="event-last-update"><strong>Last Update:</strong> 26 july 2011</div>
+          <div class="event-last-update"><strong>Last Update:</strong> <g:formatDate format="dd MMM yyyy" date="${event.occuredDate}"/></div>
           <div class="event-subscriber-list">			
             <h3><sec:ifAnyGranted roles="ROLE_ADMINS,ROLE_MANAGER">
             		<g:link action="listEventSubscribers" id="${event.id}"> ${event.subscribers.size()} people subscribe to this event</g:link>
