@@ -115,7 +115,7 @@ environments {
         grails.serverURL = "http://localhost:8080/${appName}"
 		
 		// rabbitMQ Configuration
-		/*rabbitmq {
+		rabbitmq {
 			connectionfactory {
 				username = 'guest'
 				password = 'guest'
@@ -126,7 +126,7 @@ environments {
 				openmessenger()
 				//openmessenger_dtac()
 			}
-		}*/
+		}
 		
 		// sms gateway configuration
 		sms.gateway.suri='http://localhost:8090'
