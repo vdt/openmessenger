@@ -88,33 +88,34 @@ environments {
 		// rabbitMQ Configuration
 		rabbitmq {
 			connectionfactory {
-				username = ''
-				password = ''
-				hostname = ''
+				username = 'guest'
+				password = 'guest'
+				hostname = 'deftdev.com'
 				consumers = 5
 			}
 			queues = {
 				openmessenger()
+				//openmessenger_dtac()
 			}
 		}
 		
 		// sms gateway configuration
-		sms.gateway.suri='https://api.clickatell.com'
-		sms.gateway.uri='http://api.clickatell.com'
-		sms.gateway.path='/http/sendmsg'
-		sms.gateway.auth='/http/auth'
-		sms.gateway.ping='/http/ping'
-		sms.gateway.coverage='/utils/routeCoverage.php'
-		sms.gateway.apiId=''
-		sms.gateway.user=''
-		sms.gateway.password=''
-		sms.gateway.senderId =''
+		sms.gateway.suri='http://localhost:8090'
+		sms.gateway.uri='http://localhost:8090'
+		sms.gateway.path='/clickatell-mocker/http/sendmsg'
+		sms.gateway.auth='/clickatell-mocker/http/auth'
+		sms.gateway.ping='/clickatell-mocker/http/ping'
+		sms.gateway.coverage='/clickatell-mocker/utils/routeCoverage.php'
+		sms.gateway.apiId='defaultApiId'
+		sms.gateway.user='defaultUser'
+		sms.gateway.password='defaultPassword'
+		sms.gateway.senderId ='defaultSenderId'
 	}
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
 		
 		// rabbitMQ Configuration
-		rabbitmq {
+		/*rabbitmq {
 			connectionfactory {
 				username = 'guest'
 				password = 'guest'
@@ -122,21 +123,22 @@ environments {
 				consumers = 5
 			}
 			queues = {
-				openmessenger_test()
+				openmessenger()
+				//openmessenger_dtac()
 			}
-		}
+		}*/
 		
 		// sms gateway configuration
-		sms.gateway.suri='http://172.16.181.129:8080'
-		sms.gateway.uri='http://172.16.181.129:8080'
-		sms.gateway.path='/clickatell-mocker-0.1/http/sendmsg'
-		sms.gateway.auth='/clickatell-mocker-0.1/http/auth'
-		sms.gateway.ping='/clickatell-mocker-0.1/http/ping'
-		sms.gateway.coverage='/clickatell-mocker-0.1/utils/routeCoverage.php'
-		sms.gateway.apiId=''
-		sms.gateway.user=''
-		sms.gateway.password=''
-		sms.gateway.senderId ='q'		
+		sms.gateway.suri='http://localhost:8090'
+		sms.gateway.uri='http://localhost:8090'
+		sms.gateway.path='/clickatell-mocker/http/sendmsg'
+		sms.gateway.auth='/clickatell-mocker/http/auth'
+		sms.gateway.ping='/clickatell-mocker/http/ping'
+		sms.gateway.coverage='/clickatell-mocker/utils/routeCoverage.php'
+		sms.gateway.apiId='defaultApiId'
+		sms.gateway.user='defaultUser'
+		sms.gateway.password='defaultPassword'
+		sms.gateway.senderId ='defaultSenderId'		
 		
     }
 

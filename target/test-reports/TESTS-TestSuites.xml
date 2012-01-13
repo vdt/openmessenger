@@ -1,2 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites />
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="kingkilly" id="0" name="EventResourceTests" package="openmessenger" tests="2" time="3.133" timestamp="2012-01-12T13:22:52">
+      <properties />
+
+      <testcase classname="openmessenger.EventResourceTests" name="testExtractMessageAndSend" time="2.631" />
+
+      <testcase classname="openmessenger.EventResourceTests" name="testAuthenticate" time="0.48" />
+
+      <system-out><![CDATA[--Output from testExtractMessageAndSend--
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): gateway 1234567890 inter_clickatell
+DEBUG (openmessenger.EventService): 2345678901
+DEBUG (openmessenger.EventService): gateway 2345678901 inter_clickatell
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): gateway 3456789012 inter_clickatell
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): gateway 1234567890 inter_clickatell
+DEBUG (openmessenger.EventService): 12345678901
+DEBUG (openmessenger.EventService): gateway 12345678901 inter_clickatell
+DEBUG (openmessenger.EventService): 23456789012
+DEBUG (openmessenger.EventService): gateway 23456789012 inter_clickatell
+DEBUG (openmessenger.EventService): 34567890123
+DEBUG (openmessenger.EventService): gateway 34567890123 inter_clickatell
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): gateway 1234567890 inter_clickatell
+DEBUG (openmessenger.CommunicationService): agkpbk
+DEBUG (openmessenger.CommunicationService): agkpbk
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): 2345678901
+agkpbk and 1234567890 and 6281287925981 and Hill and roofimon and password
+DEBUG (openmessenger.CommunicationService): agkpbk
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): 2345678901
+test null codename started .....
+DEBUG (openmessenger.EventService): 34567890123
+DEBUG (openmessenger.EventService): 12345678901
+DEBUG (openmessenger.EventService): 1234567890
+--Output from testAuthenticate--
+DEBUG (openmessenger.RemoteAuthenticationService): 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 : 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+DEBUG (openmessenger.RemoteAuthenticationService): 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 : 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+EkoONOMFfTwhGaId9Ws0xIw=
+DEBUG (openmessenger.RemoteAuthenticationService): null : 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+error: not found
+ok
+[{"class":"openmessenger.GroupChat","id":5,"codename":"agkpbk1","description":"mock group","isSenderId":true,"isUnicode":false,"messages":null,"name":"group-chat1","occuredDate":"2012-01-12T13:22:55Z","status":{"enumType":"openmessenger.Event$Status","name":"NORMAL"},"subscribers":null,"type":{"enumType":"openmessenger.Event$Type","name":"GROUP_CHAT"}}]
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): gateway 1234567890 inter_clickatell
+DEBUG (openmessenger.EventService): 2345678901
+DEBUG (openmessenger.EventService): gateway 2345678901 inter_clickatell
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): gateway 3456789012 inter_clickatell
+[{"class":"openmessenger.Subscriber","id":8,"active":"Y","gateway":{"class":"Gateway","id":1},"msisdn":"3456789012"},{"class":"openmessenger.Subscriber","id":7,"active":"Y","gateway":{"class":"Gateway","id":1},"msisdn":"2345678901"},{"class":"openmessenger.Subscriber","id":6,"active":"Y","gateway":{"class":"Gateway","id":1},"msisdn":"1234567890"}]
+DEBUG (openmessenger.EventService): create by: null, eventId: 5
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): 2345678901
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): create by: null, eventId: 5
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): 2345678901
+DEBUG (openmessenger.EventService): 1234567890
+DEBUG (openmessenger.EventService): create by: null, eventId: 5
+DEBUG (openmessenger.EventService): 3456789012
+DEBUG (openmessenger.EventService): 2345678901
+DEBUG (openmessenger.EventService): 1234567890
+[{"id":7,"content":"test msg","createBy":null,"createdDate":"2012-01-12T13:22:55Z"},{"id":9,"content":"test msg","createBy":null,"createdDate":"2012-01-12T13:22:56Z"},{"id":8,"content":"test msg","createBy":null,"createdDate":"2012-01-12T13:22:56Z"}]
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testExtractMessageAndSend--
+--Output from testAuthenticate--
+]]></system-err>
+
+  </testsuite>
+</testsuites>
