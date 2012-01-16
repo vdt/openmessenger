@@ -44,6 +44,7 @@ class ConsumerService {
 			log.info("date:${map.date}, senderId:${CH.config.sms.gateway.senderId}, msisdn:${map.msisdn}, message:${map.content}")		
 		}catch (Exception e) {
 			log.error(e.toString(),e)
+			// callback
 		}		
 	}
 	

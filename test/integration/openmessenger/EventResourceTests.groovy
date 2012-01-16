@@ -106,7 +106,7 @@ class EventResourceTests extends IntegrationTestCase {
 		sendRequest('/api/event/null/msisdn/23456789012/6281287925981/hello/passphase/roofimon/passw0rd','GET', headers)		
 		assertEquals(200, response.status)
 		assertEquals("${expected}".toString(), response.contentAsString)
-		assertEquals(3, rabbitSent)
+		assertEquals(3, rabbitSent)		
     }
 	
 	@Test
@@ -117,7 +117,7 @@ class EventResourceTests extends IntegrationTestCase {
 		//CH.config.grails.plugins.springsecurity.dao.reflectionSaltSourceProperty = ''
 		def user1 = new User(username:'boyone',
 			password:'password',
-			firstname:'password',
+			firstname:'boyone',
 			lastname:'lastname',
 			email:'email@email.com',
 			enabled:true,
@@ -127,7 +127,7 @@ class EventResourceTests extends IntegrationTestCase {
 		)
 		def user2 = new User(username:'boytwo',
 			password:'password',
-			firstname:'password',
+			firstname:'boytwo',
 			lastname:'lastname',
 			email:'email@email.com',
 			enabled:true,
@@ -138,7 +138,7 @@ class EventResourceTests extends IntegrationTestCase {
 		
 		def user3 = new User(username:'default',
 			password:'password',
-			firstname:'password',
+			firstname:'default',
 			lastname:'lastname',
 			email:'email@email.com',
 			enabled:true,
@@ -164,12 +164,13 @@ class EventResourceTests extends IntegrationTestCase {
 		
 		def headers = ['Content-Type':'application/json', 'Accept':'text/plain']
 		
+		// test /api/event/auth 
 		assertEquals 2, SessionToken.findAllByUsername('boyone').size()		
 		sendRequest('/api/event/auth/boyone/password', 'GET', headers)	
 		assertEquals(200, response.status)
 		assertEquals 2, SessionToken.findAllByUsername('boyone').size()
 		
-		
+		// test /api/event/auth
 		assertEquals 1, SessionToken.findAllByUsername('default').size()
 		sendRequest('/api/event/auth/default/password', 'GET', headers)
 		assertEquals(200, response.status)
@@ -179,15 +180,20 @@ class EventResourceTests extends IntegrationTestCase {
 		assertNotNull(token)
 		assertEquals(SessionToken.findByUsername('default').token, token)		
 		
+		// test /api/event/auth with unknown user
 		sendRequest('/api/event/auth/error/password', 'GET', headers)
 		println response.contentAsString
 		assertEquals('error: not found', response.contentAsString)
 		
-		sendRequest("/api/event/ping/default/$token", 'GET', headers)
+		// test /api/event/ping
+		println "url: /api/event/ping/default/${token}"
+		sendRequest("/api/event/ping/default/${token}", 'GET', headers)
+		println "response: $response"
 		assertEquals(200, response.status)
 		println response.contentAsString
 		assertEquals('ok', response.contentAsString)
 		
+		// test /api/event/ping
 		sendRequest("/api/event/ping/defaultx/$token", 'GET', headers)
 		assertEquals('error: not found', response.contentAsString)
 		
@@ -195,12 +201,14 @@ class EventResourceTests extends IntegrationTestCase {
 		def group = new GroupChat(codename:'agkpbk1', name:'group-chat1', description:'mock group', occuredDate:new Date(), status:Status.NORMAL, type:Type.GROUP_CHAT, isSenderId:true)
 		group.save()
 		
+		// test /api/event/list
 		UserEvent.create(user3, group, true)
 		headers = ['Content-Type':'application/json', 'Accept':['application/json', 'text/plain']]
 		sendRequest("/api/event/list/default/$token", 'GET', headers)
 		assertEquals(200, response.status)
 		println response.contentAsString
 		
+		// test /api/event/list
 		sendRequest("/api/event/list/defaultx/$token", 'GET', headers)
 		assertEquals('error: not found', response.contentAsString)
 		
@@ -208,6 +216,7 @@ class EventResourceTests extends IntegrationTestCase {
 		eventService.subscribeToEvent(group.id, '2345678901')
 		eventService.subscribeToEvent(group.id, '3456789012')
 		
+		// test /api/event/subscribers
 		sendRequest("/api/event/subscribers/default/$token/${group.id}", 'GET', headers)
 		assertEquals(200, response.status)
 		println response.contentAsString
@@ -217,6 +226,8 @@ class EventResourceTests extends IntegrationTestCase {
 		def rabbitSent=0
 		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++}		
 		def message = 'test msg'
+		
+		// test /api/event/sendmessage
 		sendRequest("/api/event/sendmessage/default/$token/${group.id}/$message", 'GET', headers)
 		assertEquals(200, response.status)
 		assertEquals("Request Completed", response.contentAsString)
@@ -228,7 +239,7 @@ class EventResourceTests extends IntegrationTestCase {
 		assertEquals(200, response.status)
 		assertEquals(9, rabbitSent)
 		
-		
+		// test /api/event/messages
 		sendRequest("/api/event/messages/default/$token/${group.id}", 'GET', headers)
 		assertEquals(200, response.status)
 		println response.contentAsString

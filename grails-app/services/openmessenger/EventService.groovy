@@ -94,7 +94,7 @@ class EventService {
 		event.subscribers.each {
 			log.debug(it.msisdn)
 			def date = new Date()
-            def msg = [msisdn:it.msisdn, content:message.content, date:date, isSenderId:isSenderId]
+            def msg = [msisdn:it.msisdn, content:message.content, date:date, isSenderId:isSenderId, eventId:eventId]
 			insertMessageLog(event, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
 			rabbitSend(it.gateway.queueName, msg)
 			//rabbitSend(queueName, msg)
@@ -113,7 +113,7 @@ class EventService {
 		subscribers.each {
 			log.debug(it.msisdn)
 			def date = new Date()
-			def msg = [msisdn:it.msisdn, content:content, date:date, isSenderId:isSenderId, senderId:senderId]
+			def msg = [msisdn:it.msisdn, content:content, date:date, isSenderId:isSenderId, senderId:senderId, eventId:eventId]
 			insertMessageLog(event, event.type, it.msisdn, it.gateway, message.content, message.createBy, date)
 			rabbitSend(it.gateway.queueName, msg)
 			//rabbitSend(queueName, msg)

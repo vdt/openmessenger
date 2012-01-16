@@ -8,12 +8,17 @@ class RemoteAuthenticationServiceIntegrationTests extends GroovyTestCase {
 	
     protected void setUp() {
         super.setUp()
+		/*if(SessionToken.count()) {
+			SessionToken.list().each {
+				it.delete(flush:true)
+			}
+		}*/
 		
 		MockUtils.mockLogging(RemoteAuthenticationService, true)
 		//CH.config.grails.plugins.springsecurity.dao.reflectionSaltSourceProperty = ''
-		def user1 = new User(username:'boyone',
+		def userone = new User(username:'userone',
 			password:'password',
-			firstname:'password',
+			firstname:'userone',
 			lastname:'lastname',
 			email:'email@email.com',
 			enabled:true,
@@ -21,9 +26,9 @@ class RemoteAuthenticationServiceIntegrationTests extends GroovyTestCase {
 			accountLocked:false,
 			passwordExpired:false
 		)
-		def user2 = new User(username:'boytwo',
+		def usertwo = new User(username:'usertwo',
 			password:'password',
-			firstname:'password',
+			firstname:'usertwo',
 			lastname:'lastname',
 			email:'email@email.com',
 			enabled:true,
@@ -32,19 +37,8 @@ class RemoteAuthenticationServiceIntegrationTests extends GroovyTestCase {
 			passwordExpired:false
 		)
 		
-		user1.save()
-		user2.save()
-		
-		// mock sessionToken
-		def sessionToken1 = new SessionToken(username:'boyone', token:'token', issueDate:new Date())
-		def sessionToken2 = new SessionToken(username:'boytwo', token:'token2', issueDate:new Date())
-		def sessionToken3 = new SessionToken(username:'boyone', token:'token3', issueDate:(new Date()).previous())
-		def sessionToken4 = new SessionToken(username:'default', token:'token4', issueDate:(new Date()).previous())
-				
-		sessionToken1.save()
-		sessionToken2.save()
-		sessionToken3.save()
-		sessionToken4.save()
+		userone.save()
+		usertwo.save()				
     }
 
     protected void tearDown() {
@@ -52,9 +46,19 @@ class RemoteAuthenticationServiceIntegrationTests extends GroovyTestCase {
     }
 
     void testAuthenticate() {
-		assertEquals 2, SessionToken.findAllByUsername('boyone').size()
-		def token = remoteAuthenticationService.authenticate('boyone', 'password')
+		// mock sessionToken
+		def tokenOne = new SessionToken(username:'userone', token:'tokenasdf', issueDate:new Date())
+		def tokenTwo = new SessionToken(username:'usertwo', token:'token2dd', issueDate:new Date())
+		def tokenThree = new SessionToken(username:'userone', token:'token3sss', issueDate:(new Date()).previous())
+				
+		tokenOne.save(flush:true)
+		tokenTwo.save(flush:true)
+		tokenThree.save(flush:true)
+		
+		println "session token ${SessionToken.count()}"
+		assertEquals 2, SessionToken.findAllByUsername('userone').size()
+		def token = remoteAuthenticationService.authenticate('userone', 'password')
 		assertNotNull(token)
-		assertEquals 2, SessionToken.findAllByUsername('boyone').size()		
+		assertEquals 2, SessionToken.findAllByUsername('userone').size()		
     }
 }
