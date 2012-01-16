@@ -16,10 +16,8 @@
 			<form action='${postUrl}' method='POST' id='login' class='cssform' autocomplete='off'>
 				<div id="username-input"><label>Username: </label><input type="text" name='j_username' id='username' size="30" maxlength="20" /></div>
 				<div id="password-input"><label>Password: </label><input type="password" name='j_password' id='password' size="30" maxlength="20" /></div>
-				<div id="username-input"><label for='remember_me'><g:message code="springSecurity.login.remember.me.label" /></label>
-					<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
-					<g:if test='${hasCookie}'>checked='checked'</g:if> />
-				</div>
+				
+				<g:hiddenField name="${rememberMeParameter}" id='remember_me' value="true"/>
 				<input id="submit-button" type="submit" value="Login">
 				
 			</form>

@@ -188,13 +188,15 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName='openmessenger.U
 grails.plugins.springsecurity.authority.className='openmessenger.Role'
 
 //grails.plugins.springsecurity.dao.reflectionSaltSourceProperty=''
-
+grails.plugins.springsecurity.rememberMe.persistent = true
+grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'openmessenger.PersistentLogin'
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
 	'/sec/**':   					['IS_AUTHENTICATED_FULLY'],
 	'/user/**':   			['ROLE_ADMINS'],
 	'/role/**':   			['ROLE_ADMINS'],
+	'/report/**':  			['ROLE_ADMINS'],
 	'/event/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
 	'/groupChat/**':    				['ROLE_ADMINS','ROLE_MANAGER'],
 	'/api/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
@@ -205,3 +207,19 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/login/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/logout/**':   				['IS_AUTHENTICATED_ANONYMOUSLY']
  ]
+
+grails.plugins.springsecurity.secureChannel.definition = [	
+	'/login/**': 'REQUIRES_SECURE_CHANNEL',
+	'/role/**': 'REQUIRES_SECURE_CHANNEL',
+	'/user/**': 'REQUIRES_SECURE_CHANNEL',
+	'/subscriber/**': 'REQUIRES_SECURE_CHANNEL',
+	'/j_spring_security_check': 'REQUIRES_SECURE_CHANNEL',
+	'/index.gsp':  'REQUIRES_INSECURE_CHANNEL',		
+	'/event/**': 'REQUIRES_INSECURE_CHANNEL',
+	'/api/event/auth/**': 'REQUIRES_SECURE_CHANNEL',
+	'/api/event/ping/**': 'REQUIRES_INSECURE_CHANNEL',
+	'/api/event/list/**': 'REQUIRES_INSECURE_CHANNEL',
+	'/api/event/subscribers/**': 'REQUIRES_INSECURE_CHANNEL',
+	'/api/event/sendmessage/**': 'REQUIRES_INSECURE_CHANNEL',
+	'/api/event/messages/**': 'REQUIRES_INSECURE_CHANNEL'	
+]

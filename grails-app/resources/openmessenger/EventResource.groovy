@@ -120,8 +120,8 @@ class EventResource {
 							
 	@GET
 	@Path('/messages/{username}/{token}/{event_id}')
-	@Produces(['application/xml','application/json'])
-	def listMessages(@PathParam('username') String username,
+	@Produces('application/json')
+	JSON listMessages(@PathParam('username') String username,
 							@PathParam('token') String token,
 							@PathParam('event_id') Long eventId) {
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
@@ -132,7 +132,7 @@ class EventResource {
 				messages.add([id:it.id, content:it.content, createBy:it.createBy, createdDate:it.createdDate])
 			}
 			
-			messages
+			messages as JSON
 		} else {
 			'error: not found'
 		}
