@@ -42,9 +42,19 @@ class ConsumerService {
 				sendMessageWithoutSenderId(map)
 			}	
 			log.info("date:${map.date}, senderId:${CH.config.sms.gateway.senderId}, msisdn:${map.msisdn}, message:${map.content}")		
-		}catch (Exception e) {
-			log.error(e.toString(),e)
+		} catch (ConsumerServiceException e) {
+			log.error(e.toString())
+			log.debug "ConsumerServiceException:errorcode ${e.errorcode}"
 			// callback
+			def callback = [eventId:map.eventId, queuename:rabbitQueue, errorcode:e.errorcode, senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn,
+							content:map.content, sendDate:map.date]
+			rabbitSend(map.callbackQueue, callback)		
+		} catch (Exception e) {
+			log.error(e.toString(),e)
+			// callback			
+			def callback = [eventId:map.eventId, queuename:rabbitQueue, errorcode:e.message, senderId:CH.config.sms.gateway.senderId, msisdn:map.msisdn, 
+							content:map.content, sendDate:map.date]
+			rabbitSend(map.callbackQueue, callback)
 		}		
 	}
 	
@@ -61,9 +71,9 @@ class ConsumerService {
 										
 			}		
 		
-		if(!result.toString().contains('ID:'))
-			throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()} senderId:${CH.config.sms.gateway.senderId}, msisdn:${map.msisdn}, message:${map.content}")	
-			
+		if(!result.toString().contains('ID:')) {
+			throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()} senderId:${CH.config.sms.gateway.senderId}, msisdn:${map.msisdn}, message:${map.content}", errorcode:result.toString())	
+		}
 		return result.toString()	
 	}
 	
@@ -77,9 +87,9 @@ class ConsumerService {
 									   
 		   }
 	   
-	   if(!result.toString().contains('ID:'))
-		   throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()}, msisdn:${map.msisdn}, message:${map.content}")
-		   
+	   if(!result.toString().contains('ID:')) {
+		   throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()}, msisdn:${map.msisdn}, message:${map.content}", errorcode:result.toString())
+	   }
 	   return result.toString()
 	}
 	
@@ -95,7 +105,7 @@ class ConsumerService {
 			def date = new Date()
 			lastPing = date.time
 		}else if(result.toString().contains('ERR')){
-			throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()}, msisdn:${map.msisdn} can not get new session")
+			throw new ConsumerServiceException(message:"date:${map.date}, ${result.toString()}, msisdn:${map.msisdn} can not get new session", errorcode:result.toString())
 			// getNewSession()
 		}
 	}

@@ -124,6 +124,7 @@ environments {
 			}
 			queues = {
 				openmessenger()
+				eventCallback()
 				//openmessenger_dtac()
 			}
 		}
@@ -146,6 +147,8 @@ environments {
 
 // sms gateway configuration
 sms.gateway.inactivity=600000 // 10 mins
+
+openmessenger.eventCallback='eventCallback'
 
 /** SSL truststore configuration key */
 //rest.https.truststore.path = 'web-app/certs/truststore.jks'

@@ -1,7 +1,7 @@
 package openmessenger
 
 class CallbackMessage {
-	
+	Event event
 	String queuename
 	String errorcode
 	String senderId

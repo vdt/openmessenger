@@ -9,6 +9,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
     protected void setUp() {
         super.setUp()
 		MockUtils.mockLogging(ConsumerService, true)
+		MockUtils.mockLogging(CallbackService, true)
     }
 
     protected void tearDown() {
@@ -55,16 +56,23 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 	void testHandleMessageFail(){
 		CH.config.sms.gateway.user="opendreamx"
 		consumerService.sessionId = null
-		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true]
+		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
+			eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
 		consumerService.handleMessage(map)
-		assertNull consumerService.sessionId		
+		assertNull consumerService.sessionId
+		Thread.sleep(5000)
+		def callback = CallbackMessage.findByMsisdn('66809737799')
+		assertNotNull callback
+		assertEquals(1, CallbackMessage.count())
+		assertEquals('66809737799', callback.msisdn)
 	}
 		
 	void testSendMessageFail(){
 		CH.config.sms.gateway.user="opendreamx"		
 		shouldFail(ConsumerServiceException) {
 			consumerService.sessionId = "error"
-			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date()]
+			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
 			consumerService.sendMessage(map)
 		}		
 	}
@@ -73,14 +81,16 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 		CH.config.sms.gateway.user="opendreamx"
 		
 		shouldFail(ConsumerServiceException) {
-			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ']
+			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
 			consumerService.getNewSession(map)
 		}
 	}
 	
 	void testGetNewSessionPass(){
 		CH.config.sms.gateway.user="opendream"
-		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ']
+		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
 		consumerService.getNewSession(map)
 		assertNotNull consumerService.sessionId
 		assertNotNull consumerService.lastPing

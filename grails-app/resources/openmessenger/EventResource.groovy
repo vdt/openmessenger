@@ -4,7 +4,9 @@ import grails.converters.JSON;
 
 import javax.ws.rs.GET
 import javax.ws.rs.POST
+import javax.ws.rs.PUT
 import javax.ws.rs.Path
+import javax.ws.rs.Consumes
 import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
 import javax.ws.rs.core.Response
@@ -14,7 +16,6 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.core.MediaType;
 
 import openmessenger.EventDTO
-
 
 @Path('/api/event')
 class EventResource {
@@ -39,7 +40,7 @@ class EventResource {
     }
 
     @POST
-    @Produces('text/plain')
+	@Produces('text/plain')
     Response postMessageToEvent(EventDTO eventDTO){
         println "${eventDTO.codename} and ${eventDTO.msisdn} and ${eventDTO.senderId} and ${eventDTO.content} and ${eventDTO.username} and ${eventDTO.password}"
         def messageMap = communicationService.extractMessage(eventDTO.codename, eventDTO.msisdn, eventDTO.content)    
@@ -48,82 +49,70 @@ class EventResource {
     } 
 	
 	@GET
-	@Path('/auth/{username}/{password}') 
-	@Produces('text/plain')
-	Response authenticateUser(@PathParam('username') String username,
-								@PathParam('password') String password) {
-		def token = remoteAuthenticationService.authenticate(username, password)
-		if(token) {
-			ok token
-		} else {			
-			ok 'error: not found'
-		}
-	}
-    
-	@GET
-	@Path('/ping/{username}/{token}')
-	@Produces('text/plain')
-	Response ping(@PathParam('username') String username,
-								@PathParam('token') String token) {
-		def enable = remoteAuthenticationService.hasSessionToken(username, token)	
-		if(enable) {
-			ok 'ok'
-		} else {
-			ok 'error: not found'
-		}
-	}
-								
-	@GET
 	@Path('/list/{username}/{token}')
-	@Produces(['application/xml','application/json'])
-	def listEvents(@PathParam('username') String username,
+	@Produces('application/json')
+	JSON listEvents(@PathParam('username') String username,
 								@PathParam('token') String token) {
+		def events = [:]
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
 		if(enable) {
 			def user = User.findByUsername(username)
-			user.getEvents()
-		} else {
-			'error: not found'
-		}
+			events = user.getEvents()
+		} 
+		return events as JSON 		
 	}
 								
 	@GET
-	@Path('/subscribers/{username}/{token}/{event_id}')
+	@Path('/subscribers/{event_id}/{username}/{token}')
 	@Produces(['application/xml','application/json'])
-	def listSubscribers(@PathParam('username') String username,
-					@PathParam('token') String token,
-					@PathParam('event_id') Integer eventId) {
+	JSON listSubscribers(@PathParam('event_id') Integer eventId,
+					@PathParam('username') String username,
+					@PathParam('token') String token) {
+		def subscribers = [:]			
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
 		if(enable) {
 			def event = Event.get(eventId)
-			event.subscribers
+			subscribers = event.subscribers
+		} 
+		return subscribers as JSON		
+	}
+					
+	@POST
+	@Path('/subscribe')
+	@Consumes('application/json')
+	@Produces('text/plain')
+	Response subscribe(Map params) {
+		def enable = remoteAuthenticationService.hasSessionToken(params.username, params.token)
+		if(enable) {
+			eventService.subscribeToEvent(params.eventId, params.msisdn)
+			ok "Request Completed"
 		} else {
-			'error: not found'
+			ok 'Error: Request not Completed'
 		}
 	}
-			
+	
 	@GET
-	@Path('/sendmessage/{username}/{token}/{event_id}/{message}')
+	@Path('/sendmessage/{event_id}/{username}/{token}/{message}')
 	@Produces('text/plain')
-	Response sendMessage(@PathParam('username') String username,
-							@PathParam('token') String token,
-							@PathParam('event_id') Long eventId,
+	Response sendMessage(@PathParam('event_id') Long eventId,
+							@PathParam('username') String username,
+							@PathParam('token') String token,							
 							@PathParam('message') String message) {
-		def enable = remoteAuthenticationService.hasSessionToken(username, token);
+		def enable = remoteAuthenticationService.hasSessionToken(username, token)
 		if(enable) {
 			eventService.sendMessage(eventId, new Message(title:'test msg', content:message, createdDate:new Date()))
 			ok "Request Completed"
 		} else {
 			ok 'Error: Request not Completed'
 		}
-	}
+	}	
 							
 	@GET
-	@Path('/messages/{username}/{token}/{event_id}')
+	@Path('/messages/{event_id}/{username}/{token}')
 	@Produces('application/json')
-	JSON listMessages(@PathParam('username') String username,
-							@PathParam('token') String token,
-							@PathParam('event_id') Long eventId) {
+	JSON listMessages(@PathParam('event_id') Long eventId,
+							@PathParam('username') String username,
+							@PathParam('token') String token) {
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
 		if(enable) {
 			def event = Event.get(eventId)
@@ -134,7 +123,7 @@ class EventResource {
 			
 			messages as JSON
 		} else {
-			'error: not found'
+			[:] as JSON
 		}
 	}
 }

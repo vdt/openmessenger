@@ -2,6 +2,9 @@ package openmessenger
 
 import grails.test.*
 import grails.validation.ValidationException
+import openmessenger.Event.Status
+import openmessenger.Event.Type
+import java.text.SimpleDateFormat
 
 class CallbackServiceTests extends GrailsUnitTestCase {
 	def callbackService
@@ -13,6 +16,12 @@ class CallbackServiceTests extends GrailsUnitTestCase {
 		def callbackMsg = new CallbackMessage(queuename:'test callbackQueue', errorcode:'error test 112', senderId:'openError', 
 				msisdn:'openmesenger', content:'test callback msg', sendDate:new Date())
 		mockDomain(CallbackMessage)
+		
+		def eventInstances = [new Event(name: 'The Championships, Wimbledon',
+			description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+			occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+			status:Status.NORMAL, type:Type.GROUP_CHAT)]
+		mockDomain(Event, eventInstances)
     }
 
     protected void tearDown() {
@@ -20,7 +29,8 @@ class CallbackServiceTests extends GrailsUnitTestCase {
     }
 
     void testHandleMessage() {
-		def map = [queuename:'test callbackQueue', errorcode:'error test 112', senderId:'openError', 
+		assertEquals(1, Event.count())
+		def map = [eventId:1, queuename:'test callbackQueue', errorcode:'error test 112', senderId:'openError', 
 				msisdn:'openmesenger', content:'test callback msg', sendDate:new Date()]
 		callbackService.handleMessage(map)
 		def callbackMsg = CallbackMessage.findBySendDateAndMsisdn(map.sendDate, map.msisdn)
@@ -34,7 +44,7 @@ class CallbackServiceTests extends GrailsUnitTestCase {
 		def callbackMsg = CallbackMessage.findAll()
 		assertEquals(0, CallbackMessage.count())
 		
-		map = [queuename:'test callbackQueue', errorcode:'error test 112', senderId:'openError', 
+		map = [event:Event.get(1), queuename:'test callbackQueue', errorcode:'error test 112', senderId:'openError', 
 				msisdn:'openmesenger', contentx:'test callback msg', sendDate:'asdfasdfasdf']
 		callbackService.handleMessage(map)
 		callbackMsg = CallbackMessage.findAll()
