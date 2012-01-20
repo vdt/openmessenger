@@ -1,5 +1,6 @@
 /.settings/
 /target/
+target/
 /grails-app/services/openmessenger/ClickatellGatewayService.groovy
 /grails-app/taglib/
 /grails-app/utils/
