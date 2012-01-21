@@ -5,56 +5,109 @@
 
 <head>
 	<title>Create New Even</title>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-	<link rel="stylesheet" href="${resource(dir:'css',file:'style.css')}" />        
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="layout" content="main" />        
 </head>
 
-<body id="page-login">
-<div id="content-wrapper">
-	<div id="content">
-		<g:if test="${eventType=='event'}">
-		<h1>Create New Event</h1>
-		</g:if>
-		<g:if test="${eventType=='groupChat'}">
-		<h1>Create Group Chat</h1>
-		</g:if>
-		<form id="login" method="post" action="save">
-			<div id="username-input" class="general-field">
-				<label>name: </label>    
-				 <g:textField name="name" value="${eventInstance?.name}" /> 
-			</div>
-			<div id="password-input" class="general-field">
-				<label>description: </label>
-				 <g:textField name="description" value="${eventInstance?.description}" />
-			</div>    
-		    <g:if test="${eventType=='groupChat'}">
-		    <div id="status-input" class="general-field">
-				<label>code name: </label>
-				 <g:textField name="codename" value="${eventInstance?.codename}" />
-			</div>    
-			</g:if>	
-			<div id="status-input" class="general-field">
-				<label>status: </label>
-				<g:select name="status" from="${Status.list()}"/>
-			</div>
-			<div id="status-input" class="general-field">
-				<label>unicode: </label>
-				<g:checkBox name="isUnicode" value="${eventInstance?.isUnicode}" />
-			</div>
-			<div id="status-input" class="general-field">
-				<label>senderID: </label>
-				<g:checkBox name="isSenderId" value="${eventInstance?.isSenderId}" />
-			</div>
-			<div id="occurred-input" class="general-field date">
-				<label>occurred date: </label>
-				<g:datePicker name="occuredDate" precision="day" value="${eventInstance?.occuredDate}" >
-			  </g:datePicker>
-			</div>	
-			<g:hiddenField name="type" value="${eventType}" />					     
-			<input id="submit-button" type="submit" value="Create"> 
-		</form>
-	</div>
-</div>
+<body>
+	<div class="page-header">
+          <h1>Event <small> All your messages is here</small></h1>
+        </div>
+
+        <div class="row">
+          <div> 
+			<form method="post" action="save">
+				<fieldset>
+					<legend>New Event</legend>
+						<div class="clearfix">
+							<label for="xlInput">Event Name</label>
+								<div class="input">
+									<g:textField class="xlarge" size="30" name="name" value="${eventInstance?.name}" />
+								</div>
+						</div>
+						<div class="clearfix">
+							<label for="xlInput">Description</label>
+								<div class="input">
+									<g:textArea class="xxlarge span5" rows="3" name="description" value="${eventInstance?.description}" />
+								</div>
+						</div>
+						<g:if test="${eventType=='groupChat'}">
+					    <div class="clearfix">
+							<label for="xlInput">code name: </label>
+							<div class="input">
+							<g:textField name="codename" value="${eventInstance?.codename}" />
+							</div>
+						</div>    
+						</g:if>						
+						<div class="clearfix">
+							<label for="normalSelect">Select</label>
+								<div class="input">
+									<g:select id="normalSelect" name="status" from="${Status.list()}" value="${eventInstance?.status}"/>									
+								</div>
+						</div>
+						
+						
+						<div class="clearfix">
+								<label for="xlInput">Options</label>
+							<div class="input">
+							<ul class="inputs-list">
+							<li>
+							<label>
+							<g:checkBox name="isUnicode" value="${eventInstance?.isUnicode}" />
+							<span id="input-unicode-id" title="Unicode" data-content="This is content">Unicode</span>
+							</label>
+							</li>
+							<li>
+							<label>
+							<g:checkBox name="isSenderId" value="${eventInstance?.isSenderId}" />
+							<span id="input-sender-id" title="Sender ID" data-content="This is content">Sender ID</span>
+							</label>
+							</li>
+							</ul>
+							<span class="help-block">
+							<strong>Note:</strong>
+							Labels surround all the options for much larger click areas and a more usable form.
+							</span>
+							</div>
+						</div>
+						
+						<div class="clearfix">
+						<label>Occurred Date</label>
+						<div class="input">
+						<div class="inline-inputs">
+							<input id="startdatepicker" name="occuredDate" class="small" type="text"  value="${eventInstance?.occuredDate.format(message(code:'default.stringdate.format'))}" />
+						to
+							<input id="enddatepicker" name="enddatepicker" class="small" type="text" />
+						<span class="help-block">All times are shown as Pacific Standard Time (GMT -08:00).</span>
+						</div>
+						</div>
+						</div>
+						<g:hiddenField name="type" value="${eventType}" />
+						<div class="clearfix">
+							<div class="input">
+							<div class="inline-inputs">	
+						<input class="btn primary" type="submit" value="Create">
+						<button class="btn" type="reset">Cancel</button>
+						</div>
+						</div>
+						</div>
+												
+				</fieldset>							
+			</form>       
+          </div>
+
+        </div>
+        <script>
+			$('#input-sender-id').popover();
+			$('#input-unicode-id').popover();
+			$('#topbar').dropdown()
+			$(function() {
+				$( "#startdatepicker" ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" }); //<g:message code="my.localized.content" /> 
+			});
+			$(function() {
+				$( "#enddatepicker" ).datepicker(); //
+			});	
+		</script>
 </body>
 
 </html>

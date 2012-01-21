@@ -16,7 +16,7 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 	
-	//static transients = ['authorities']
+	static transients = ['authoritiesString']
 
 	static constraints = {
 		username blank: false, unique: true
@@ -33,6 +33,14 @@ class User {
 	
 	Set<Event> getEvents() {
 		UserEvent.findAllByUser(this).collect { it.event } as Set
+	}
+	
+	String getAuthoritiesString() {
+		def roles = getAuthorities()
+		/*def rolesString = ''
+		roles.each { rolesString +=it.authority + " "}
+		rolesString*/
+		roles*.authority?.sum()
 	}
 
 	def beforeInsert() {

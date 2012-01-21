@@ -201,14 +201,16 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/role/**':   			['ROLE_ADMINS'],
 	'/report/**':  			['ROLE_ADMINS'],
 	'/event/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
+	'/home/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
 	'/groupChat/**':    				['ROLE_ADMINS','ROLE_MANAGER'],
 	'/api/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/js/**':       				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/css/**':      				['IS_AUTHENTICATED_ANONYMOUSLY'],
-	'/images/**':   				['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/images/**':   				['IS_AUTHENTICATED_ANONYMOUSLY'],	
 	'/*':           				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/login/**':    				['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/logout/**':   				['IS_AUTHENTICATED_ANONYMOUSLY']
+	
  ]
 
 grails.plugins.springsecurity.secureChannel.definition = [	
@@ -217,6 +219,7 @@ grails.plugins.springsecurity.secureChannel.definition = [
 	'/user/**': 'REQUIRES_SECURE_CHANNEL',
 	'/subscriber/**': 'REQUIRES_SECURE_CHANNEL',
 	'/j_spring_security_check': 'REQUIRES_SECURE_CHANNEL',
+	//'/main.gsp':  'REQUIRES_INSECURE_CHANNEL',
 	'/index.gsp':  'REQUIRES_INSECURE_CHANNEL',		
 	'/event/**': 'REQUIRES_INSECURE_CHANNEL',
 	'/api/event/auth/**': 'REQUIRES_SECURE_CHANNEL',

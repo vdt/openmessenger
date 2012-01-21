@@ -1,18 +1,21 @@
 package openmessenger
+
 import openmessenger.Event.Type
+import java.text.SimpleDateFormat
+
 class EventController {
     
     def eventService
-	def springSecurityService
-    
-    def view = {
-        def targetEvent = eventService.findEventById(Long.valueOf(params.id))
-		/*def offset = params.offset?params.int('offset'):0
+	def springSecurityService	
+	
+	def view = {
+        def targetEvent = eventService.findEventById(Long.valueOf(params.id))		
+		def offset = params.offset?params.int('offset'):0
 		def max = params.max?params.int('max'):10
 		def total = targetEvent.messages.size()
 		if(offset+max>total) max =total-offset
-		def messages = eventService.getEventMessages(targetEvent.messages.toList(), offset, max)*/
-		render(view: "view", model:[event: targetEvent]) //, total:total, messages:messages
+		def messages = eventService.getEventMessages(targetEvent.messages.toList(), offset, max)
+		render(view: "view", model:[event: targetEvent, total:total, messages:messages, offset:offset]) //, total:total, messages:messages
     }
 
     def listAllEvents = { 
@@ -43,6 +46,9 @@ class EventController {
     def save = {
         def eventInstance
         def eventType = params.type
+		if(params.occuredDate) {
+			params.occuredDate = new SimpleDateFormat(message(code:'default.stringdate.format')).parse(params.occuredDate)
+		}
         //println "group "+eventType
         //println "params: "+params
         if(eventType=='event'){    
@@ -54,7 +60,7 @@ class EventController {
             eventInstance.type = Type.GROUP_CHAT
             //println "add group ${eventInstance.codename}"
         }
-
+		
         eventInstance.validate()
         
         if(eventInstance.hasErrors()){
@@ -96,8 +102,10 @@ class EventController {
         def eventId = params.eventId
         def content = params.message
 		//TODO check subscriber before sent and create msg
-        def message = new Message(title:"News from openmessenger", content: content, createdDate: new Date())
-        eventService.sendMessage(Long.valueOf(eventId), message)
+		if(eventId && content) {
+			def message = new Message(title:"News from openmessenger", content: content, createdDate: new Date())
+			eventService.sendMessage(Long.valueOf(eventId), message)
+		}
 
         redirect(action: "view", id: eventId)
     }
