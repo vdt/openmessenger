@@ -75,7 +75,7 @@
 						<label>Occurred Date</label>
 						<div class="input">
 						<div class="inline-inputs">
-							<input id="startdatepicker" name="occuredDate" class="small" type="text"  value="${eventInstance?.occuredDate.format(message(code:'default.stringdate.format'))}" />
+							<input id="startdatepicker" name="occuredDate" class="small" type="text"  value="${eventInstance?.occuredDate?.format(message(code:'default.stringdate.format'))}" />
 						to
 							<input id="enddatepicker" name="enddatepicker" class="small" type="text" />
 						<span class="help-block">All times are shown as Pacific Standard Time (GMT -08:00).</span>

@@ -67,6 +67,7 @@ environments {
 			}
 			queues = {
 				openmessenger()
+				eventCallback()
 			}
 		}
 		
@@ -95,6 +96,7 @@ environments {
 			}
 			queues = {
 				openmessenger()
+				eventCallback()
 				//openmessenger_dtac()
 			}
 		}
