@@ -9,12 +9,18 @@ class EventController {
 	def springSecurityService	
 	
 	def view = {
-        def targetEvent = eventService.findEventById(Long.valueOf(params.id))		
+        def targetEvent = eventService.findEventById(Long.valueOf(params.id))	
 		def offset = params.offset?params.int('offset'):0
 		def max = params.max?params.int('max'):10
-		def total = targetEvent.messages.size()
-		if(offset+max>total) max =total-offset
-		def messages = eventService.getEventMessages(targetEvent.messages.toList(), offset, max)
+		def total = targetEvent?.messages?.size()?:0
+		if(offset+max>total && total > 0) {
+			max =total-offset
+		}
+		def messages = null
+		if(total>0) {
+			messages = eventService.getEventMessages(targetEvent?.messages?.toList(), offset, max)
+		}
+		
 		render(view: "view", model:[event: targetEvent, total:total, messages:messages, offset:offset]) //, total:total, messages:messages
     }
 
@@ -32,15 +38,8 @@ class EventController {
 	}    
 	
     def create = {
-        def eventInstance
-        def eventType = params.type
-        if(eventType=='event'){
-            eventInstance = new Event()    
-        }else if(eventType=='groupChat'){
-            eventInstance = new GroupChat()
-        }
-        //eventInstance.properties = params
-        return [eventInstance: eventInstance, eventType:eventType]
+        def eventInstance = new Event()        
+        return [eventInstance: eventInstance]
     }	
 
     def save = {
@@ -51,22 +50,16 @@ class EventController {
 		}
         //println "group "+eventType
         //println "params: "+params
-        if(eventType=='event'){    
-            eventInstance = new Event(params)
-            eventInstance.type = Type.EVENT
-            //println 'add event'
-        }else if(eventType=='groupChat'){    
+        if(eventType==Type.EVENT.toString()){    
+            eventInstance = new Event(params)            
+        }else if(eventType==Type.GROUP_CHAT.toString()){    
             eventInstance = new GroupChat(params)
-            eventInstance.type = Type.GROUP_CHAT
-            //println "add group ${eventInstance.codename}"
         }
 		
         eventInstance.validate()
         
         if(eventInstance.hasErrors()){
-            eventInstance.errors.each {
-                //println it
-            }
+            log.error eventInstance.errors
         }
 
         if (eventInstance.save(flush: true)){
@@ -75,9 +68,54 @@ class EventController {
 			UserEvent.create(user, eventInstance)
             redirect(action: "view", id: eventInstance.id)
         }else{
-            render(view: "create", model: [eventInstance: eventInstance, , eventType:eventType])
+            render(view: "create", model: [eventInstance: eventInstance])
         }
     }      
+	
+	def edit = {
+		def eventInstance = Event.get(params.id)
+		if(eventInstance) {
+			render(view: "edit", model: [eventInstance: eventInstance])
+		} else {
+			redirect(controller:"home", action: "main")
+		}
+	}
+	
+	def update = {
+		def eventInstance = Event.get(params.id)
+		if(params.occuredDate) {
+			params.occuredDate = new SimpleDateFormat(message(code:'default.stringdate.format')).parse(params.occuredDate)
+		}
+		if (eventInstance) {
+			if (params.version) {
+				def version = params.version.toLong()
+				if (eventInstance.version > version) {
+					eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Event')] as Object[], "Another user has updated this User while you were editing")
+					render(view: "edit", model: [eventInstance: eventInstance])
+					return
+				}
+			}
+			eventInstance.properties = params
+			if (eventInstance.validate()) { 
+				try {
+					eventInstance.save()					
+					flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
+					redirect(action: "view", id: eventInstance.id)
+				} catch (Exception e) {
+					log.error(e)
+					render(view: "edit", model: [eventInstance: eventInstance])
+				}
+			}
+			else {
+				log.error(eventInstance.errors)
+				render(view: "edit", model: [eventInstance: eventInstance])
+			}
+		}
+		else { println 'not found target instance'
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+			redirect(action: "listAllEvents")
+		}
+	}
            
     def unsubscribeFromEvent = {
         def eventId =  params.id

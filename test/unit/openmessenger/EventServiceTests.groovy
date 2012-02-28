@@ -15,6 +15,9 @@ class EventServiceTests extends GrailsUnitTestCase {
 		springSecurityService.principal = new HashMap()
 		springSecurityService.principal.username = 'default username'
 		
+		mockConfig ('''
+		openmessenger.eventCallback="eventCallback"
+		''')
     }
 
     protected void tearDown() {

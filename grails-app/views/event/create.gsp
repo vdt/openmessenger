@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page import="openmessenger.Event.Status" %>
+<%@ page import="openmessenger.Event.Type" %>
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -31,21 +32,24 @@
 									<g:textArea class="xxlarge span5" rows="3" name="description" value="${eventInstance?.description}" />
 								</div>
 						</div>
-						<g:if test="${eventType=='groupChat'}">
-					    <div class="clearfix">
+						<div class="clearfix">
 							<label for="xlInput">code name: </label>
 							<div class="input">
-							<g:textField name="codename" value="${eventInstance?.codename}" />
+							<input type="text" id="codename" name="codename" value="${eventInstance?.codename}"  />
 							</div>
-						</div>    
-						</g:if>						
+						</div>    												
 						<div class="clearfix">
-							<label for="normalSelect">Select</label>
+							<label for="normalSelect">Status</label>
 								<div class="input">
 									<g:select id="normalSelect" name="status" from="${Status.list()}" value="${eventInstance?.status}"/>									
 								</div>
 						</div>
-						
+						<div class="clearfix">
+							<label for="normalSelect">Type</label>
+								<div class="input">
+									<g:select id="normalSelect" id="type" name="type" from="${Type.list()}" value="${eventInstance?.type}"/>									
+								</div>
+						</div>
 						
 						<div class="clearfix">
 								<label for="xlInput">Options</label>
@@ -82,7 +86,7 @@
 						</div>
 						</div>
 						</div>
-						<g:hiddenField name="type" value="${eventType}" />
+						
 						<div class="clearfix">
 							<div class="input">
 							<div class="inline-inputs">	
@@ -98,6 +102,7 @@
 
         </div>
         <script>
+        	$('#codename').attr('disabled', ${eventInstance?.type==Type.GROUP_CHAT?false:true});
 			$('#input-sender-id').popover();
 			$('#input-unicode-id').popover();
 			$('#topbar').dropdown()
@@ -107,6 +112,14 @@
 			$(function() {
 				$( "#enddatepicker" ).datepicker(); //
 			});	
+			$('#type').change( function() {
+					if($('#type').val()=="${Type.GROUP_CHAT}") {
+						$('#codename').attr('disabled', false);
+					} else {
+						$('#codename').attr('disabled', true);
+					}
+				}
+			);
 		</script>
 </body>
 

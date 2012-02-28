@@ -3,145 +3,129 @@
 <%@ page import="openmessenger.User" %>
 <%@ page import="openmessenger.Role" %>
 <%@ page import="openmessenger.Event" %>
+<%@ page import="openmessenger.UserEvent" %>
+<%@ page import="openmessenger.UserRole" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+    
+    	<div class="page-header">
+          <h1>Setting <small> All your messages is here</small></h1>
         </div>
-        <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${userInstance}">
-            <div class="errors">
-                <g:renderErrors bean="${userInstance}" as="list" />
-            </div>
-            </g:hasErrors>
-            <g:form action="save" >
-                <div class="dialog">
-                    <table>
-                        <tbody>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="username"><g:message code="user.username.label" default="Username" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
-                                    <g:textField name="username" value="${userInstance?.username}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="password"><g:message code="user.password.label" default="Password" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                                    <g:textField name="password" value="${userInstance?.password}" />
-                                </td>
-                            </tr>
-                            
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="firstname"><g:message code="user.firstname.label" default="Firstname" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'firstname', 'errors')}">
-                                    <g:textField name="firstname" value="${userInstance?.firstname}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="lastname"><g:message code="user.lastname.label" default="Lastname" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'lastname', 'errors')}">
-                                    <g:textField name="lastname" value="${userInstance?.lastname}" />
-                                </td>
-                            </tr>                            
-                            
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="email"><g:message code="user.email.label" default="Email" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${userInstance?.email}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="accountExpired"><g:message code="user.accountExpired.label" default="Account Expired" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'accountExpired', 'errors')}">
-                                    <g:checkBox name="accountExpired" value="${userInstance?.accountExpired}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="accountLocked"><g:message code="user.accountLocked.label" default="Account Locked" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'accountLocked', 'errors')}">
-                                    <g:checkBox name="accountLocked" value="${userInstance?.accountLocked}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="enabled"><g:message code="user.enabled.label" default="Enabled" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'enabled', 'errors')}">
-                                    <g:checkBox name="enabled" value="${userInstance?.enabled}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="passwordExpired"><g:message code="user.passwordExpired.label" default="Password Expired" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordExpired', 'errors')}">
-                                    <g:checkBox name="passwordExpired" value="${userInstance?.passwordExpired}" />
-                                </td>
-                            </tr>
-                            
-                            <g:each var="auth" in="${Role.list()}">
-							<tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="enabled">Role</label>
-                                </td>
-								<td valign="top" >
-									<g:checkBox value="${auth.id}" name="auth.authority" checked="false"/>
-									<g:link controller='role' action='edit' id='${auth.id}'>${auth.authority.encodeAsHTML()}</g:link>
-								</td>
-                            </tr>
-							</g:each>
-							
-							<g:each var="event" in="${Event.list()}">
-							<tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="enabled">Event</label>
-                                </td>
-								<td valign="top" >
-									<g:checkBox value="${event.id}" name="event" checked="false"/>
-									<g:link controller='event' action='edit' id='${event.id}'>${event.name.encodeAsHTML()}</g:link>
-								</td>
-                            </tr>
-                        	</g:each>
-                        
-                        </tbody>
-                    </table>
-                </div>
-                <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
-                </div>
-            </g:form>
+
+        <div class="row">
+          <div> 
+			<g:form action="save" >
+				<fieldset>
+					<legend>Create user</legend>
+						<div class="clearfix">
+							<label for="xlInput">Username</label>
+								<div class="input">
+									<input id="xlInput" class="xlarge" type="text" size="30" name="username" value="${userInstance?.username}" />
+								</div>
+						</div>
+						<div class="clearfix">
+							<label for="xlInput">Password</label>
+							<div class="input">
+								<input id="xlInput" class="xlarge" type="password" size="30" name="password" value="${userInstance?.password}" />
+							</div>
+						</div>
+
+						<div class="clearfix">
+							<label for="xlInput">Firstname</label>
+								<div class="input">
+									<input id="xlInput" class="xlarge" type="text" size="30" name="firstname" value="${userInstance?.firstname}" />
+								</div>
+						</div>
+						<div class="clearfix">
+							<label for="xlInput">Lastname</label>
+							<div class="input">
+								<input id="xlInput" class="xlarge" type="text" size="30" name="lastname" value="${userInstance?.lastname}" />
+							</div>
+						</div>						
+						<div class="clearfix">
+							<label for="xlInput">Email</label>
+							<div class="input">
+								<input id="xlInput" class="xlarge" type="email" size="30" name="email" value="${userInstance?.email}" />
+							</div>
+						</div>						
+						<div class="clearfix">
+								<label for="xlInput">Options</label>
+							<div class="input">
+							<ul class="inputs-list">
+							<li>
+							<label>
+							<input type="checkbox" name="accountExpired" value="${userInstance?.accountExpired}" ${userInstance?.accountExpired?'checked=checked':null}/>
+							<span id="input-unicode-id" title="Unicode" data-content="This is content">Is account expired</span>
+							</label>
+							</li>
+							<li>
+							<label>
+							<input type="checkbox" name="accountLocked" value="${userInstance?.accountLocked}" ${userInstance?.accountLocked?'checked=checked':null}/>
+							<span id="input-sender-id" title="Sender ID" data-content="This is content">Is account locked</span>
+							</label>
+							</li>
+							<li>
+							<label>
+							<input type="checkbox" name="enabled" value="${userInstance?.enabled}" ${userInstance?.enabled?'checked=checked':null}"/>
+							<span id="input-unicode-id" title="Unicode" data-content="This is content">Enabled</span>
+							</label>
+							</li>
+							<li>
+							<label>
+							<input type="checkbox" name="passwordExpired" value="${userInstance?.passwordExpired}" ${userInstance?.passwordExpired?'checked=checked':null}"/>
+							<span id="input-sender-id" title="Sender ID" data-content="This is content">Is password expired</span>
+							</label>
+							</li>							
+							</ul>
+							<span class="help-block">
+							<strong>Note:</strong>
+							Labels surround all the options for much larger click areas and a more usable form.
+							</span>
+							</div>
+						</div>
+						
+						<div class="clearfix">
+							<label for="multiSelect">Roles</label>
+							<div class="input">
+								<select id="multiSelect" class="medium" name="roles" multiple="multiple" size="5">
+									<g:each var="auth" in="${Role.list().sort{it.authority}}">
+										<option value="${auth.id}" >${auth.authority.encodeAsHTML()}</option>
+									</g:each>
+								</select>
+							</div>
+						</div>
+						
+						<div class="clearfix">
+							<label for="multiSelect">Events</label>
+							<div class="input">
+								<select id="multiSelect" class="medium" name="events" multiple="multiple" size="7">
+									<g:each var="event" in="${Event.list().sort{ it.name }}">
+										<option value="${event.id}" >${event.name.encodeAsHTML()}</option>
+									</g:each>
+								</select>
+							</div>
+						</div>						
+						
+						<div class="clearfix">
+							<div class="input">
+							<div class="inline-inputs">	
+						<input class="btn primary" type="submit" value="Create">
+						<button class="btn" type="reset">Cancel</button>
+						</div>
+						</div>
+						</div>
+												
+				</fieldset>							
+			</g:form>     
+          </div>
+
         </div>
+    
     </body>
 </html>

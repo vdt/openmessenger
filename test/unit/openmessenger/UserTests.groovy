@@ -16,7 +16,7 @@ class UserTests extends GrailsUnitTestCase {
 			passwordExpired:false
 		)
 		mockDomain(User, [user1])
-		//user1.save()
+		//
     }
 
     protected void tearDown() {
@@ -38,6 +38,19 @@ class UserTests extends GrailsUnitTestCase {
 		assertFalse user.properties.containsKey('passwordx')
 	}
 
+	void testValidateUser() {
+		assert null != User.list()
+		def user = User.get(1)
+		assert 'boyone' == user.username
+		
+		user.username = null
+		user.validate(['username'])
+		assert "nullable" == user.errors['username']
+		
+		user.username = ''
+		user.validate(['username'])
+		assert "blank" == user.errors['username']
+	}
 	
 /*
 Must be at least 10 characters

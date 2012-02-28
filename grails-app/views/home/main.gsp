@@ -29,6 +29,7 @@
 							<th class="blue header">Name</th>
 							<th class="blue header">Messages</th>
 							<th class="blue header">Last Updated</th>
+							<th class="blue header">Setting</th>
 						</tr>
 					</thead>
 	              	<tbody>
@@ -43,6 +44,7 @@
 	                  		</td>
 	                  		<td><span class="label success">${event.messages.size()}</span></td>
 	                  		<td><g:formatDate format="MMM dd, yyyy" date="${event.occuredDate}"/></td>
+	                  		<td><a class="btn info" href="${createLink(controller:'event', action:'edit', params:[id:event.id])}">edit</a></td>
 	                	</tr>
 	                	</g:each>	                	                             
 	              </tbody>
@@ -58,6 +60,7 @@
 							<th class="green header">Name</th>
 							<th class="green header">Messages</th>
 							<th class="green header">Last Updated</th>
+							<th class="blue header">Setting</th>
 						</tr>
 					</thead>
 	              	<tbody>
@@ -72,6 +75,7 @@
 	                  		</td>
 	                  		<td><span class="label success">${group.messages.size()}</span></td>
 	                  		<td><g:formatDate format="MMM dd, yyyy" date="${group.occuredDate}"/></td>
+	                  		<td><a class="btn info" href="${createLink(controller:'event', action:'edit', params:[id:group.id])}">edit</a></td>
 	                	</tr>
 	                	</g:each>	                	                             
 	              </tbody>
@@ -95,7 +99,7 @@
 	                	<tr>
 	                  		<td>${i+1}</td>
 	                  		<td>
-	                    			<a href="#">${user.firstname+' '+user.lastname}</a>
+	                    			<a href="${createLink(controller:'user', action:'view', params:[id:user.id])}">${user.firstname+' '+user.lastname}</a>
 	                  		</td>
 	                  		<td><span class="label success">${user.enabled?'ACTIVE':'INACTIVE' }</span></td>
 	                  		<td>${user.getAuthoritiesString()}</td>
@@ -114,8 +118,8 @@
     <div class="span4">
     	<h3></h3>
     	<sec:ifAnyGranted roles="ROLE_ADMINS">
-        <div class="alert-message block-message info abc"><a class="btn small" href="${createLink(controller:'event', action:'create', params:[type:'event'])}">Create New Event</a></div>
-        <div class="alert-message block-message info abc"><a class="btn small" href="${createLink(controller:'event', action:'create', params:[type:'groupChat'])}">Create New Group Chat</a></div>
+        <div class="alert-message block-message info abc"><a class="btn small" href="${createLink(controller:'event', action:'create')}">Create New Event</a></div>
+        <div class="alert-message block-message info abc"><a class="btn small" href="${createLink(controller:'user', action:'create')}">Create New User</a></div>
         <!--div class="alert-message block-message info"><b>Created Date:</b> August 12, 2011</div>
         <div class="alert-message block-message info"><b>Created Date:</b> August 12, 2011</div>
         <div class="alert-message block-message info"><b>Number of subscriber:</b>300,000</div-->

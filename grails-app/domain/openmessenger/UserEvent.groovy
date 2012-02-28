@@ -26,8 +26,7 @@ class UserEvent implements Serializable {
 	}
 	
 	static UserEvent get(long userId, long eventId) {
-		find 'from UserEvent where user.id=:userId and event.id=:eventId',
-			[userId: userId, eventId: eventId]
+		findByUserAndEvent(User.get(userId), Event.get(eventId))
 	}
 
 	static UserEvent create(User user, Event event, boolean flush = false) {
@@ -40,6 +39,10 @@ class UserEvent implements Serializable {
 
 	static void removeAll(Event event) {
 		executeUpdate 'DELETE FROM UserEvent WHERE event=:event', [event: event]
+	}
+	
+	static void remove(User user, Event event) {
+		executeUpdate 'DELETE FROM UserEvent WHERE user=:user and event=:event', [user: user, event: event]
 	}
 	
 	static mapping = {
