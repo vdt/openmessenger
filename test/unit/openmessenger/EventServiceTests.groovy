@@ -17,6 +17,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 		
 		mockConfig ('''
 		openmessenger.eventCallback="eventCallback"
+		openmessenger.prefixSize=4
 		''')
     }
 
@@ -75,30 +76,44 @@ class EventServiceTests extends GrailsUnitTestCase {
             description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
             occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
             status:Status.NORMAL, type:Type.GROUP_CHAT)
-        def newSubscriber = new Subscriber(msisdn: '66809737798', active: 'Y')    
+        def newSubscribers = [new Subscriber(msisdn: '66809737798', active: 'Y'),
+								new Subscriber(msisdn: '85509737798', active: 'Y'),
+								new Subscriber(msisdn: '85209737798', active: 'Y')]
+		   
 		def defaultGateway = new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin')
 		def dtacGateway = new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin')
-        
+		def helloGateway = new Gateway(prefix:'855', name:'kh_hello', queueName:'openmessenger_hello', createdBy:'admin')
+        def hongkongGateway  = new Gateway(prefix:'852', name:'hk_hongkong', queueName:'openmessenger_hongkong', createdBy:'admin')
+		
         mockDomain(Event, [eventInstance])
-        mockDomain(Subscriber, [newSubscriber])
-		mockDomain(Gateway, [defaultGateway,dtacGateway])
+        mockDomain(Subscriber, newSubscribers)
+		mockDomain(Gateway, [defaultGateway,dtacGateway,helloGateway,hongkongGateway])
         
-        newSubscriber.save()
-        eventInstance.save()
-		defaultGateway.save()
-		dtacGateway.save()
-        
-        assertNotNull eventInstance.id
-        
+        //newSubscriber.save()
+        //eventInstance.save()
+		//defaultGateway.save()
+		//dtacGateway.save()
         
         def eventService = new EventService()
         eventService.subscribeToEvent(1,"66809737798")
         
         def targetEvent  = Event.get(1)
-        assertEquals 1, targetEvent.subscribers.size()
+        assert 1 == targetEvent.subscribers.size()
 		
 		def subscriberInstance = Subscriber.findByMsisdn('66809737798')
-		assertEquals 'th_dtac', subscriberInstance.gateway.name
+		assert 'th_dtac' == subscriberInstance.gateway.name
+		
+		eventService.subscribeToEvent(1,"85509737798")
+		assert 2 == targetEvent.subscribers.size()
+		subscriberInstance = Subscriber.findByMsisdn('85509737798')
+		println subscriberInstance
+		assert 'kh_hello' == subscriberInstance.gateway.name
+		
+		eventService.subscribeToEvent(1,"85209737798")
+		assert 3 == targetEvent.subscribers.size()
+		subscriberInstance = Subscriber.findByMsisdn('85209737798')
+		println subscriberInstance
+		assert 'hk_hongkong' == subscriberInstance.gateway.name
     }  
 	
 	void testSubscriberListToEvent(){

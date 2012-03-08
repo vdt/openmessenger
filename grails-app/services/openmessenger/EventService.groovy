@@ -9,7 +9,7 @@ class EventService {
 	def springSecurityService
 	def subscriberFileService
     //def queueName = 'openmessenger'
-	def callbackQueue = CH.config.openmessenger.eventCallback
+	def callbackQueue = CH.config.openmessenger.eventCallback	
 
     def findEventById(Long eventId){
         def eventInstance = Event.get(eventId)
@@ -34,7 +34,8 @@ class EventService {
     
     def subscribeToEvent(Long eventId, String msisdn){
         def event = Event.get(eventId)
-        def subscriber = Subscriber.findByMsisdn(msisdn)     
+        def subscriber = Subscriber.findByMsisdn(msisdn)    
+		println subscriber
 		if(subscriber==null){ 
 			subscriber = new Subscriber(msisdn: msisdn, active:"Y")			
 		}
@@ -51,7 +52,6 @@ class EventService {
 	def subscribeToEvent(Long eventId, File file){
 		def msisdns = subscriberFileService.parseCsv(file)
 		def event = Event.get(eventId)
-		log.debug("subscribeToEvent")
 		msisdns.each {
 			def subscriber = Subscriber.findByMsisdn(it)
 			if(subscriber==null) subscriber = new Subscriber(msisdn: it, active:"Y")			
@@ -67,8 +67,16 @@ class EventService {
 	
 	def findGateway(String msisdn){
 		log.debug(msisdn)
-		def prefix = msisdn.substring(0, 2)
-		def gateway = Gateway.findByPrefix(prefix)
+		def prefix
+		def gateway
+		def prefixSize = CH.config.openmessenger.prefixSize
+		log.debug("find gateway : $msisdn")
+		for(;0 < prefixSize; prefixSize--) {
+			prefix = msisdn.substring(0, prefixSize)
+			gateway = Gateway.findByPrefix(prefix)
+			log.debug("$prefix : ${gateway?.name}")	
+			if(gateway)	return gateway	
+		}		
 		
 		if(!gateway){
 			gateway = Gateway.findByPrefix('00')
