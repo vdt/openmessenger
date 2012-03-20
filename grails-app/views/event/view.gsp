@@ -64,7 +64,7 @@
             <h3>Information</h3>
             <div class="alert-message block-message info"><b>${event.description}</b></div>
             <div class="alert-message block-message info"><b>Created Date:</b><g:formatDate format=" MMM dd, yyyy" date="${event.occuredDate}"/></div>
-            <div class="alert-message block-message info"><b>Number of subscriber:</b>${event.subscribers.size()}</div>
+            <div class="alert-message block-message info"><g:link controller="event" action="listEventSubscribers" id="${event.id}"><b>Number of subscriber:</b></g:link>${event.subscribers.size()}</div>
           </div>          
         </div>
   </body>
