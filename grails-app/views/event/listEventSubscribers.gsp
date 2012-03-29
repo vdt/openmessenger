@@ -1,75 +1,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page import="openmessenger.Event.Type" %>  
+<%@ page import="openmessenger.GroupChat" %>  
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="layout" content="main" />
     <title>News List | Open Messenger</title>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-      <link rel="stylesheet" href="${resource(dir:'css',file:'style.css')}" />
   </head>
 
-  <body id="page-news-list">
-    <div id="content-wrapper">
-      <!-- News List -->
-      <div id="news-list">
-        <h1>
-	<g:link action="listAllEvents">Openmessenger</g:link>/
-	<g:link action="view" id="${event.id}">${fieldValue(bean: event, field: "name")}</g:link></h1>
-        <!--form id="search" method="post" action="">
-          <div id="search-input"><input type="text" name="search" value="" size="20" maxlength="20" /></div>
-          <input id="submit-button" type="submit" value="Search">
-        </form-->
-
-        <form id="send-message" method="post" action="../subscribeToEvent">  
-	      <g:hiddenField name="eventId" value="${event?.id}" />
-          <div id="message-input"><textarea id="edit-message" class="" name="msisdn" rows="3" cols="60"></textarea></div>
-          <input id="submit-button" type="submit" value="Add Subscriber">
-        </form>
-
-        <div id="news-wrapper">
-          <div class="news-items">
-            <g:each in="${event.subscribers}" var="subscriber">
-              <div class="rows row-1">
-                <div class="news-writer">-</div>					
-                <div class="news-title">${subscriber.msisdn}</div>
-                <div class="news-date">${subscriber.active}</div>   
-				<div class="new-date">
-					<g:link action="unsubscribeFromEvent" id="${event.id}" params="[msisdn:subscriber.msisdn]" >Unscribe</g:link>
-				</div>
-              </div>
-            </g:each>
-          </div>
-
-          <div class="pager-wrapper">
-            <ul class="pager">
-              <li class="prev"><a href="#">previous</a></li>
-              <li class="page-number current"><a href="#">1</a></li>
-              <li class="page-number"><a href="#">2</a></li>
-              <li class="page-number"><a href="#">3</a></li>
-              <li class="dot">...</li>
-              <li class="page-number"><a href="#">10</a></li>
-              <li class="next"><a href="#">next</a></li>
-            </ul>
-          </div>			
+  <body>
+    <div class="page-header">
+          <h1><g:link controller="event" action="listEventSubscribers" id="${event.id}">${event.name}</g:link> <small> All your messages is here</small></h1>
         </div>
 
-      </div><!-- End News List -->
+        <div class="row">
+          <div class="span10">
+            <h2>Message to be sent</h2>     
+            
+            <div class="clearfix">
+			<div class="input">
+				<form id="send-message" method="post" action="/subscribeToEvent">
+				<g:hiddenField name="eventId" value="${event?.id}" />
+				<div id="message-input"><textarea id="textarea2" class="xxlarge" rows="3" name="msisdn"></textarea></div>
+				<input class="btn primary" type="submit" value="Add Subscriber">
+				<!-- button class="btn" type="reset">Cancel</button-->
+				</form>
+			</div>
+		</div>
 
-      <!-- Event Detail -->	
-      <div id="event-detail">
-        <div id="event-content">
-          <h2 class="event-title">Event</h2>
-          <div class="event-description">${fieldValue(bean: event, field: "description")}</div>
-          <div class="event-news-count"><strong>Totals:</strong></div>
-          <div class="event-last-update"><strong>Last Update:</strong> 26 july 2011</div>
-          <div class="event-subscriber-list">
-
-            <h3> ${event.subscribers.size()} people subscribe to this event</h3>
-            <ol>
-            </ol>
+<table id="sortTableExample"  class="zebra-striped">
+<thead>
+<tr>
+<th class="header"></th>
+<th class="blue header">Content</th>
+<th class="blue header">Status</th>
+<th class="blue header">Action</th>
+</tr>
+</thead>
+              <tbody>
+              	<g:each status="i" in="${event.subscribers}" var="subscriber" >
+                <tr>
+                  <td>${i+1}</td>
+                  <td>${subscriber.msisdn}</td>
+                  <td>${subscriber.active}</td> 
+                  <td><g:link action="unsubscribeFromEvent" id="${event.id}" params="[msisdn:subscriber.msisdn]" >Unscribe</g:link></td>                 
+                </tr>
+                </g:each>                                                
+              </tbody>
+            </table>
+    <div class="pagination">
+    	<msngr:paginate id="${event?.id}" action="view" max="10" prev="&larr; Previous" next="Next &rarr;" total="10" />
+    </div>            
           </div>
+          <div class="span4">
+            <h3>Information</h3>
+            <div class="alert-message block-message info"><b>${event.description}</b></div>
+            <div class="alert-message block-message info"><b>Created Date:</b><g:formatDate format=" MMM dd, yyyy" date="${event.occuredDate}"/></div>
+            <div class="alert-message block-message info"><g:link controller="event" action="listEventSubscribers" id="${event.id}"><b>Number of subscriber:</b></g:link>${event.subscribers.size()}</div>
+          </div>          
         </div>
-      </div><!-- End Event Detail -->
-    </div>
   </body>
 </html>
