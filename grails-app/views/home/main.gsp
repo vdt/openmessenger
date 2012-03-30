@@ -9,7 +9,7 @@
 		    <div class="span12">
 			    <div class="wrapper">
 			        <div class="page-header">
-			          	<h1>Main Panel <small> All your messages is here</small></h1>
+			          	<h1>Main Panel</h1>
 			        </div>
 		        </div> <!-- wrapper -->
 		    </div> <!-- span12 -->
