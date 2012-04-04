@@ -11,9 +11,7 @@
 
     <!-- Le styles -->
 
-	<script src="${resource(dir:'js',file:'jquery-1.7.1.min.js')}"></script>
-	<script src="${resource(dir:'js',file:'bootstrap-dropdown.js')}"></script>
-    <link href="${resource(dir:'css',file:'bootstrap.css')}" rel="stylesheet">
+	  <link href="${resource(dir:'css',file:'bootstrap.css')}" rel="stylesheet">
 
     <style type="text/css">
       /* Override some defaults */
@@ -67,7 +65,7 @@
     </style>
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="${resource(dir:'images',file:'messenger.ico')}"/>
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">

@@ -52,11 +52,11 @@ class UserService {
 	}
 	
 	def saveRoles(User user, List updateRoles) {
-		def events = findUpdateRoles(user, updateRoles)
-		events.newItems.each {
+		def roles = findUpdateRoles(user, updateRoles)
+		roles.newItems.each {
 			UserRole.create(user, Role.get(it))
 		}
-		events.deprecateItems.each {
+		roles.deprecateItems.each {
 			UserRole.remove(user, Role.get(it))
 		}					
 	}

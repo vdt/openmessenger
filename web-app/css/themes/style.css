@@ -1,0 +1,124 @@
+body{
+	background: #eee;
+}
+
+.content{
+	background: #fff;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+	box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.wrapper{
+	padding: 0 20px;
+}
+
+.wrapper-rborder{ border-right: 1px solid #ddd; margin-bottom: 20px;}
+
+.wrapper-no-border{ margin-bottom: 20px;}
+
+.wrapper-rsidebar {
+	padding-left: 0;
+}
+
+.nav-border{
+	margin-bottom: 0;
+}
+
+.tab-content-border{
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+table p{ font-size: 14px; }
+
+table small::before {
+	content: '— \00A0';
+}
+
+table small {
+	display: block;
+	font-size: 12px;
+	font-weight: 300;
+	line-height: 18px;
+	color: darkGray;
+}
+
+.pagination{
+	border-top: 1px solid #DDD;
+	padding-top: 10px;
+	margin-bottom: 10px;
+}
+
+footer{
+	margin: 30px 0;
+	text-align: center;
+}
+
+.front{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.noborder{ border: none;}
+
+.list-sidebar{
+	margin-top: 10px;
+}
+.list-sidebar li{
+	margin: 0 0 5px;
+}
+
+.form-inline, .form-inline .btn{
+	margin: 0;
+}
+.form-inline{
+	margin-top: 5px;
+}
+
+/*
+ * Custom classes
+ */
+.navbar-static-top, .navbar-static-bottom {
+}
+
+.navbar-static-top {
+    top: 0;
+}
+
+.navbar-static-bottom {
+    bottom: 0;
+}
+
+.navbar-static-top .navbar-inner,
+.navbar-static-bottom .navbar-inner {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.navbar-static-top .container,
+.navbar-static-bottom .container {
+	width: 940px;
+}
+
+.control-group-accordion .control-label {
+	float: none;
+	width: 174px;
+}
+
+.control-group-accordion .control-label i {
+	margin-left: 20px;
+}
+
+.tab-content-control {
+	padding-top: 18px;
+}
+
+.well form:last-child {
+	margin-bottom: 0;
+}

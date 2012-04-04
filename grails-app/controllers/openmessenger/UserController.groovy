@@ -1,6 +1,7 @@
 package openmessenger
 
 class UserController {
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	def userService
@@ -21,17 +22,17 @@ class UserController {
     }
 
     def save = {
-		def paramEvents = params.remove('events')
+        def paramEvents = params.remove('events')
 		def paramRoles = params.remove('roles')
 		
 		def userInstance = new User(params)
 		
         if (userInstance.validate()) { //save(flush: true)) {
-			def roles = []
-			paramEvents.each { roles.add it.toLong() }
-			
 			def events = []
-			paramRoles.each { events.add it.toLong() }
+			paramEvents.each { events.add it.toLong()}
+			
+			def roles = []
+			paramRoles.each { roles.add it.toLong()}
 			
 			userService.save(userInstance, roles, events)
 			
@@ -44,7 +45,8 @@ class UserController {
     }
 
     def view = {
-        def userInstance = User.get(params.id)
+        def userInstance = getUserInstanceByPermission()        
+
         if (!userInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
@@ -55,7 +57,7 @@ class UserController {
     }
 
     def edit = {
-        def userInstance = User.get(params.id)
+        def userInstance = getUserInstanceByPermission()        
         if (!userInstance) {			
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
@@ -66,7 +68,7 @@ class UserController {
     }
 
     def update = {
-		def userInstance = User.get(params.id)
+		def userInstance = getUserInstanceByPermission()        
 		
         if (userInstance) {
             if (params.version) {
@@ -77,14 +79,21 @@ class UserController {
                     return
                 }
             }
+            
             userInstance.properties = params
             if (userInstance.validate()) {
 				try {
 					def roles = []
 					params.roles.each { roles.add it.toLong() }
 					def events = []
-					params.events.each { events.add it.toLong() }					
-					
+					params.events.each { events.add it.toLong() }	
+                    
+                    if(springSecurityService?.principal?.authorities.findAll { it != 'ROLE_ADMINS'}	) {
+                        println 'not admin'
+                        roles = userInstance.authorities.collect { it.id }
+                        events = userInstance.events.collect { it.id }
+                    }
+
 					userService.save(userInstance, roles, events)
 					flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
 	                redirect(action: "view", id: userInstance.id)
@@ -121,5 +130,14 @@ class UserController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
         }
+    }
+
+    protected def getUserInstanceByPermission() {
+        def userInstance
+        def userDetail = springSecurityService?.principal
+        if(userDetail?.id==params.long('id') || userDetail?.authorities.find { it == 'ROLE_ADMINS'}) {            
+            userInstance = User.get(params.id)
+        }
+        return userInstance
     }
 }
