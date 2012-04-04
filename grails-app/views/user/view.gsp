@@ -83,7 +83,9 @@
 											${fieldValue(bean: userInstance, field: "email")}
 										</span>
 									</div>
-								</div>						
+								</div>
+										
+								<sec:ifAnyGranted roles="ROLE_ADMINS">			
 								<div class="control-group">
 									<label class="control-label" for="xlInput">Options</label>
 									
@@ -111,6 +113,8 @@
 										
 									</div>
 								</div>
+								</sec:ifAnyGranted>
+
 							</div><!-- #tab-main -->
 
 							<sec:ifAnyGranted roles="ROLE_ADMINS">

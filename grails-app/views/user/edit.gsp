@@ -74,7 +74,8 @@
 									<div class="controls">
 										<input id="xlInput" class="input-xlarge" type="email" size="30" name="email" value="${userInstance?.email}" />
 									</div>
-								</div>						
+								</div>	
+								<sec:ifAnyGranted roles="ROLE_ADMINS">					
 								<div class="control-group">
 								<label class="control-label" for="xlInput">Options</label>
 									<div class="controls">
@@ -104,6 +105,7 @@
 										</span>
 									</div>
 								</div>
+								</sec:ifAnyGranted>
 							</div><!-- #tab-main -->
 
 							<sec:ifAnyGranted roles="ROLE_ADMINS">
