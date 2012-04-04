@@ -4,6 +4,7 @@ import org.springframework.web.servlet.support.RequestContextUtils as RCU
 
 class MessengerTagLib {
 	static namespace = "msngr"
+	def springSecurityService
 	
 	def paginate = { attrs ->
 		def writer = out
@@ -121,5 +122,9 @@ class MessengerTagLib {
 			writer << str		
 		}
 		writer << '</ul>'
+	}
+
+	def userLink = { attrs ->
+		out << """<a href="${createLink(controller:'user', action:'edit', params:[id:springSecurityService?.principal?.id])}">Edit Profile</a>"""		
 	}
 }
