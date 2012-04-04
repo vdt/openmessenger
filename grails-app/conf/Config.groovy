@@ -151,6 +151,7 @@ environments {
 sms.gateway.inactivity=600000 // 10 mins
 
 openmessenger.eventCallback='eventCallback'
+openmessenger.prefixSize=4
 
 /** SSL truststore configuration key */
 //rest.https.truststore.path = 'web-app/certs/truststore.jks'
@@ -198,8 +199,12 @@ grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'open
 
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
-	'/sec/**':   					['IS_AUTHENTICATED_FULLY'],
-	'/user/**':   			['ROLE_ADMINS'],
+	'/sec/**':   					['IS_AUTHENTICATED_FULLY'],	
+	'/user/view/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
+	'/user/edit/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
+	'/user/create/**':   			['ROLE_ADMINS'],
+	'/user/delete/**':   			['ROLE_ADMINS'],
+	'/user/list/**':   			['ROLE_ADMINS'],
 	'/role/**':   			['ROLE_ADMINS'],
 	'/report/**':  			['ROLE_ADMINS'],
 	'/event/**':   			['ROLE_ADMINS','ROLE_MANAGER','ROLE_USER'],
