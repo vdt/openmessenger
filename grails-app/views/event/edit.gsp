@@ -5,7 +5,7 @@
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Create New Even</title>
+	<title>Edit Even</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="layout" content="main" />        
 </head>
@@ -96,11 +96,15 @@
 				</div> <!-- wrapper --> 
           	</div> <!-- span12 -->
         </div>  <!-- row -->
+
+        <script src="${resource(dir:'js',file:'jquery/jquery.ui.core.js')}"></script>
+        <script src="${resource(dir:'js',file:'jquery/jquery.ui.widget.js')}"></script>
+        <script src="${resource(dir:'js',file:'jquery/jquery.ui.datepicker.js')}"></script>
+        <link href="${resource(dir:'css',file:'themes/base/jquery.ui.theme.css')}" rel="stylesheet"/>
+    	<link href="${resource(dir:'css',file:'themes/base/jquery.ui.base.css')}" rel="stylesheet"/>
+
         <script>
-        	$('#codename').attr('disabled', ${eventInstance?.type==Type.GROUP_CHAT?false:true});
-        	$('#input-sender-id').popover();
-			$('#input-unicode-id').popover();
-			$('#topbar').dropdown()
+        	$('#codename').attr('disabled', ${eventInstance?.type==Type.GROUP_CHAT?false:true});        	
 			$(function() {
 				$( "#startdatepicker" ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" }); //<g:message code="my.localized.content" /> 
 				$( "#enddatepicker" ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" });

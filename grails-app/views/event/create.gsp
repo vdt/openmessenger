@@ -6,8 +6,8 @@
 
 <head>
 	<title>Create New Even</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="layout" content="main" />        
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+    <meta name="layout" content="main" />               
 </head>
 
 <body>
@@ -72,37 +72,41 @@
 						<label class="control-label">Occurred Date</label>
 						<div class="controls">
 							<div class="inline-inputs">
-								<input id="startdatepicker" name="occuredDate" class="small" type="text"  value="${eventInstance?.occuredDate?.format(message(code:'default.stringdate.format'))}" />
+								<input id="startdatepicker" name="occuredDate" class="small hasDatepicker span2" type="text"  value="${eventInstance?.occuredDate?.format(message(code:'default.stringdate.format'))}" />
 						to
-								<input id="enddatepicker" name="enddatepicker" class="small" type="text" />
+								<input id="enddatepicker" name="enddatepicker" class="small hasDatepicker span2" type="text" />
 								<span class="help-block">All times are shown as Pacific Standard Time (GMT -08:00).</span>
 							</div>
 						</div>
 					</div>
 						
-					<div class="control-group">
-						<div class="controls">
-							<div class="inline-inputs">	
-								<input class="btn primary" type="submit" value="Create">
-								<button class="btn" type="reset">Cancel</button>
-							</div>
-						</div>
-					</div>												
+					
+					<div class="form-actions">
+						
+							<button class="btn btn-primary" type="submit">Create</button>
+							<button class="btn" type="reset">Cancel</button>
+						
+					</div>
+																
 					</fieldset>							
 					</form>       
         		</div> <!-- wrapper --> 
           	</div> <!-- span12 -->
         </div>  <!-- row -->
+
+
+		<script src="${resource(dir:'js',file:'jquery/jquery.ui.core.js')}"></script>
+        <script src="${resource(dir:'js',file:'jquery/jquery.ui.widget.js')}"></script>
+        <script src="${resource(dir:'js',file:'jquery/jquery.ui.datepicker.js')}"></script>
+        <link href="${resource(dir:'css',file:'themes/base/jquery.ui.theme.css')}" rel="stylesheet"/>
+    	<link href="${resource(dir:'css',file:'themes/base/jquery.ui.base.css')}" rel="stylesheet"/>
         <script>
         	$('#codename').attr('disabled', ${eventInstance?.type==Type.GROUP_CHAT?false:true});
-			$('#input-sender-id').popover();
-			$('#input-unicode-id').popover();
-			$('#topbar').dropdown()
 			$(function() {
-				$( "#startdatepicker" ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" }); //<g:message code="my.localized.content" /> 
+				$( '#startdatepicker' ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" }); //<g:message code="my.localized.content" /> 
 			});
 			$(function() {
-				$( "#enddatepicker" ).datepicker(); //
+				$( '#enddatepicker' ).datepicker(); //
 			});	
 			$('#type').change( function() {
 					if($('#type').val()=="${Type.GROUP_CHAT}") {

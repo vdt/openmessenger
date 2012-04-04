@@ -7,7 +7,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <title>News List | Open Messenger</title>
+        <title>${event.name} | Open Messenger</title>
     </head>
 
     <body>
@@ -24,22 +24,23 @@
         <div class="row">
             <div class="span8">
                 <div class="wrapper wrapper-rborder">
-                                            
-              	    <form class="form-horizontal" id="send-message" method="post" action="../sendMessage">
-                        <fieldset>
-                        <legend class="noborder">Message to be sent</legend>
-                				<g:hiddenField name="eventId" value="${event?.id}" />
-                        <div class="control-group">
-                    				<textarea id="textarea2" class="input-xlarge span5" rows="3" name="message"></textarea>
-                    				<span class="help-block"> Block of help text to describe the field above if need be. </span>
-                        </div>
-                				<input class="btn btn-primary" type="submit" value="Send to subscribers">
-                				<button class="btn" type="reset">Cancel</button>
-
-                        <fieldset>
-              	    </form>
+                    <div class="well"> 
+                        <h2>Send message</h2>        
+                  	    <form class="form-vertical" id="send-message" method="post" action="../sendMessage">
+                            <fieldset>                            
+                    			<g:hiddenField name="eventId" value="${event?.id}" />
+                                <div class="control-group">
+                        			<textarea id="textarea2" class="input-xlarge span7" rows="3" name="message"></textarea>
+                        			<span class="help-block"> Block of help text to describe the field above if need be. </span>
+                                </div>
+                    				<button class="btn btn-primary" type="submit">Send</button>
+                    				<button class="btn" type="reset">Cancel</button>
+                            <fieldset>
+                  	    </form>
+                    </div> <!-- well -->
               	
-                <table id="sortTableExample"  class="table table-striped">
+                <h2>Timeline</h2>
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th class="header"></th>
@@ -48,21 +49,19 @@
                             <th class="blue header">Date</th>
                         </tr>
                     </thead>
-                        <tbody>
-                            <g:each in="${messages}" var="message" status="i">
+                    <tbody>
+                        <g:each in="${messages}" var="message" status="i">
                             <tr>
                                 <td>${offset+i+1}</td>
-                                <td>
-                                    <blockquote>
+                                <td>                                    
                                     <p>${ message.content }</p>
                                     <small>${message.createBy}</small>
-                                    </blockquote>
                                 </td>
-                                <td><span class="label success">Normal</span></td>
-                                <td><g:formatDate format=" MMM dd, yyyy" date="${message.createdDate}"/></td>
+                                <td><span class="label label-success">Normal</span></td>
+                                <td><p><g:formatDate format=" MMM dd, yyyy" date="${message.createdDate}"/></p></td>
                             </tr>
-                            </g:each>                                                
-                        </tbody>
+                        </g:each>                                                
+                    </tbody>
                 </table>
                 <div class="pagination">
                 	<msngr:paginate id="${event?.id}" action="view" max="10" prev="&larr; Previous" next="Next &rarr;" total="${total}" />
@@ -70,12 +69,25 @@
                 </div> <!-- wrapper wrapper-rborder -->           
             </div> <!-- span8 -->
             <div class="span4">
-                <h3>Information</h3>
-                <ul class="list-sidebar">
-                    <li><b>${event.description}</b></li>
-                    <li><b>Created Date:</b><g:formatDate format=" MMM dd, yyyy" date="${event.occuredDate}"/></li>
-                    <li><g:link controller="event" action="listEventSubscribers" id="${event.id}"><b>Number of subscriber:</b></g:link>${event.subscribers.size()}</li>
-                </ul>
+                <div class="wrapper wrapper-rsidebar">
+                <div class="well">
+                    <h3>Information</h3>
+                    <ul class="list-sidebar unstyled">
+                        <li>
+                            <i class="icon-search"></i>
+                            <b>${event.description}</b>
+                        </li>
+                        <li>
+                            <i class="icon-calendar"></i>
+                            <b>Created Date:</b><g:formatDate format=" MMM dd, yyyy" date="${event.occuredDate}"/>
+                        </li>
+                        <li>
+                            <i class="icon-user"></i>
+                            <g:link controller="event" action="listEventSubscribers" id="${event.id}"><b>Number of subscriber:</b></g:link>${event.subscribers.size()}
+                        </li>
+                    </ul>
+                </div>
+                </div>
             </div> <!-- span4-->          
         </div> <!-- row -->
     </body>
