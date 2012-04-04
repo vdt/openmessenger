@@ -18,6 +18,12 @@ body{
 
 .wrapper-rborder{ border-right: 1px solid #ddd; margin-bottom: 20px;}
 
+.wrapper-no-border{ margin-bottom: 20px;}
+
+.wrapper-rsidebar {
+	padding-left: 0;
+}
+
 .nav-border{
 	margin-bottom: 0;
 }
@@ -72,4 +78,47 @@ footer{
 }
 .form-inline{
 	margin-top: 5px;
+}
+
+/*
+ * Custom classes
+ */
+.navbar-static-top, .navbar-static-bottom {
+}
+
+.navbar-static-top {
+    top: 0;
+}
+
+.navbar-static-bottom {
+    bottom: 0;
+}
+
+.navbar-static-top .navbar-inner,
+.navbar-static-bottom .navbar-inner {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.navbar-static-top .container,
+.navbar-static-bottom .container {
+	width: 940px;
+}
+
+.control-group-accordion .control-label {
+	float: none;
+	width: 174px;
+}
+
+.control-group-accordion .control-label i {
+	margin-left: 20px;
+}
+
+.tab-content-control {
+	padding-top: 18px;
+}
+
+.well form:last-child {
+	margin-bottom: 0;
 }
