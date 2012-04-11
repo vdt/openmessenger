@@ -72,9 +72,9 @@
 						<label class="control-label">Occurred Date</label>
 						<div class="controls">
 							<div class="inline-inputs">
-								<input id="startdatepicker" name="occuredDate" class="small hasDatepicker span2" type="text"  value="${eventInstance?.occuredDate?.format(message(code:'default.stringdate.format'))}" />
+								<input id="startdatepicker" name="occuredDate" class="small" type="text"  value="${eventInstance?.occuredDate?.format(message(code:'default.stringdate.format'))}" />
 						to
-								<input id="enddatepicker" name="enddatepicker" class="small hasDatepicker span2" type="text" />
+								<input id="enddatepicker" name="enddatepicker" class="small" type="text" />
 								<span class="help-block">All times are shown as Pacific Standard Time (GMT -08:00).</span>
 							</div>
 						</div>
@@ -106,7 +106,7 @@
 				$( '#startdatepicker' ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" }); //<g:message code="my.localized.content" /> 
 			});
 			$(function() {
-				$( '#enddatepicker' ).datepicker(); //
+				$( "#enddatepicker" ).datepicker({dateFormat:"${message(code:'default.datepicker.format')}" });
 			});	
 			$('#type').change( function() {
 					if($('#type').val()=="${Type.GROUP_CHAT}") {
