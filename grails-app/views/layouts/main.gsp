@@ -62,7 +62,7 @@
   	    
   		</div>
           <footer>
-              <p align="center">&copy; Oxfam</p>
+              <p align="center">&copy; Opendream Co., Ltd. | Technology creates Social Innovation</p>
           </footer>    
       </div>
   </body>
