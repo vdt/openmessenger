@@ -37,7 +37,7 @@
 				        <tbody>
 				        	<g:each in="${userInstanceList}" var="user" status="i">
 				           	<tr>
-				           		<td>${i+1}</td>
+				           		<td>${i+1+offset}</td>
 				           		<td>
 				           			<a href="${createLink(controller:'user', action:'view', params:[id:user.id])}">${user.firstname+' '+user.lastname}</a>
 				           		</td>
@@ -48,7 +48,7 @@
 				        </tbody>
 				    </table>
 				    <div class="pagination">
-	                	<msngr:paginate id="${event?.id}" action="view" max="10" prev="&larr; Previous" next="Next &rarr;" total="${userInstanceTotal}" />
+	                	<msngr:paginate id="${event?.id}" action="list" max="10" prev="&larr; Previous" next="Next &rarr;" total="${userInstanceTotal}" />
 	                </div>				    
 	          	</div> <!-- wrapper -->
     		</div> <!-- span12 -->        
