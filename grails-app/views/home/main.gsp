@@ -23,12 +23,12 @@
           	<div class="wrapper wrapper-no-border">
           	<div class="tabbable">
 				<ul class="nav nav-tabs nav-border">
-					<li class="active"><a href="#1" data-toggle="tab">Event</a></li>
-					<li><a href="#2" data-toggle="tab">Group Chat</a></li>	
+					<li ${tab=='event' || tab==null?'class=active':''}><a href="#1" data-toggle="tab">Event</a></li>
+					<li ${tab=='group'?'class=active':''}><a href="#2" data-toggle="tab">Group Chat</a></li>	
 				</ul>
 				<div class="tab-content tab-content-border">
 
-					<div class="tab-pane active" id="1">
+					<div class="tab-pane ${tab=='event' || tab==null?'active':''}" id="1">
 						<g:if test="${events.size()>0}" >
 						<table id="sortTableExample"  class="table table-striped">
 							<thead>
@@ -45,7 +45,7 @@
 			              	<tbody>
 			              		<g:each in="${events}" var="event" status="i">
 			                	<tr>
-			                  		<td>${i+1}</td>
+			                  		<td>${i+1+offset}</td>
 			                  		<td>
 			                    		<blockquote>
 			                    			<g:link controller="event" action="view" id="${event.id}"><p>${event.name}</p></g:link>
@@ -60,11 +60,14 @@
 			                	</tr>
 			                	</g:each>	                	                             
 			              </tbody>
-			            </table>				
+			            </table>
+			            <div class="pagination">
+	                		<msngr:paginate action="main" prefix="event" max="10" prev="&larr; Previous" next="Next &rarr;" total="${totalEvents}" id="event"/>
+	                	</div>				
 						</g:if>
 					</div>
 					
-					<div class="tab-pane" id="2">
+					<div class="tab-pane ${tab=='group'?'active':''}" id="2">
 						<g:if test="${groupChats.size()>0}" >				
 						<table id="sortTableExample"  class="table table-striped">
 							<thead>
@@ -81,7 +84,7 @@
 			              	<tbody>
 			              		<g:each in="${groupChats}" var="group" status="i">
 			                	<tr>
-			                  		<td>${i+1}</td>
+			                  		<td>${i+1+goffset}</td>
 			                  		<td>
 			                    		<blockquote>
 			                    			<g:link controller="event" action="view" id="${group.id}"><p>${group.name}</p></g:link>
@@ -95,7 +98,10 @@
 			                	</tr>
 			                	</g:each>	                	                             
 			              </tbody>
-			            </table>				
+			            </table>
+			            <div class="pagination">
+	                		<msngr:paginate action="main" prefix="group" max="10" prev="&larr; Previous" next="Next &rarr;" total="${totalGroupChats}" id="group" />
+	                	</div>				
 						</g:if>
 					</div>					
 				</div>
