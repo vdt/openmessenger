@@ -122,3 +122,8 @@ footer{
 .well form:last-child {
 	margin-bottom: 0;
 }
+
+.msg-word-warp {
+	width: 370px;
+    word-wrap: break-word;
+}
