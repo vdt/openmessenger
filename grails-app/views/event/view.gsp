@@ -54,7 +54,7 @@
                             <tr>
                                 <td>${offset+i+1}</td>
                                 <td>                                    
-                                    <p>${ message.content }</p>
+                                    <p class="msg-word-warp">${ message.content }</p>
                                     <small>${message.createBy}</small>
                                 </td>
                                 <td><span class="label label-success">Normal</span></td>
