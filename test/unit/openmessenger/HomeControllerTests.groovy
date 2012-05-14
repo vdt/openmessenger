@@ -67,8 +67,7 @@ class HomeControllerTests extends ControllerUnitTestCase {
 		
 		assert "main" == controller.renderArgs.view
 		assert 0 == controller.renderArgs.model.events.size()
-		assert 2 == controller.renderArgs.model.groupChats.size()
-		assert 2 == controller.renderArgs.model.users.size()
+		assert 2 == controller.renderArgs.model.groupChats.size()		
 		
 		eventService.verify()
     }

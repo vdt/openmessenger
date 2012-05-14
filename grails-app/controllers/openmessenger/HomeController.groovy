@@ -29,7 +29,12 @@ class HomeController {
 		if(offset+max>totalEvents && totalEvents > 0) {
 			max =totalEvents-offset			
 		}
-		news = news[offset..offset+max-1]
+		println news.size()
+		println offset+max-1
+		if(totalEvents>0) {
+			news = news[offset..offset+max-1]
+		}
+
 
 		def groupChats = events.findAll { it.type == Type.GROUP_CHAT }
 		def totalGroupChats = groupChats?.size()?:0
@@ -42,7 +47,9 @@ class HomeController {
 		if(goffset+gmax>totalGroupChats && totalGroupChats > 0) {
 			gmax =totalGroupChats-goffset			
 		}
-		groupChats = groupChats[goffset..goffset+gmax-1]
+		if(totalGroupChats>0) {
+			groupChats = groupChats[goffset..goffset+gmax-1]
+		}
 		
 		render(view:"main", model:[events: news, totalEvents: totalEvents, groupChats:groupChats, totalGroupChats: totalGroupChats, tab:params.id, offset:offset, goffset:goffset])		
 	}
