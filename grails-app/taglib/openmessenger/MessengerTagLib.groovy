@@ -13,20 +13,21 @@ class MessengerTagLib {
 		}
 		def messageSource = grailsAttributes.messageSource
 		def locale = RCU.getLocale(request)
-
+		def prefix = attrs.prefix ?: ''
 		def total = attrs.int('total') ?: 0
 		def action = (attrs.action ? attrs.action : (params.action ? params.action : "list"))
-		def offset = params.int('offset') ?: 0
-		def max = params.int('max')
+		def offset = params.int(prefix+'offset') ?: 0
+		def max = params.int(prefix+'max')
 		def maxsteps = (attrs.int('maxsteps') ?: 10)
 
 		if (!offset) offset = (attrs.int('offset') ?: 0)
 		if (!max) max = (attrs.int('max') ?: 10)
 
 		def linkParams = [:]
-		if (attrs.params) linkParams.putAll(attrs.params)
-		linkParams.offset = offset - max
-		linkParams.max = max
+		if (attrs.params) linkParams.putAll(attrs.params)		
+		linkParams.prefix = prefix
+		linkParams.put(prefix+'offset', offset - max)
+		linkParams.put(prefix+'max', max)
 		if (params.sort) linkParams.sort = params.sort
 		if (params.order) linkParams.order = params.order
 
@@ -51,7 +52,8 @@ class MessengerTagLib {
 		// display previous link when not on firststep
 		if (currentstep > firststep) {
 			linkTagAttrs.class = 'prev'
-			linkParams.offset = offset - max
+			//linkParams.offset = offset - max
+			linkParams.put(prefix+'offset', offset - max)
 			def str = link(linkTagAttrs.clone()) {
 				 (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Previous', locale), locale))				
 			}
@@ -81,7 +83,8 @@ class MessengerTagLib {
 
 			// display firststep link when beginstep is not firststep
 			if (beginstep > firststep) {
-				linkParams.offset = 0
+				//linkParams.offset = 0
+				linkParams.put(prefix+'offset', 0)
 				def str = link(linkTagAttrs.clone()) {firststep.toString()}
 				str= '<li class="prev disabled">'+str+'<li>'
 				writer << str
@@ -90,11 +93,12 @@ class MessengerTagLib {
 
 			// display paginate steps
 			(beginstep..endstep).each { i ->
-				if (currentstep == i) {
+				if (currentstep == i) { 
 					writer << "<li class='active'><a href='#'>$i</a></li>"
 				}
 				else {
-					linkParams.offset = (i - 1) * max
+					//linkParams.offset = (i - 1) * max
+					linkParams.put(prefix+'offset', (i - 1) * max)
 					def str = link(linkTagAttrs.clone()) {i.toString()}
 					str = '<li>'+str+'</li>'
 					writer << str
@@ -104,7 +108,8 @@ class MessengerTagLib {
 			// display laststep link when endstep is not laststep
 			if (endstep < laststep) {
 				writer << '<li class="next">...</li>'
-				linkParams.offset = (laststep -1) * max
+				//linkParams.offset = (laststep -1) * max
+				linkParams.put(prefix+'offset', (laststep -1) * max)
 				def str = link(linkTagAttrs.clone()) { laststep.toString() }
 				str = '<li class="next">'+str+'</li>'
 				writer << str
@@ -114,7 +119,8 @@ class MessengerTagLib {
 		// display next link when not on laststep
 		if (currentstep < laststep) {
 			linkTagAttrs.class = 'next'
-			linkParams.offset = offset + max
+			//linkParams.offset = offset + max
+			linkParams.put(prefix+'offset', offset + max)
 			def str = link(linkTagAttrs.clone()) {				
 				(attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))				
 			}

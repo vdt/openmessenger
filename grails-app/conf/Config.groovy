@@ -226,7 +226,7 @@ grails.plugins.springsecurity.secureChannel.definition = [
 	'/user/**': 'REQUIRES_SECURE_CHANNEL',
 	'/subscriber/**': 'REQUIRES_SECURE_CHANNEL',
 	'/j_spring_security_check': 'REQUIRES_SECURE_CHANNEL',
-	//'/main.gsp':  'REQUIRES_INSECURE_CHANNEL',
+	'/home/main/**':  'REQUIRES_INSECURE_CHANNEL',
 	'/index.gsp':  'REQUIRES_INSECURE_CHANNEL',		
 	'/event/**': 'REQUIRES_INSECURE_CHANNEL',
 	'/api/event/auth/**': 'REQUIRES_SECURE_CHANNEL',
