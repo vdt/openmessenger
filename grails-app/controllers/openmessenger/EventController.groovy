@@ -26,7 +26,7 @@ class EventController {
 
     def listAllEvents = { 
 		def userDetails = springSecurityService.principal
-		def user = User.get(userDetails.id)		
+		def user = User.get(userDetails.id)	
 		def events = eventService.findAllEventByUser(user)
         //def events = Event.list()
         render(view:"listAllEvents",model:[events: events])

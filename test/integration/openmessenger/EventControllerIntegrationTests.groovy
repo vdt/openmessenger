@@ -8,8 +8,9 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 class EventControllerIntegrationTests extends grails.test.ControllerUnitTestCase {
-    protected void setUp() {
+    protected void setUp() {        
         super.setUp()
+        controller.metaClass.message = {Map map -> 'dd/MM/yyyy'}
     }
 
     protected void tearDown() {
@@ -28,11 +29,16 @@ class EventControllerIntegrationTests extends grails.test.ControllerUnitTestCase
                         [ new GrantedAuthorityImpl('ROLE_ADMIN')],
                         null),
                 "admin"))
+        def springSecurityService = [:]
+        def principal = [:]
+        principal.authorities = ['ROLE_ADMIN', 'ROLE_USER']
+        principal.id = 1
+        springSecurityService.principal = principal
+        controller.springSecurityService = springSecurityService
                 
-        def events =  controller.listAllEvents()
-        assertNotNull events
-		
-        //assertEquals "listAllEvents", controller.renderArgs.view
+        controller.listAllEvents()
+        assertNotNull controller.modelAndView.model.events
+        assertEquals "listAllEvents", controller.renderArgs.view
     }
 
     void testSaveEvent(){
@@ -53,10 +59,11 @@ class EventControllerIntegrationTests extends grails.test.ControllerUnitTestCase
         mockDomain(Event, eventSaved)
         controller.params.name = "dude"
         controller.params.description = "description"
-        controller.params.occuredDate = new Date()
+        //controller.params.occuredDate = new Date()
+        controller.params.occuredDate = '12/05/2012'
         controller.params.type = "GROUP_CHAT"
         controller.params.status = "NORMAL"
-        controller.params.type = "event"
+        controller.params.type = "EVENT"
         controller.save()
         
         assertEquals "view", controller.redirectArgs["action"]
@@ -79,9 +86,10 @@ class EventControllerIntegrationTests extends grails.test.ControllerUnitTestCase
         mockDomain(Event, eventSaved)
         controller.params.name = "dude"
         controller.params.description = "description"
-        controller.params.occuredDate = new Date()
+        //controller.params.occuredDate = new Date()
+        controller.params.occuredDate = '12/05/2012'
         controller.params.status = "EVIL" //Wrong status for Event class 
-        controller.params.type = "event"
+        controller.params.type = "EVENT"
         controller.save()
         assertEquals "create", controller.renderArgs.view
     }   
