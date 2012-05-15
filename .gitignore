@@ -4,3 +4,4 @@ target/
 /grails-app/services/openmessenger/ClickatellGatewayService.groovy
 /src/templates/
 /target-eclipse/
+stacktrace.log
