@@ -5,3 +5,4 @@ target/
 /src/templates/
 /target-eclipse/
 stacktrace.log
+cobertura.ser

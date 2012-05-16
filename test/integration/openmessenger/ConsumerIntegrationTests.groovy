@@ -17,32 +17,32 @@ class ConsumerIntegrationTests extends GroovyTestCase {
     }
 	
 	void testHandleMessage(){
-		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true, senderId:'testSenderId']
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true, senderId:'testSenderId', isUnicode:true]
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}
 	
 	void testHandleMessageWithDefaultSenderId(){
-		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true]
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:true, isUnicode:true]
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}
 	
 	void testHandleMessageWithOutSenderIdCheckSenderId(){
-		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false, senderId:"WithoutSender"]
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false, senderId:"WithoutSender", isUnicode:true]
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}
 	
 	void testHandleMessageWithOutSenderId(){
-		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false]
+		def map = [msisdn:'66897753337', content:'Call me RabbitMQ Dude ', isSenderId:false, isUnicode:false]
 		consumerService.handleMessage(map)
 		assertNotNull consumerService.sessionId
 	}
 	
     void testSendMessage() {
 		//text -> limited 189 characters
-		def map = [msisdn:'66890242989', content:'Call me RabbitMQ']
+		def map = [msisdn:'66890242989', content:'Call me RabbitMQ', isUnicode:true]
 		//def map = [msisdn:'66800892412', content:'ทดสอบไทย']
 		
 		def result = consumerService.sendMessage(map)
@@ -57,7 +57,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 		CH.config.sms.gateway.user="opendreamx"
 		consumerService.sessionId = null
 		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
-			eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
+			eventId:1, callbackQueue:CH.config.openmessenger.eventCallback, isUnicode:false]
 		consumerService.handleMessage(map)
 		assertNull consumerService.sessionId
 		Thread.sleep(5000)
@@ -72,7 +72,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 		shouldFail(ConsumerServiceException) {
 			consumerService.sessionId = "error"
 			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
-				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback, isUnicode:false]
 			consumerService.sendMessage(map)
 		}		
 	}
@@ -82,7 +82,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 		
 		shouldFail(ConsumerServiceException) {
 			def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
-				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback, isUnicode:false]
 			consumerService.getNewSession(map)
 		}
 	}
@@ -90,7 +90,7 @@ class ConsumerIntegrationTests extends GroovyTestCase {
 	void testGetNewSessionPass(){
 		CH.config.sms.gateway.user="opendream"
 		def map = [msisdn:'66809737799', content:'Call me RabbitMQ Dude ทดสอบไทย ព្រះរាជាណាចក្រកម្ពុជា  tiếng Việt, Việt ngữ', isSenderId:true, date:new Date(), 
-				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback]
+				eventId:1, callbackQueue:CH.config.openmessenger.eventCallback, isUnicode:false]
 		consumerService.getNewSession(map)
 		assertNotNull consumerService.sessionId
 		assertNotNull consumerService.lastPing

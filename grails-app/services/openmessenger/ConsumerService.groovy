@@ -33,6 +33,13 @@ class ConsumerService {
 				   if(result.contains('ERR')) getNewSession(map)
 			   }
 			}
+			//default for latin font
+			map.unicode = 0
+			// check caractor is unicode or not
+			if(!map.isUnicode) {
+				map.content = convertToUnicode(map.content)
+				map.unicode = 1
+			}
 			
 			if(map.isSenderId){	
 				println("send with senderId")
@@ -66,8 +73,8 @@ class ConsumerService {
 			def html = get(path :CH.config.sms.gateway.path,
 								query : [session_id:sessionId, to:map.msisdn,
 										from:senderId,
-										text:convertToUnicode(map.content), 
-										unicode:1, concat:getConcatinationSize(map.content)]) 
+										text:map.content, 
+										unicode:map.unicode, concat:getConcatinationSize(map.content)]) 
 										
 			}		
 		
@@ -82,8 +89,8 @@ class ConsumerService {
 	   def result = withHttp(uri:CH.config.sms.gateway.uri) {
 		   def html = get(path :CH.config.sms.gateway.path,
 							   query : [session_id:sessionId, to:map.msisdn,
-									   text:convertToUnicode(map.content),
-									   unicode:1, concat:getConcatinationSize(map.content)])
+									   text:map.content,
+									   unicode:map.unicode, concat:getConcatinationSize(map.content)])
 									   
 		   }
 	   

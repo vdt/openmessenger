@@ -27,8 +27,8 @@ class ConsumerServiceTests extends GrailsUnitTestCase {
     void testHandleMessage() {
 		consumerService.sessionId = 'testSessionId'
 		consumerService.lastPing = System.currentTimeMillis()
-		def maps = [[uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude'], 
-			[uri:'http2', msisdn:'66890242989', content:'Call me RabbitMQ dude'], 
+		def maps = [[uri:'http1', msisdn:'66890242989', content:'Call me RabbitMQ dude', isUnicode:true], 
+			[uri:'http2', msisdn:'66890242989', content:'Call me RabbitMQ dude', isUnicode:false], 
 			[uri:'http3', msisdn:'66890242989', content:'Call me RabbitMQ dude']]
 		def counter = 0
 		consumerService.metaClass.withHttp = {Map map, Closure closure -> 

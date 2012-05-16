@@ -119,9 +119,9 @@ environments {
 		// rabbitMQ Configuration
 		rabbitmq {
 			connectionfactory {
-				username = ''
-				password = ''
-				hostname = ''
+				username = 'guest'
+				password = 'guest'
+				hostname = 'dminer.in.th'
 				consumers = 5
 			}
 			queues = {
