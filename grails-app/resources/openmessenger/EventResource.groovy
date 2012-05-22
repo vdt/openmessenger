@@ -47,8 +47,8 @@ class EventResource {
         eventService.sendGroupChatMessage(messageMap.eventId, messageMap.message, eventDTO.senderId)
         ok "Request Completed"
     } 
-	
-	@GET
+
+    @GET
 	@Path('/list/{username}/{token}')
 	@Produces('application/json')
 	JSON listEvents(@PathParam('username') String username,
@@ -105,6 +105,25 @@ class EventResource {
 		} else {
 			ok 'Error: Request not Completed'
 		}
+	}
+	
+	@GET
+    @Path('/sendIndividualMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
+    @Produces('text/plain')
+    Response sendIndividualMessage(@PathParam('eventId') String eventId,
+    								@PathParam('username') String username,
+								    @PathParam('token') String password,
+    								@PathParam('msisdn') String msisdn,
+								  	@PathParam('message') String message) {
+		def enable = remoteAuthenticationService.hasSessionToken(username, token)
+		def user = User.findByUsername(username)
+		def userEvent = UserEvent.get(user.id, eventId)
+		if(enable && userEvent) {
+			eventService.sendIndividualMessage(eventId, username, msisdn, new Message(title:'', content:message, createdDate:new Date())
+			ok "Request Completed"
+		} else {
+			ok 'Error: Request not Completed'
+		}		  		
 	}	
 							
 	@GET
