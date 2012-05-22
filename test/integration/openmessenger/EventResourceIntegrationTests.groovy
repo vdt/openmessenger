@@ -202,13 +202,13 @@ class EventResourceIntegrationTests extends IntegrationTestCase {
 		*/
 		sendRequest('/api/auth/error/password', 'GET', headers)
 		println response.contentAsString
-		assertEquals('error: not found', response.contentAsString)
+		assertEquals('Error: not found', response.contentAsString)
 	   
 		/*
 		 *  test /api/event/ping/$username/$token
 		 */
 		sendRequest("/api/ping/defaultx/$usertoken", 'GET', headers)
-		assertEquals('error: not found', response.contentAsString)					
+		assertEquals('Error: not found', response.contentAsString)					
 	}
 	
 	@Test
