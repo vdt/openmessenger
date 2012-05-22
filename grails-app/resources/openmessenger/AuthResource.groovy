@@ -31,7 +31,7 @@ class AuthResource {
 		if(token) {
 			ok token
 		} else {			
-			ok 'error: not found'
+			ok 'Error: not found'
 		}
 	}
     
@@ -44,7 +44,7 @@ class AuthResource {
 		if(enable) {
 			ok 'ok'
 		} else {
-			ok 'error: not found'
+			ok 'Error: not found'
 		}
 	}
 }
