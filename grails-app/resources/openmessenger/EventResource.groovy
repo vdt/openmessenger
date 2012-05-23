@@ -119,7 +119,7 @@ class EventResource {
 		def user = User.findByUsername(username)
 		def userEvent = UserEvent.get(user.id, eventId)
 		if(enable && userEvent) {
-			eventService.sendIndividualMessage(eventId, username, msisdn, new Message(title:'', content:message, createdDate:new Date())
+			eventService.sendIndividualMessage(eventId, username, msisdn, new Message(title:'', content:message, createdDate:new Date()))
 			ok "Request Completed"
 		} else {
 			ok 'Error: Request not Completed'

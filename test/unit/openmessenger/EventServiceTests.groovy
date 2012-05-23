@@ -267,6 +267,83 @@ class EventServiceTests extends GrailsUnitTestCase {
 		assertEquals 5, targetEvent.subscribers.size()
 	}
 
+	void testSendIndividualMessageWithEmtrySubscriber() {
+		mockDomain(Gateway,[new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin'),
+							new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin')])
+		
+		def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status:Status.NORMAL, type:Type.GROUP_CHAT)
+ 		
+		mockDomain(Event, [eventInstance])   
+		mockDomain(Subscriber)
+		mockDomain(MessageLog)
+		mockDomain(Message)
+
+		eventInstance.save()
+		
+		def rabbitSent = 0
+		def eventService = new EventService()
+		def message = new Message(title:"title", content:"first content", createdDate:new Date())
+		// closure rabbitsend
+		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++; println queue}
+
+		//event has 0 subscriber
+		assert null == eventInstance.subscribers
+		eventService.sendIndividualMessage(eventInstance.id, 'username', "66890242989", message)
+		
+		// should be
+		assert 1 == eventInstance.subscribers.size()
+		// subcriber by msisdn prefixed wiht 66 should use dtac gateway
+		def subscriber = Subscriber.findByMsisdn("66890242989")
+		assert 'th_dtac' == subscriber.gateway.name
+		assert 1 == eventInstance.messages.size()
+		assert 1 == rabbitSent
+		assert 1 == MessageLog.count()
+	}
+
+	void testSendIndividualMessage() {
+		mockDomain(Gateway,[new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin'),
+							new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin')])
+		
+		def eventInstance = new Event(name: 'The Championships, Wimbledon',
+            description: 'The oldest tennis tournament in the world, considered by many to be the most prestigious',
+            occuredDate: new SimpleDateFormat("yyyy-MMM-dd").parse("20011-DEC-25"),
+            status:Status.NORMAL, type:Type.GROUP_CHAT)
+        def subscribers = [	'66809737791', '66809737792',
+							'66809737793', '66809737794']
+ 		
+		mockDomain(Event, [eventInstance])   
+		mockDomain(Subscriber)
+		mockDomain(MessageLog)
+		mockDomain(Message)
+
+		eventInstance.save()		
+		def rabbitSent = 0
+		def eventService = new EventService()
+		subscribers.each {
+			eventService.subscribeToEvent(eventInstance.id, it)
+		}
+
+		def message = new Message(title:"title", content:"first content", createdDate:new Date())
+		// closure rabbitsend
+		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++; println queue}
+
+		//event has 0 subscriber
+		assert 4 == eventInstance.subscribers.size()
+		eventService.sendIndividualMessage(eventInstance.id, 'username', "66890242989", message)
+		
+		// should be
+		assert 5 == eventInstance.subscribers.size()
+		// subcriber by msisdn prefixed wiht 66 should use dtac gateway
+		def subscriber = Subscriber.findByMsisdn("66890242989")
+		assert 'th_dtac' == subscriber.gateway.name
+		assert 1 == eventInstance.messages.size()
+		assert 1 == rabbitSent
+		assert 1 == MessageLog.count()
+	}
+
 	void testSendMessage(){
 		
 		mockDomain(Gateway,[new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin'),
