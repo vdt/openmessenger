@@ -37,7 +37,8 @@ class EventService {
         def subscriber = Subscriber.findByMsisdn(msisdn)    
 		println subscriber
 		if(subscriber==null){ 
-			subscriber = new Subscriber(msisdn: msisdn, active:"Y")			
+			subscriber = new Subscriber(msisdn: msisdn, active:"Y")	
+			subscriber.save()		
 		}
         
         event.addToSubscribers(subscriber)
@@ -62,7 +63,7 @@ class EventService {
 				gateway.save()
 			}
 		}
-		event.save()		
+		event.save()				
 	}
 	
 	def findGateway(String msisdn){
@@ -92,7 +93,26 @@ class EventService {
         event.removeFromSubscribers(targetSubscriber)
         event.save()
     }
-	
+
+    def sendIndividualMessage(Long eventId, def username, def msisdn, Message message) {
+    	def event = Event.findById(eventId)
+    	def isSenderId = event.isSenderId
+    	if(!event.subscribers.find {it.msisdn == msisdn}) {
+    		subscribeToEvent(event.id, msisdn)
+    	}
+    	println msisdn
+    	def subscriber = Subscriber.findByMsisdn(msisdn)
+    	println "$subscriber ${subscriber?.msisdn} ${subscriber?.gateway}"
+    	message.title = "News from ${event.name} to {msisdn}"
+		message.createBy = username
+        event.addToMessages(message)
+        def date = new Date()
+        def msg = [msisdn:msisdn, content:message.content, date:date, isSenderId:isSenderId, eventId:eventId, callbackQueue:callbackQueue, isUnicode:event.isUnicode]
+			insertMessageLog(event, event.type, msisdn, subscriber.gateway, message.content, message.createBy, date)
+			rabbitSend(subscriber.gateway.queueName, msg)
+		event.save()
+    }
+
     def sendMessage(Long eventId, Message message){
 		def userDetails = springSecurityService.principal
 		log.debug("create by: ${userDetails?.username}, eventId: $eventId")
