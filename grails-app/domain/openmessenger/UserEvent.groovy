@@ -25,7 +25,7 @@ class UserEvent implements Serializable {
 		builder.toHashCode()
 	}
 	
-	static UserEvent get(long userId, long eventId) {
+	static UserEvent get(Long userId, Long eventId) {
 		findByUserAndEvent(User.get(userId), Event.get(eventId))
 	}
 
