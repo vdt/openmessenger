@@ -36,7 +36,6 @@ class EventResourceIntegrationTests extends IntegrationTestCase {
 				println it
 			}
 		}
-		
 		group.save(flush:true)
 		
 		eventService.subscribeToEvent(group.id, '1234567890')
@@ -197,18 +196,18 @@ class EventResourceIntegrationTests extends IntegrationTestCase {
 		
 		
 		/*
-		*  test /api/event/auth/$username/$password
+		*  test /api/auth/$username/$password
 		*  with unknown user
 		*/
 		sendRequest('/api/auth/error/password', 'GET', headers)
 		println response.contentAsString
-		assertEquals('Error: not found', response.contentAsString)
+		assert 'Error: not found' == response.contentAsString //toLowerCase()
 	   
 		/*
 		 *  test /api/event/ping/$username/$token
 		 */
 		sendRequest("/api/ping/defaultx/$usertoken", 'GET', headers)
-		assertEquals('Error: not found', response.contentAsString)					
+		assert 'Error: not found' == response.contentAsString
 	}
 	
 	@Test
@@ -347,6 +346,48 @@ class EventResourceIntegrationTests extends IntegrationTestCase {
 		sendRequest("/api/event/messages/${group.id}/${user.username}/$token", 'GET', headers)
 		assertNotSame('{}', response.contentAsString)
 		println response.contentAsString
+	}
+
+	void testSendPersonalMessage() { // use mock object from testSendMessage()
+		def headers = ['Content-Type':'application/json', 'Accept':['application/json', 'text/plain']]
+		def user = User.findByUsername('default1')
+		assert null != user
+		def group = Event.findByName('group-chat1')
+		assert null != group
+
+		assert null != UserEvent.get(user.id, group.id)
+
+		def token = remoteAuthenticationService.authenticate(user.username, 'password')
+
+		assert 3 == group.subscribers?.size()
+
+		def rabbitSent=0
+		eventService.metaClass.rabbitSend = {queue, msg -> rabbitSent++}
+		def message = 'test msg'
+		def msisdn = '1234567890'
+
+		sendRequest("/api/event/sendPersonalMessage/${group.id}/${user.username}/$token/$msisdn/$message", 'GET', headers)
+
+		assert 200 == response.status
+		assert "Request Completed" == response.contentAsString
+		assert 1 == rabbitSent
+
+		msisdn = '1234567888'
+		sendRequest("/api/event/sendPersonalMessage/${group.id}/${user.username}/$token/$msisdn/$message", 'GET', headers)
+
+		assert 200 == response.status
+		assert "Request Completed" == response.contentAsString
+		assert 2 == rabbitSent
+		assert 4 == group.subscribers?.size()
+
+		msisdn = '1234567888'
+		token = 'errortoken'
+		sendRequest("/api/event/sendPersonalMessage/${group.id}/${user.username}/$token/$msisdn/$message", 'GET', headers)
+
+		assert 200 == response.status
+		assert "Error: Request not Completed" == response.contentAsString
+		assert 2 == rabbitSent
+		assert 4 == group.subscribers?.size()
 	}
 
 }
