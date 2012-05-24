@@ -267,7 +267,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 		assertEquals 5, targetEvent.subscribers.size()
 	}
 
-	void testSendIndividualMessageWithEmtrySubscriber() {
+	void testSendPersonalMessageWithEmtrySubscriber() {
 		mockDomain(Gateway,[new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin'),
 							new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin')])
 		
@@ -291,7 +291,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 
 		//event has 0 subscriber
 		assert null == eventInstance.subscribers
-		eventService.sendIndividualMessage(eventInstance.id, 'username', "66890242989", message)
+		eventService.sendPersonalMessage(eventInstance.id, 'username', "66890242989", message)
 		
 		// should be
 		assert 1 == eventInstance.subscribers.size()
@@ -303,7 +303,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 		assert 1 == MessageLog.count()
 	}
 
-	void testSendIndividualMessage() {
+	void testSendPersonalMessage() {
 		mockDomain(Gateway,[new Gateway(prefix:'00', name:'inter_clickatell', queueName:'openmessenger', createdBy:'admin'),
 							new Gateway(prefix:'66', name:'th_dtac', queueName:'openmessenger_dtac', createdBy:'admin')])
 		
@@ -332,7 +332,7 @@ class EventServiceTests extends GrailsUnitTestCase {
 
 		//event has 0 subscriber
 		assert 4 == eventInstance.subscribers.size()
-		eventService.sendIndividualMessage(eventInstance.id, 'username', "66890242989", message)
+		eventService.sendPersonalMessage(eventInstance.id, 'username', "66890242989", message)
 		
 		// should be
 		assert 5 == eventInstance.subscribers.size()

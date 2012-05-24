@@ -108,18 +108,18 @@ class EventResource {
 	}
 	
 	@GET
-    @Path('/sendIndividualMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
+    @Path('/sendPersonalMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
     @Produces('text/plain')
-    Response sendIndividualMessage(@PathParam('eventId') String eventId,
+    Response sendPersonalMessage(@PathParam('eventId') Long eventId,
     								@PathParam('username') String username,
-								    @PathParam('token') String password,
+								    @PathParam('token') String token,
     								@PathParam('msisdn') String msisdn,
 								  	@PathParam('message') String message) {
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
 		def user = User.findByUsername(username)
 		def userEvent = UserEvent.get(user.id, eventId)
 		if(enable && userEvent) {
-			eventService.sendIndividualMessage(eventId, username, msisdn, new Message(title:'', content:message, createdDate:new Date()))
+			eventService.sendPersonalMessage(eventId, username, msisdn, new Message(title:'', content:message, createdDate:new Date()))
 			ok "Request Completed"
 		} else {
 			ok 'Error: Request not Completed'
