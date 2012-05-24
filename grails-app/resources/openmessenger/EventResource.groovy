@@ -110,9 +110,9 @@ class EventResource {
 	@GET
     @Path('/sendPersonalMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
     @Produces('text/plain')
-    Response sendPersonalMessage(@PathParam('eventId') String eventId,
+    Response sendPersonalMessage(@PathParam('eventId') Long eventId,
     								@PathParam('username') String username,
-								    @PathParam('token') String password,
+								    @PathParam('token') String token,
     								@PathParam('msisdn') String msisdn,
 								  	@PathParam('message') String message) {
 		def enable = remoteAuthenticationService.hasSessionToken(username, token)
