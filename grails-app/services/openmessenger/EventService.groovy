@@ -94,7 +94,7 @@ class EventService {
         event.save()
     }
 
-    def sendIndividualMessage(Long eventId, def username, def msisdn, Message message) {
+    def sendPersonalMessage(Long eventId, def username, def msisdn, Message message) {
     	def event = Event.findById(eventId)
     	def isSenderId = event.isSenderId
     	if(!event.subscribers.find {it.msisdn == msisdn}) {
