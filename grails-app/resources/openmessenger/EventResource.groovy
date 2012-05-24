@@ -108,9 +108,9 @@ class EventResource {
 	}
 	
 	@GET
-    @Path('/sendIndividualMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
+    @Path('/sendPersonalMessage/{eventId}/{username}/{token}/{msisdn}/{message}')
     @Produces('text/plain')
-    Response sendIndividualMessage(@PathParam('eventId') String eventId,
+    Response sendPersonalMessage(@PathParam('eventId') String eventId,
     								@PathParam('username') String username,
 								    @PathParam('token') String password,
     								@PathParam('msisdn') String msisdn,
