@@ -152,6 +152,7 @@ sms.gateway.inactivity=600000 // 10 mins
 
 openmessenger.eventCallback='eventCallback'
 openmessenger.prefixSize=4
+openmessenger.message.limit=140
 
 /** SSL truststore configuration key */
 //rest.https.truststore.path = 'web-app/certs/truststore.jks'
