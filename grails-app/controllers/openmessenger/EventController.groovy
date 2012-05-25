@@ -10,7 +10,8 @@ class EventController {
 	
 	def view = {
         def targetEvent = eventService.findEventById(Long.valueOf(params.id))	
-		def offset = params.offset?params.int('offset'):0
+        def errorMessage = params?.errorMessage?:''
+        def offset = params.offset?params.int('offset'):0
 		def max = params.max?params.int('max'):10
 		def total = targetEvent?.messages?.size()?:0
 		if(offset+max>total && total > 0) {
@@ -21,7 +22,7 @@ class EventController {
 			messages = eventService.getEventMessages(targetEvent?.messages?.toList(), offset, max)
 		}
 		
-		render(view: "view", model:[event: targetEvent, total:total, messages:messages, offset:offset]) //, total:total, messages:messages
+		render(view: "view", model:[event: targetEvent, total:total, messages:messages, message:errorMessage, offset:offset]) //, total:total, messages:messages
     }
 
     def listAllEvents = { 
@@ -111,7 +112,7 @@ class EventController {
 				render(view: "edit", model: [eventInstance: eventInstance])
 			}
 		}
-		else { println 'not found target instance'
+		else {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
 			redirect(action: "listAllEvents")
 		}
@@ -139,13 +140,15 @@ class EventController {
     def sendMessage = {       
         def eventId = params.eventId
         def content = params.message
+        def messageLimit = grailsApplication.config.openmessenger.message.limit
 		//TODO check subscriber before sent and create msg
-		if(eventId && content) {
+		if(eventId && content.size() <= messageLimit) {
 			def message = new Message(title:"News from openmessenger", content: content, createdDate: new Date())
 			eventService.sendMessage(Long.valueOf(eventId), message)
-		}
-
-        redirect(action: "view", id: eventId)
+			redirect(action: "view", id: eventId)
+		} else {
+	        redirect(action: "view", id: eventId, params:[errorMessage:content])
+    	}
     }
 }
 
