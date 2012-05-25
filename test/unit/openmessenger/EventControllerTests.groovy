@@ -13,9 +13,12 @@ class EventControllerTests extends ControllerUnitTestCase {
 
     protected void setUp() {
         super.setUp()
-		mockConfig ('''
-		openmessenger.eventCallback="eventCallback"
-		''')
+		mockConfig ("""
+		openmessenger.eventCallback='eventCallback'
+		openmessenger.message.limit=140
+		""")
+
+		controller.metaClass.grailsApplication = [config:[openmessenger:[message:[limit:140]]]]
 		
 		springSecurityService = new HashMap()
 		springSecurityService.principal = new HashMap()
