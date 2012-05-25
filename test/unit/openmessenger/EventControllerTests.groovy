@@ -150,6 +150,18 @@ class EventControllerTests extends ControllerUnitTestCase {
         assertEquals "view", controller.redirectArgs["action"]
         eventService.verify()
     }
+
+    void testSendMessageWithLongMessage() {
+    	def message = "test messageasdfasjdflasjfjasldfjasdfjklasdjfklasdjfaklsdjfklasdjfklasdfljasdklfjsdfjasdfjklasdjflasdfjlasdjflasdjflasdjfkljasdfjsdafljasdlfjasdlfjasdlfaslfjasldfjasldjfasldfjasldfjasldfjasdlfjlasdfjasdkljfaklsdjfl;asdfjasdlfjasldjflasdasdfasdfasdfasdfasdf"
+    	controller.params.eventId = "2"
+        controller.params.message = message
+
+        controller.sendMessage()
+
+        assertEquals "view", controller.redirectArgs["action"]
+
+        assert message == controller.redirectArgs.params.errorMessage
+    }
 	
 	void testEditEvent() {
 		def firstEvent = Event.findByName('The Championships, Wimbledon')
