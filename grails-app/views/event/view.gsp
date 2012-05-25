@@ -30,10 +30,10 @@
                             <fieldset>                            
                     			<g:hiddenField name="eventId" value="${event?.id}" />
                                 <div class="control-group">
-                        			<textarea id="textarea2" class="input-xlarge span7" rows="3" name="message"></textarea>
-                        			<span class="help-block"> Block of help text to describe the field above if need be. </span>
+                        			<textarea id="textarea2" class="input-xlarge span7" rows="3" name="message" >${message}</textarea>                 			
                                 </div>
-                    				<button class="btn btn-primary" type="submit">Send</button>
+                                    <span id="counter">${grailsApplication.config.openmessenger.message.limit}</span>
+                    				<button id="sendButton" class="btn btn-primary" style="clear:right" type="submit">Send</button>
                     				<button class="btn" type="reset">Cancel</button>
                             <fieldset>
                   	    </form>
@@ -90,5 +90,28 @@
                 </div>
             </div> <!-- span4-->          
         </div> <!-- row -->
-    </body>
+
+        <g:javascript>
+        $(document).ready(function() {
+            function checkMessageLength() {                
+                var len = $('#textarea2').val().length;
+                var remain = ${grailsApplication.config.openmessenger.message.limit} - len;
+                $('#counter').text(remain);   
+                if(remain<0) {
+                    $('#sendButton').attr('disabled', true);
+                    $('#counter').css('color', 'red');
+                } else {
+                    $('#sendButton').attr('disabled', false);
+                    $('#counter').css('color', '#333333');
+                } 
+            }
+
+            checkMessageLength();
+
+            $('#textarea2').keyup(function(e) {                
+                checkMessageLength();            
+            });
+        });
+        </g:javascript>
+    </body>    
 </html>

@@ -127,3 +127,8 @@ footer{
 	width: 370px;
     word-wrap: break-word;
 }
+
+#counter {
+	font-size: 14px;    
+    padding: 0 5px;	
+}
